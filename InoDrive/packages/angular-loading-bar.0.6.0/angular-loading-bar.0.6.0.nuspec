@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>angular-loading-bar</id>
+    <version>0.6.0</version>
+    <title>angular-loading-bar</title>
+    <authors>Wes Cruver</authors>
+    <owners>Wes Cruver</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>http://chieffancypants.github.io/angular-loading-bar/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An automatic loading bar using angular interceptors. It works automatically, so simply include it as a dependency and it will automatically display the progress of your $http requests.</description>
+    <releaseNotes>Updates include: Customize progress bar template, Only append bar to first parent found</releaseNotes>
+    <tags>angularjs angular-loading-bar loading progress</tags>
+  </metadata>
+</package>

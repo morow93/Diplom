@@ -1,0 +1,254 @@
+﻿{
+    "cities": [
+        {
+            "name": "Moskva",
+            "latitude": "55.750",
+            "longitude": "37.620"
+        },
+        {
+            "name": "Sankt-peterburg",
+            "latitude": "59.930",
+            "longitude": "30.320"
+        },
+        {
+            "name": "Novosibirsk",
+            "latitude": "55.040",
+            "longitude": "82.930"
+        },
+        {
+            "name": "Jekaterinburg",
+            "latitude": "56.850",
+            "longitude": "60.600"
+        },
+        {
+            "name": "Niznij novgorod",
+            "latitude": "56.330",
+            "longitude": "44.000"
+        },
+        {
+            "name": "Samara",
+            "latitude": "53.200",
+            "longitude": "50.150"
+        },
+        {
+            "name": "Omsk",
+            "latitude": "55.000",
+            "longitude": "73.400"
+        },
+        {
+            "name": "Kazan",
+            "latitude": "55.750",
+            "longitude": "49.130"
+        },
+        {
+            "name": "Rostov na donu",
+            "latitude": "47.240",
+            "longitude": "39.710"
+        },
+        {
+            "name": "Celjabinsk",
+            "latitude": "55.150",
+            "longitude": "61.430"
+        },
+        {
+            "name": "Volgograd",
+            "latitude": "48.710",
+            "longitude": "44.480"
+        },
+        {
+            "name": "Ufa",
+            "latitude": "54.780",
+            "longitude": "56.040"
+        },
+        {
+            "name": "Perm",
+            "latitude": "58.000",
+            "longitude": "56.250"
+        },
+        {
+            "name": "Krasnojarsk",
+            "latitude": "56.020",
+            "longitude": "93.060"
+        },
+        {
+            "name": "Saratov",
+            "latitude": "51.570",
+            "longitude": "46.030"
+        },
+        {
+            "name": "Voronez",
+            "latitude": "51.720",
+            "longitude": "39.260"
+        },
+        {
+            "name": "Toljatti",
+            "latitude": "53.480",
+            "longitude": "49.510"
+        },
+        {
+            "name": "Krasnodar",
+            "latitude": "45.030",
+            "longitude": "38.980"
+        },
+        {
+            "name": "Izevsk",
+            "latitude": "56.850",
+            "longitude": "53.230"
+        },
+        {
+            "name": "Barnaul",
+            "latitude": "53.360",
+            "longitude": "83.750"
+        },
+        {
+            "name": "Uljanovsk",
+            "latitude": "54.330",
+            "longitude": "48.400"
+        },
+        {
+            "name": "Jaroslavl",
+            "latitude": "57.620",
+            "longitude": "39.870"
+        },
+        {
+            "name": "Irkutsk",
+            "latitude": "52.330",
+            "longitude": "104.240"
+        },
+        {
+            "name": "Vladivostok",
+            "latitude": "43.130",
+            "longitude": "131.900"
+        },
+        {
+            "name": "Orenburg",
+            "latitude": "51.780",
+            "longitude": "55.100"
+        },
+        {
+            "name": "Habarovsk",
+            "latitude": "48.420",
+            "longitude": "135.120"
+        },
+        {
+            "name": "Novokuzneck",
+            "latitude": "53.750",
+            "longitude": "87.100"
+        },
+        {
+            "name": "Astrahan",
+            "latitude": "46.350",
+            "longitude": "48.050"
+        },
+        {
+            "name": "Tjumen",
+            "latitude": "57.150",
+            "longitude": "65.530"
+        },
+        {
+            "name": "Rjazan",
+            "latitude": "54.620",
+            "longitude": "39.740"
+        },
+        {
+            "name": "Nabereznyje celny",
+            "latitude": "55.690",
+            "longitude": "52.320"
+        },
+        {
+            "name": "Mahackala",
+            "latitude": "42.980",
+            "longitude": "47.500"
+        },
+        {
+            "name": "Penza",
+            "latitude": "53.200",
+            "longitude": "45.000"
+        },
+        {
+            "name": "Lipeck",
+            "latitude": "52.620",
+            "longitude": "39.620"
+        },
+        {
+            "name": "Tomsk",
+            "latitude": "56.500",
+            "longitude": "84.970"
+        },
+        {
+            "name": "Kemerovo",
+            "latitude": "55.330",
+            "longitude": "86.080"
+        },
+        {
+            "name": "Tula",
+            "latitude": "54.200",
+            "longitude": "37.610"
+        },
+        {
+            "name": "Kirov",
+            "latitude": "58.600",
+            "longitude": "49.660"
+        },
+        {
+            "name": "Kaliningrad",
+            "latitude": "54.710",
+            "longitude": "20.500"
+        },
+        {
+            "name": "Ceboksary",
+            "latitude": "56.130",
+            "longitude": "47.250"
+        },
+        {
+            "name": "Brjansk",
+            "latitude": "53.260",
+            "longitude": "34.420"
+        },
+        {
+            "name": "Magnitogorsk",
+            "latitude": "53.420",
+            "longitude": "58.970"
+        },
+        {
+            "name": "Ivanovo",
+            "latitude": "57.010",
+            "longitude": "40.990"
+        },
+        {
+            "name": "Kursk",
+            "latitude": "51.730",
+            "longitude": "36.190"
+        },
+        {
+            "name": "Niznij tagil",
+            "latitude": "57.920",
+            "longitude": "59.970"
+        },
+        {
+            "name": "Tver",
+            "latitude": "56.860",
+            "longitude": "35.890"
+        },
+        {
+            "name": "Stavropol",
+            "latitude": "45.040",
+            "longitude": "41.970"
+        },
+        {
+            "name": "Ulan-ude",
+            "latitude": "51.830",
+            "longitude": "107.620"
+        },
+        {
+            "name": "Arhangelsk",
+            "latitude": "64.570",
+            "longitude": "40.530"
+        },
+        {
+            "name": "Belgorod",
+            "latitude": "50.610",
+            "longitude": "36.590"
+        }
+    ]
+}

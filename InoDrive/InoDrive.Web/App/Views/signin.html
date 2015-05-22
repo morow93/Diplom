@@ -1,0 +1,77 @@
+﻿<div class="sign-wrapper">
+    <div class="row form-sign-wrapper">
+        <div class="
+                col-xs-8 col-xs-offset-2
+                col-sm-8 col-sm-offset-2
+                col-md-8 col-md-offset-2
+                col-lg-6 col-lg-offset-3
+                border">
+
+            <form name="formSignIn" novalidate autocomplete="off">
+
+                <div class="row">
+                    <div class="col-xs-12 no-padding">
+                        <div class="form-title">
+                            <h3 class="text-center">Вход</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <input name="username"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Email, указанный при регистрации"
+                                   ng-model="signin.username"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignIn.username.$invalid && formSignIn.username.$dirty">
+                                <i>Укажите email!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Пароль</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            <input name="password"
+                                   class="form-control"
+                                   type="password"
+                                   placeholder="Пароль"
+                                   ng-model="signin.password"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignIn.password.$invalid && formSignIn.password.$dirty">
+                                <i>Укажите пароль!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-alert"></div>
+                    </div>
+                </div>
+
+                <div class="row form-submit">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <a href="javascript:void(0)" class="btn btn-primary form-submit-button" ng-click="formSubmit(formSignIn)">Выполнить вход</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,6 @@
+E:\Диплом\InoDrive\InoDrive.Web\bin\InoDrive.Web.dll.config
+E:\Диплом\InoDrive\InoDrive.Web\bin\InoDrive.Web.dll
+E:\Диплом\InoDrive\InoDrive.Web\bin\InoDrive.Web.pdb
+E:\Диплом\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.csprojResolveAssemblyReference.cache
+E:\Диплом\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.dll
+E:\Диплом\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.pdb

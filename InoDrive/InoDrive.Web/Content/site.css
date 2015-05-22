@@ -1,0 +1,346 @@
+﻿/*Growl notifications begin*/
+growl-notification.fading.ng-move{
+    opacity: 0;
+    -webkit-transition: 1s linear all; /* Safari/Chrome */
+    transition: 1s linear all; /* All other modern browsers and IE10+ */
+}
+
+growl-notification.fading.ng-move.ng-move-active {
+    opacity: 1;
+}
+growl-notification.fading.ng-leave {
+    opacity: 1;
+    -webkit-transition: 1s linear all; /* Safari/Chrome */
+    transition: 1s linear all; /* All other modern browsers and IE10+ */
+}
+
+growl-notification.fading.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+/*Growl notifications end*/
+
+/*Arrow to top begin*/
+.to-top {
+    position: fixed;
+    background-color: rgba(180, 153, 172, 0.3);
+    background: rgba(180, 153, 172, 0.3);
+    color: rgba(180, 153, 172, 0.3);
+    width: 50px;
+    height: 100%;
+    z-index: 100000;
+}
+.to-top-text {          
+    margin-top: 10px;
+}
+.to-top-link {            
+    color: #B0B0B0 !important;
+}
+/*Arrow to top end*/
+
+/*Sticky footer begin*/
+
+html {
+    position: relative;
+    min-height: 100%;                    
+}
+
+body {                    
+    margin-bottom: 120px;
+    min-width: 700px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;                    
+    height: 55px;                    
+}
+
+.footer-container {
+    height: inherit;
+}
+
+.footer-text{
+    border-top: 2px solid #f5f5f5;
+    padding-top: 5px;
+}
+
+/*Sticky footer end*/
+
+/*General begin*/
+
+.animate-show {
+    -webkit-transition: all linear 0.5s;
+    transition: all linear 0.5s;
+}
+.animate-show.ng-hide {
+    opacity: 0;
+}
+
+.alert{
+    border-radius: 0px;
+    margin: 0px;
+}
+
+.form-submit {
+    border-top: 2px solid #f5f5f5;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    text-align: center;
+}
+
+.form-submit-button{
+    width: 100%;
+}
+
+.form-alert{
+    min-height: 70px;    
+    margin-top: 10px;
+}
+
+.form-error{
+    margin-top: 3px;
+    min-height: 20px;
+    color: red;
+}
+
+.control-label{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-title{
+     border-bottom: 2px solid #f5f5f5;
+     margin-bottom: 30px;
+}
+
+.form-title > h3{
+     margin: 20px;
+}
+
+.no-padding{
+    padding: 0;
+}
+
+.border{
+    border: 2px solid #f5f5f5;
+}
+
+.inherit-height {
+    height: inherit;
+}
+
+.btn-primary{
+    background-color: #428bca;
+    border-color: #428bca;
+}
+/*General end*/
+
+/*Header begin*/
+
+@font-face {
+    font-family: MISTRESS;
+    src: url('../../content/fonts/0_font.ttf');
+}
+
+.logo-font {
+    font-family: MISTRESS;
+    font-size: 30px;
+}
+
+.header {
+    background-color: #428bca;
+    height: 55px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.header-link{
+    color: white;
+}
+a.header-link:link {
+    color: white;
+    text-decoration: none;
+}
+a.header-link:visited {
+    color: white;
+    text-decoration: none;
+}
+a.header-link:hover {
+    color: #D6EBFF;
+    text-decoration: none;
+}
+a.header-link:active {
+    color: white;
+    text-decoration: none;
+}
+
+.header-left{    
+    margin-top: 8px;
+    height: 36px;
+}
+.header-left-link{    
+    font-size: 28px; 
+}
+
+.header-right{
+    margin-top: 17px;
+    height: 21px;
+}
+.header-right-link{    
+    font-size: 14px; 
+    padding-left: 15px;
+}
+
+/*Header end*/
+
+/*Sortable list begin*/
+
+.list {
+    list-style: none outside none;
+    margin: 10px auto 30px;
+}
+
+.item {
+    width: 200px;
+    padding: 5px 10px;
+    margin-right: 25px;
+    margin-left: 25px;
+    border: 2px solid #444;
+    border-radius: 5px;
+    background-color: #EA8A8A;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    cursor: auto;
+}
+
+.floatingList > .item {
+    float: left;
+    width: 70px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+} 
+
+/*Sortable list end*/
+
+/*Home begin*/
+
+.home-wrapper, .sign-wrapper{
+    border-bottom: 2px solid #f5f5f5; 
+    border-left: 2px solid #f5f5f5; 
+    border-right: 2px solid #f5f5f5;
+    border-top: 1px solid white;
+}
+
+.angular-google-map-container {
+    height: 240px;
+}
+
+.home-map-container{      
+    overflow: hidden;
+    position: relative;    
+}
+
+.home-map-wrapper{
+    -webkit-filter: url(#blur);
+    filter: url(#blur);
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='2');
+    -webkit-transition: 1s -webkit-filter linear;
+    transition: 1s filter linear; 
+}
+
+.home-greeting-wrapper {
+    top: 0;
+    position: absolute;
+    padding: 20px;   
+    padding-bottom: 60px;
+}
+
+.home-map-clear{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    background-color: white;
+}
+
+.home-greeting {
+    position: relative;
+    z-index: 100;    
+    background: rgb(34,34,34);
+    background: rgba(34,34,34,0.75);
+    height: 175px;
+    display: table;    
+    text-align: center;
+}
+
+.greeting-text {
+    text-align: center;
+    color: #fefefe;
+    font-weight: normal;
+    padding: 30px;
+    display: table-cell;
+    vertical-align: middle;    
+}
+ .form-home-wrapper
+{
+     margin-bottom: 100px; 
+     margin-top: 75px;
+     margin-left: 15px;
+     margin-right: 15px;
+}
+/*Home end*/
+
+/*Sign\in\up begin*/
+ .form-sign-wrapper
+{
+     margin: 100px 15px;
+}
+/*Sign\in\up end*/
+
+/*Page nav begin*/
+
+.page-nav-link{
+    padding: 5px 10px;
+    margin: 10px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    display: block; 
+    width: 100%;
+}
+.page-nav-link-active{
+    border-left-color: #428bca;  
+}
+.page-nav-link-hover{
+    background-color: #eee;
+}
+a.page-nav-link:link {
+    text-decoration: none;
+}
+a.page-nav-link:visited {
+    text-decoration: none;
+}
+a.page-nav-link:hover {    
+    text-decoration: none;
+}
+a.page-nav-link:active {
+    text-decoration: none;
+}
+/*Page nav end*/

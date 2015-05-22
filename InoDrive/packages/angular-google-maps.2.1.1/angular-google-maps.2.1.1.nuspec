@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>angular-google-maps</id>
+    <version>2.1.1</version>
+    <title>Google Maps for AngularJS</title>
+    <authors>AngularUI Team</authors>
+    <owners>AngularUI Team</owners>
+    <licenseUrl>https://github.com/angular-ui/angular-google-maps#license</licenseUrl>
+    <projectUrl>https://angular-ui.github.io/angular-google-maps/</projectUrl>
+    <iconUrl>http://i.imgur.com/jkTXPeS.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Google Maps for AngularJS is a set of directives which integrate Google Maps in AngularJS applications.</description>
+    <releaseNotes />
+    <tags>angular-google-maps angular angularJS goole map maps</tags>
+    <dependencies>
+      <dependency id="lodash" version="2.4.1" />
+      <dependency id="AngularJS.Core" version="1.3.4" />
+    </dependencies>
+  </metadata>
+</package>

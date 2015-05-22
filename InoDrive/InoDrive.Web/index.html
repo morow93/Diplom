@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Ино Драйв</title>
+    <link rel="icon" type="image/ico" href="content/images/favicon.ico" />
+
+    <!-- Third party libraries -->
+
+    <link href="content/bootstrap.css" rel="stylesheet" />
+    <link href="content/bootstrap-additions.css" rel="stylesheet" />
+    <link href="content/angular-motion.css" rel="stylesheet" />
+    <link href="content/css/font-awesome.css" rel="stylesheet" />
+    <link href="content/loading-bar.css" rel="stylesheet" />
+    <link href="scripts/angular-notify.css" rel="stylesheet" />
+    <link href="content/site.css" rel="stylesheet" />
+
+    <script src="scripts/jquery-2.1.4.js"></script>
+    <script src="scripts/jquery-ui-1.11.4.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-animate.js"></script>
+    <script src="scripts/angular-sanitize.js"></script>
+    <script src="scripts/angular-cookies.js"></script>
+    <script src="scripts/angular-resource.js"></script>
+    <script src="scripts/i18n/angular-locale_ru-ru.js"></script>
+    <script src="scripts/angular-ui-router.js"></script>
+    <script src="scripts/sortable.js"></script>
+    <script src="scripts/angular-strap.min.js"></script>
+    <script src="scripts/angular-strap.tpl.min.js"></script>
+    <script src='//maps.googleapis.com/maps/api/js?libraries=places&sensor=false'></script>
+    <script src="scripts/lodash.js"></script>
+    <script src="scripts/angular-google-maps.js"></script>
+    <script src="scripts/ngautocomplete.js"></script>
+    <script src="scripts/oclazyload.js"></script>
+    <script src="scripts/loading-bar.js"></script>
+    <script src="scripts/angular-scroll.js"></script>
+    <script src="scripts/angular-notify.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/controllers/indexcontroller.js"></script>
+    <script src="app/services/mapservice.js"></script>
+    <script src="app/directives/match.js"></script>
+
+</head>
+<body ng-app="InoDrive" ng-controller="indexController">   
+    
+    <div class="to-top animate-show" ng-show="isVisibleToTop">
+        <div class="to-top-text text-center animate-show" ng-show="isVisibleToTop">
+            <a href="javascript:void(0)" ng-click="toTheTop()" class="to-top-link">
+                <i class="fa fa-arrow-circle-up fa-2x"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 header">
+                <div class="row inherit-height">
+                    <div class="col-xs-4 header-left">
+                        <a class="header-link header-left-link logo-font" data-ui-sref="home">Ino Drive</a>                        
+                    </div>
+                    <div class="col-xs-8 header-right">
+                        <a data-ui-sref="signup" class="header-link header-right-link pull-right">Зарегистрироваться</a>
+                        <a data-ui-sref="signin" class="header-link header-right-link pull-right">Войти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">                
+                <div data-ui-view></div>
+            </div>
+        </div>
+    </div> 
+
+    <footer class="footer">
+        <div class="container inherit-height">
+            <div class="row inherit-height">
+                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 footer-container">
+                    <div class="footer-text">
+                        <div class="text-center">
+                            <span class="text-muted">© 2015 «ИноДрайв». Все права защищены</span>
+                        </div>
+                        <div class="text-center">
+                            <a href="javascrip:void(0)">Обратная связь</a> | <a href="javascript:void(0)">F.A.Q.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </footer>
+
+</body>
+</html>

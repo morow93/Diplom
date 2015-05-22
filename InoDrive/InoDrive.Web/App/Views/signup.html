@@ -1,0 +1,201 @@
+﻿<div class="sign-wrapper">
+    <div class="row form-sign-wrapper">
+        <div class="
+                col-xs-8 col-xs-offset-2
+                col-sm-8 col-sm-offset-2
+                col-md-8 col-md-offset-2
+                col-lg-6 col-lg-offset-3
+                border">
+
+            <form name="formSignUp" novalidate autocomplete="off">
+
+                <div class="row">
+                    <div class="col-xs-12 no-padding">
+                        <div class="form-title">
+                            <h3 class="text-center">Регистрация</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Никнейм</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="username"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Никнейм"
+                                   ng-model="signup.username"
+                                   ng-minlength="1"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[a-zA-Z0-9]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.username.$dirty && formSignUp.username.$error.required">
+                                <i>Укажите никнейм!</i>
+                            </span>
+                            <span ng-show="!formSignUp.username.$error.pattern &&
+                                      (formSignUp.username.$error.minlength || formSignUp.username.$error.maxlength)">
+                                <i>Должен содержать до 20 символов!</i>
+                            </span>
+                            <span ng-show="formSignUp.username.$error.pattern">
+                                <i>Допускаются только цифры и буквы английского алфавита!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Имя</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="firstName"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Имя"
+                                   ng-model="signup.firstName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.firstName.$dirty && formSignUp.firstName.$error.required">
+                                <i>Укажите имя!</i>
+                            </span>
+                            <span ng-show="!formSignUp.firstName.$error.pattern &&
+                                      (formSignUp.firstName.$error.minlength || formSignUp.firstName.$error.maxlength)">
+                                <i>Имя должно содержать от 2 до 20 букв!</i>
+                            </span>
+                            <span ng-show="formSignUp.firstName.$error.pattern">
+                                <i>Должно состоять только из букв русского алфавита!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Фамилия</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="lastName"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="signup.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.lastName.$dirty && formSignUp.lastName.$error.required">
+                                <i>Укажите фамилию!</i>
+                            </span>
+                            <span ng-show="!formSignUp.lastName.$error.pattern &&
+                                      (formSignUp.lastName.$error.minlength || formSignUp.lastName.$error.maxlength)">
+                                <i>Фамилия должна содержать от 2 до 20 букв!</i>
+                            </span>
+                            <span ng-show="formSignUp.lastName.$error.pattern">
+                                <i>Должна состоять только из букв русского алфавита!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <input name="email"
+                                   class="form-control"
+                                   type="email"
+                                   placeholder="Email"
+                                   ng-model="signup.email"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.email.$error.required && formSignUp.email.$dirty">
+                                <i>Укажите email!</i>
+                            </span>
+                            <span ng-show="formSignUp.$error.email">
+                                <i>Недопустимый e-mail!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Пароль</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            <input name="password"
+                                   class="form-control"
+                                   type="password"
+                                   placeholder="Введите пароль"
+                                   ng-model="signup.password"
+                                   ng-class="{'ng-invalid':formSignup.confirmPassword.$error.match}"
+                                   ng-minlength="6"
+                                   ng-maxlength="20"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.password.$error.required && formSignUp.password.$dirty">
+                                <i>Укажите пароль!</i>
+                            </span>
+                            <span ng-show="!formSignUp.password.$error.pattern &&
+                                      (formSignUp.password.$error.minlength || formSignUp.password.$error.maxlength)">
+                                <i>Пароль должен содержать от 6 до 20 символов!</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Подтверждение пароля</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            <input type="password"
+                                   class="form-control"
+                                   name="confirmPassword"
+                                   ng-model="signup.confirmPassword"
+                                   data-match="signup.password"
+                                   placeholder="Подтверждение пароля"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.confirmPassword.$error.required && formSignUp.confirmPassword.$dirty">
+                                <i>Укажите подтверждение пароля!</i>
+                            </span>
+                            <span ng-show="!formSignUp.confirmPassword.$error.required && formSignUp.confirmPassword.$error.match">
+                                <i>Пароль и его подтверждение не совпадают!</i>
+                            </span>
+                        </div>
+                    </div>                  
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-alert"></div>
+                    </div>
+                </div>
+
+                <div class="row form-submit">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <a href="javascript:void(0)" class="btn btn-primary form-submit-button" ng-click="formSubmit(formSignUp)">Зарегистрироваться</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
