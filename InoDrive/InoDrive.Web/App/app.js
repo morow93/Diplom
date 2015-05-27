@@ -35,11 +35,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     });
 
-    $stateProvider.state("find", {
-        templateUrl: "/app/views/find.html",
-        url: "/find/"
-    });//HOW???!!!
-
     $stateProvider.state("signin", {
         url: "/signin/",
         controller: "signinController",
@@ -72,10 +67,42 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     });
     
+    $stateProvider.state("send_code", {
+        url: "/send_code/",
+        controller: "sendCodeController",
+        templateUrl: "/app/views/send_code.html",
+        resolve: {
+            store: function ($ocLazyLoad) {
+                return $ocLazyLoad.load(
+                    {
+                        name: "InoDrive",
+                        files: ["app/controllers/sendCodeController.js"]
+                    }
+                );
+            }
+        }
+    });
+
+    $stateProvider.state("reset_password", {
+        url: "/reset_password/?userId&code",
+        controller: "resetPasswordController",
+        templateUrl: "/app/views/reset_password.html",
+        resolve: {
+            store: function ($ocLazyLoad) {
+                return $ocLazyLoad.load(
+                    {
+                        name: "InoDrive",
+                        files: ["app/controllers/resetPasswordController.js"]
+                    }
+                );
+            }
+        }
+    });
+
     $stateProvider
         .state("user", {
             url: "/",
-            templateUrl: "/app/views/user.html",
+            templateUrl: "/app/views/user/user.html",
             abstract: true,
             controller: "userController",
             resolve: {
@@ -91,19 +118,27 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
             .state("user.view", {
                 url: "",
-                templateUrl: "/app/views/user.view.html"
+                templateUrl: "/app/views/user/user.view.html"
             })
             .state("user.my_trips", {
                 url: "my_trips/",
-                templateUrl: "/app/views/user.my_trips.html"
+                templateUrl: "/app/views/user/user.my_trips.html"
+            })
+            .state("user.create_trip", {
+                url: "create_trip/",
+                templateUrl: "/app/views/user/user.create_trip.html"
+            })
+            .state("user.find", {
+                url: "find/",
+                templateUrl: "/app/views/user/user.find.html"
             })
             .state("user.my_bids", {
                 url: "my_bids/",
-                templateUrl: "/app/views/user.my_bids.html"
+                templateUrl: "/app/views/user/user.my_bids.html"
             })
             .state("user.settings", {
                 url: "settings/",
-                templateUrl: "/app/views/user.settings.html"
+                templateUrl: "/app/views/user/user.settings.html"
             });
 
     $urlRouterProvider.otherwise("/greeting/");
@@ -122,11 +157,37 @@ app.config(function ($datepickerProvider) {
 
 //run run run
 app.run(function ($rootScope, notify) {
-
-    
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         
-        notify({ message: 'state was changed...', position: 'right', duration: '5000' });
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+        //function getRandomInt(min, max) {
+        //    return Math.floor(Math.random() * (max - min)) + min;
+        //}
+
+        //var randomNumber = getRandomInt(0, 3);
+        //var type;
+
+        //switch (randomNumber) {
+        //    case 0:
+        //        type = 'success';
+        //        break
+        //    case 1:
+        //        type = 'danger';
+        //        break
+        //    case 2:
+        //        type = 'info';
+        //        break
+        //}
+
+        //var message = 'not very long test message must be here';
+        
+        //notify.config({ startTop: 15 });
+        
+        //notify({
+        //    message: message,            
+        //    duration: '5000',
+        //    templateUrl: '/app/views/notifications/notify_' + type + '.html'
+        //});
 
     });
 

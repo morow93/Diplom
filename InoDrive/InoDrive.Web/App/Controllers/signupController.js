@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signupController', function ($scope, $interval, $alert, $state) {
+﻿angular.module('InoDrive').controller('signupController', function ($scope, $alert, $state) {
 
     var myAlert;
 
@@ -19,7 +19,7 @@
         else {
 
             $scope.showAlert({
-                title: 'Исправьте отмеченные поля!',
+                title: 'Пожалуйста, исправьте отмеченные поля!',
                 content: '',
                 type: 'danger',
                 show: false,

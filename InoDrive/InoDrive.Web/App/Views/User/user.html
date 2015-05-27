@@ -1,0 +1,28 @@
+﻿<div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 user-left-column">
+        <div>
+            <div ng-repeat="item in list">
+                <a ng-class="{'page-nav-link-active': isActiveNav(item.value), 'page-nav-link-hover': hover}"
+                   ng-mouseenter="hover = true"
+                   ng-mouseleave="hover = false"
+                   ui-sref="{{item.value}}"
+                   ng-bind="item.text"
+                   class="page-nav-link">
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 user-right-column">
+        <div class=" typical-wrapper">
+            <div data-ui-view></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

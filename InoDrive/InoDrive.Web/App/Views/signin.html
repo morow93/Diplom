@@ -1,4 +1,4 @@
-﻿<div class="sign-wrapper">
+﻿<div class="typical-wrapper">
     <div class="row form-sign-wrapper">
         <div class="
                 col-xs-8 col-xs-offset-2
@@ -54,6 +54,22 @@
                                 <i>Укажите пароль!</i>
                             </span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="checkbox checkbox-primary pointer">
+                            <input type="checkbox" id="useRefreshTokens" ng-model="signin.useRefreshTokens" class="pointer">
+                            <label for="useRefreshTokens">
+                                <b>Оставаться в системе</b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="forgot-password">
+                            <a data-ui-sref="send_code">Забыли пароль?</a>
+                        </div>                        
                     </div>
                 </div>
 

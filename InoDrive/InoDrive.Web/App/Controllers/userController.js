@@ -10,6 +10,14 @@
             value: "user.my_trips"
         },
         {
+            text: "Создать поездку",
+            value: "user.create_trip"
+        },
+        {
+            text: "Искать поездку",
+            value: "user.find"
+        },
+        {
             text: "Мои заявки",
             value: "user.my_bids"
         },
@@ -22,8 +30,7 @@
     $scope.isActiveNav = function (stateName) {
 
         var isActive = (stateName === $state.current.name);
-        return isActive;
-        
+        return isActive;        
 
     };
 

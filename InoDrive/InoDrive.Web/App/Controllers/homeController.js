@@ -19,7 +19,7 @@
         else {
 
             $scope.showAlert({
-                title: 'Исправьте отмеченные поля!',
+                title: 'Пожалуйста, исправьте отмеченные поля!',
                 content: '',
                 type: 'danger',
                 show: false,

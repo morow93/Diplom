@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signinController', function ($scope, $alert, $state) {
+﻿angular.module('InoDrive').controller('sendCodeController', function ($scope, $alert, $state) {
 
     var myAlert;
 
@@ -14,12 +14,12 @@
 
         if (form.$valid) {
 
-            $state.go("user.view");
+            $state.go("reset_password");
         }
         else {
 
             $scope.showAlert({
-                title: 'Пожалуйста, исправьте отмеченные поля!',
+                title: 'Пожалуйста, укажите email!',
                 content: '',
                 type: 'danger',
                 show: false,
@@ -34,6 +34,6 @@
 
     };
 
-    $scope.signin = {};
+    $scope.sendCode = {};
 
 });

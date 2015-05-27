@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signinController', function ($scope, $alert, $state) {
+﻿angular.module('InoDrive').controller('resetPasswordController', function ($scope, $alert, $state) {
 
     var myAlert;
 
@@ -14,7 +14,7 @@
 
         if (form.$valid) {
 
-            $state.go("user.view");
+            $state.go("signin");
         }
         else {
 
@@ -34,6 +34,6 @@
 
     };
 
-    $scope.signin = {};
+    $scope.resetPassword = {};
 
 });

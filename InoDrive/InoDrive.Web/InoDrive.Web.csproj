@@ -59,25 +59,31 @@
   <ItemGroup>
     <Content Include="App\Controllers\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
+    <Content Include="App\Controllers\resetPasswordController.js" />
+    <Content Include="App\Controllers\sendCodeController.js" />
     <Content Include="App\Controllers\userController.js" />
     <Content Include="App\Controllers\signinController.js" />
     <Content Include="App\Controllers\signupController.js" />
     <Content Include="App\Directives\Match.js" />
     <Content Include="App\Services\mapService.js" />
-    <Content Include="App\Views\user.my_bids.html" />
-    <Content Include="App\Views\user.html" />
-    <Content Include="App\Views\user.my_trips.html" />
-    <Content Include="App\Views\user.settings.html" />
+    <Content Include="App\Views\Notifications\notify_danger.html" />
+    <Content Include="App\Views\Notifications\notify_info.html" />
+    <Content Include="App\Views\Notifications\notify_success.html" />
+    <Content Include="App\Views\reset_password.html" />
+    <Content Include="App\Views\send_code.html" />
+    <Content Include="App\Views\User\user.my_bids.html" />
+    <Content Include="App\Views\User\user.html" />
+    <Content Include="App\Views\User\user.my_trips.html" />
+    <Content Include="App\Views\User\user.settings.html" />
     <Content Include="Content\angular-motion.css" />
     <Content Include="Content\angular-motion.min.css" />
+    <Content Include="Content\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\bootstrap-additions.css" />
     <Content Include="Content\bootstrap-additions.min.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\favicon.ico" />
-    <Content Include="Scripts\angular-notify.css" />
-    <Content Include="Scripts\angular-notify.js" />
     <Content Include="Scripts\angular-scroll.js" />
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />
@@ -100,7 +106,8 @@
     <Content Include="Content\angular-motion.min.css.map" />
     <Content Include="Content\bootstrap-additions.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="App\Views\user.view.html" />
+    <Content Include="App\Views\User\user.view.html" />
+    <Content Include="App\Views\User\user.create_trip.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -110,7 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
-    <Content Include="App\Views\user.find.html" />
+    <Content Include="App\Views\User\user.find.html" />
     <Content Include="App\Views\home.html" />
     <Content Include="App\Views\signin.html" />
     <Content Include="App\Views\signup.html" />

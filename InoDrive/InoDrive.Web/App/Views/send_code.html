@@ -1,0 +1,61 @@
+﻿<div class="typical-wrapper">     
+    <div class="row form-sign-wrapper">
+        <div class="
+                col-xs-8 col-xs-offset-2
+                col-sm-8 col-sm-offset-2
+                col-md-8 col-md-offset-2
+                col-lg-6 col-lg-offset-3
+                border">
+
+            <form name="formSendResetPasswordCode" novalidate autocomplete="off">
+
+                <div class="row">
+                    <div class="col-xs-12 no-padding">
+                        <div class="form-title">
+                            <h3 class="text-center">Восстановление пароля</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="up-text">
+                            Введите email, указанный при регистрации на сайте.
+                            На этот адрес будет выслано письмо для восстановления пароля.
+                        </p>                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 up-input">
+                        <label class="control-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <input name="email"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Email, на который будет отправлено письмо"
+                                   ng-model="sendCode.email"
+                                   required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-alert"></div>
+                    </div>
+                </div>
+
+                <div class="row form-submit">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <a href="javascript:void(0)" class="btn btn-primary form-submit-button" ng-click="formSubmit(formSendResetPasswordCode)">Отправить письмо</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
