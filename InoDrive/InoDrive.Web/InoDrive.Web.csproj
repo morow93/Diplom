@@ -66,9 +66,8 @@
     <Content Include="App\Controllers\signupController.js" />
     <Content Include="App\Directives\Match.js" />
     <Content Include="App\Services\mapService.js" />
-    <Content Include="App\Views\Notifications\notify_danger.html" />
-    <Content Include="App\Views\Notifications\notify_info.html" />
-    <Content Include="App\Views\Notifications\notify_success.html" />
+    <Content Include="App\Templates\alert.html" />
+    <Content Include="App\Templates\notify.html" />
     <Content Include="App\Views\reset_password.html" />
     <Content Include="App\Views\send_code.html" />
     <Content Include="App\Views\User\user.my_bids.html" />
@@ -84,6 +83,8 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\favicon.ico" />
+    <Content Include="Scripts\angular-notify.css" />
+    <Content Include="Scripts\angular-notify.js" />
     <Content Include="Scripts\angular-scroll.js" />
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />

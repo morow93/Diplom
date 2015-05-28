@@ -1,25 +1,4 @@
-﻿/*Growl notifications begin*/
-growl-notification.fading.ng-move{
-    opacity: 0;
-    -webkit-transition: 1s linear all; /* Safari/Chrome */
-    transition: 1s linear all; /* All other modern browsers and IE10+ */
-}
-
-growl-notification.fading.ng-move.ng-move-active {
-    opacity: 1;
-}
-growl-notification.fading.ng-leave {
-    opacity: 1;
-    -webkit-transition: 1s linear all; /* Safari/Chrome */
-    transition: 1s linear all; /* All other modern browsers and IE10+ */
-}
-
-growl-notification.fading.ng-leave.ng-leave-active {
-    opacity: 0;
-}
-/*Growl notifications end*/
-
-/*Arrow to top begin*/
+﻿/*Arrow to top begin*/
 .to-top {
     position: fixed;
     background-color: rgba(180, 153, 172, 0.3);
@@ -101,15 +80,16 @@ button:focus {
     width: 100%;
 }
 
-.form-alert{
-    min-height: 70px;    
-    margin-top: 10px;
+.form-alert{  
+    min-height: 30px;
+    margin-top: 15px;    
 }
 
 .form-error{
     margin-top: 3px;
     min-height: 20px;
-    color: red;
+    font-size: 13px;
+    color: #FF9999;
 }
 
 .control-label{
@@ -326,7 +306,6 @@ a.header-link:active {
  .forgot-password{
      margin: 10px 0px; 
      text-align: right; 
-     cursor: pointer;
  }
 /*Sign\in\up end*/
 
@@ -375,24 +354,24 @@ a.page-nav-link:active {
 /*Notify begin*/
 .notify-style {
     border: 10px solid white;
+    padding: 15px;
+    padding-left: 17px;
     font-size: 13px;
     cursor: pointer;
-    width: 350px;
     text-align: left;
     color: white;
     -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.17);
     -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.17);
-    box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.17);
-    padding: 15px;
+    box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.17);    
     background-color: black;
+    min-height: 90px;
+    margin-bottom: 15px;
 }
-.notify-icon {
-    float: left;
-    width: 46px;
+.notify-fixed-width{
+    width: 400px;
 }
-.notify-body {
-    float: left;
-    width: 253px;
+.notify-text{
+    margin-left: 15px;
 }
 .notify-danger{
     background-color: #FF9999;

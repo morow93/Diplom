@@ -26,6 +26,7 @@
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$position = args.position ? args.position : position;
             scope.$message = args.message;
+            scope.$type = args.type;
             scope.$classes = args.classes;
             scope.$messageTemplate = args.messageTemplate;
 
@@ -125,6 +126,15 @@
                 },
                 set: function (val) {
                     scope.$message = val;
+                }
+            });
+
+            Object.defineProperty(retVal, 'type', {
+                get: function () {
+                    return scope.$type;
+                },
+                set: function (val) {
+                    scope.$type = val;
                 }
             });
 

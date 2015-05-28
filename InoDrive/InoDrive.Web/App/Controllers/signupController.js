@@ -19,11 +19,12 @@
         else {
 
             $scope.showAlert({
-                title: 'Пожалуйста, исправьте отмеченные поля!',
+                title: 'Для того чтобы зарегистрироваться, пожалуйста, исправьте отмеченные поля!',
                 content: '',
                 type: 'danger',
                 show: false,
-                container: '.form-alert'
+                container: '.form-alert',
+                template: '/app/templates/alert.html'
             });
 
             angular.forEach(form.$error.required, function (field) {

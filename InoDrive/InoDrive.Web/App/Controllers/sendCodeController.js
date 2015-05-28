@@ -19,11 +19,12 @@
         else {
 
             $scope.showAlert({
-                title: 'Пожалуйста, укажите email!',
+                title: 'Пожалуйста, укажите email, чтобы мы могли отправиь Вам письмо для восстановления пароля!',
                 content: '',
                 type: 'danger',
                 show: false,
-                container: '.form-alert'
+                container: '.form-alert',
+                template: '/app/templates/alert.html'
             });
 
             angular.forEach(form.$error.required, function (field) {

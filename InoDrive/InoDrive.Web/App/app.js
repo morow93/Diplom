@@ -160,35 +160,23 @@ app.run(function ($rootScope, notify) {
         
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-        //function getRandomInt(min, max) {
-        //    return Math.floor(Math.random() * (max - min)) + min;
-        //}
-
-        //var randomNumber = getRandomInt(0, 3);
-        //var type;
-
-        //switch (randomNumber) {
-        //    case 0:
-        //        type = 'success';
-        //        break
-        //    case 1:
-        //        type = 'danger';
-        //        break
-        //    case 2:
-        //        type = 'info';
-        //        break
-        //}
-
-        //var message = 'not very long test message must be here';
-        
-        //notify.config({ startTop: 15 });
-        
-        //notify({
-        //    message: message,            
-        //    duration: '5000',
-        //    templateUrl: '/app/views/notifications/notify_' + type + '.html'
-        //});
+        displayNotificationOnStageChange(notify, "test", "success");     
 
     });
 
 });
+
+function displayNotificationOnStageChange(notify, message, type) {
+
+    notify.config({
+        startTop: 15,
+        verticalSpacing: 15,
+        maximumOpen: 5,
+        duration: 5000
+    });
+    notify({
+        type: type,
+        message: message,
+        templateUrl: '/app/templates/notify.html'
+    });
+}
