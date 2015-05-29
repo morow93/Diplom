@@ -6,10 +6,6 @@
             value: "user.view"
         },
         {
-            text: "Мои поездки",
-            value: "user.my_trips"
-        },
-        {
             text: "Создать поездку",
             value: "user.create_trip"
         },

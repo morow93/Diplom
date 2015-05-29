@@ -1,28 +1,26 @@
-﻿<div class="notify-style notify-danger"
+﻿<div class="notify-style"
      ng-class="{'notify-danger': type == 'danger', 'notify-success': type == 'success', 'notify-info': type != 'danger' && type != 'success'}"
      ng-click="$hide()">
 
     <div class="row">
+        <div class="col-xs-12 no-padding">
 
-        <div class="col-xs-1">
+            <div class="notify-icon">
+                <i ng-if="type == 'danger'"
+                   class="fa fa-exclamation-circle fa-3x"></i>
 
-            <i ng-if="type == 'danger'"
-               class="fa fa-exclamation-circle fa-3x"></i>
+                <i ng-if="type == 'success'"
+                   class="fa fa-check-circle fa-3x"></i>
 
-            <i ng-if="type == 'success'"
-               class="fa fa-check-circle fa-3x"></i>
+                <i ng-if="type != 'danger' && type != 'success'"
+                   class="fa fa-info-circle fa-3x"></i>
+            </div>
 
-            <i ng-if="type != 'danger' && type != 'success'"
-               class="fa fa-info-circle fa-3x"></i>
-
-        </div>
-
-        <div class="col-xs-11">
             <div class="notify-text">
                 <span ng-bind="title"></span>
             </div>
-        </div>
 
+        </div>
     </div>
 
 </div>

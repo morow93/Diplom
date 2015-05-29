@@ -23,8 +23,8 @@
                 content: '',
                 type: 'danger',
                 show: false,
-                container: '.form-alert',
-                template: '/app/templates/alert.html'
+                container: '.form-alert'
+                ,template: '/app/templates/alert.html'
             });
 
             angular.forEach(form.$error.required, function (field) {

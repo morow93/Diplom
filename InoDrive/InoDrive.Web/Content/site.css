@@ -20,12 +20,13 @@
 
 html {
     position: relative;
-    min-height: 100%;                    
+    min-height: 100%;               
 }
 
 body {                    
     margin-bottom: 120px;
     min-width: 700px;
+    color: #246BB2 !important;  
 }
 
 .footer {
@@ -46,7 +47,29 @@ body {
 
 /*Sticky footer end*/
 
+/*Loading begin*/
+.loading-wrapper {
+    color: #246BB2;
+    border: 1px solid #eee;
+    min-height: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.loading-icon {
+    width: 35px;
+    float: left;
+    margin-left: 15px;
+}
+.loading-text {
+    margin-top: 5px;
+    padding-right: 15px;
+}
+/*Loading end*/
+
 /*General begin*/
+.contrast-color{
+    color: #777;
+}
 .no-padding{
     padding: 0px;
 }
@@ -105,8 +128,8 @@ button:focus {
 }
 
 .form-alert{  
-    min-height: 30px;
-    margin-top: 15px;    
+    min-height: 30px;   
+    margin-top: 1px;
 }
 
 .form-error{
@@ -143,8 +166,8 @@ button:focus {
 }
 
 .btn-primary{
-    background-color: #428bca;
-    border-color: #428bca;
+    background-color: #246BB2;
+    border-color: #246BB2;
 }
 /*General end*/
 
@@ -161,7 +184,7 @@ button:focus {
 }
 
 .header {
-    background-color: #428bca;
+    background-color: #246BB2;
     height: 55px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -336,21 +359,21 @@ a.header-link:active {
 /*Page nav begin*/
 
 .page-nav-link{
-    padding: 7px 10px;
+    padding: 7.5px 10px;
     margin: 10px 0;
     border: 1px solid #eee;
     border-left-width: 5px;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 14px;
     display: block; 
     width: 100%;
 }
 .page-nav-link-active{
-    border-left-color: #428bca;  
+    border-left-color: #246BB2;  
 }
 .page-nav-link-hover{    
     background-color: #D6EBFF;
-    color: #337ab7 !important;
+    color: #246BB2 !important;
 }
 a.page-nav-link:link {
     text-decoration: none;
@@ -364,6 +387,43 @@ a.page-nav-link:hover {
 a.page-nav-link:active {
     text-decoration: none;
 }
+
+.sub-page-nav-link{
+    padding: 5px;    
+    border: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;    
+    border-top-width: 4px;
+    text-align: center;
+    font-size: 14px;
+    display: block; 
+    width: 100%;
+}
+.sub-page-nav-link-middle{
+    border-left: 0px;
+    border-right: 0px;
+}
+.sub-page-nav-link-active{
+    border-top-color: #246BB2; 
+    border-bottom: 0;
+}
+.sub-page-nav-link-hover{    
+    background-color: #D6EBFF;
+    color: #246BB2 !important;
+}
+a.sub-page-nav-link:link {
+    text-decoration: none;
+}
+a.sub-page-nav-link:visited {
+    text-decoration: none;
+}
+a.sub-page-nav-link:hover {    
+    text-decoration: none;
+}
+a.sub-page-nav-link:active {
+    text-decoration: none;
+}
 /*Page nav end*/
 
 
@@ -372,7 +432,7 @@ a.page-nav-link:active {
     margin-bottom: 20px;
 }
 .up-input{
-    margin-bottom: 5px;
+    margin-bottom: 19px;
 }
 /*Send code end*/
 
@@ -390,13 +450,18 @@ a.page-nav-link:active {
     box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.17);    
     background-color: black;
     min-height: 90px;
-    margin-bottom: 15px;
+    margin-bottom: 19px;
 }
 .notify-fixed-width{
-    width: 400px;
+    width: 350px;
+}
+.notify-icon{
+    width: 48px;
+    float: left;
+    margin-left: 15px;
 }
 .notify-text{
-    margin-left: 15px;
+    padding-right: 15px;
 }
 .notify-danger{
     background-color: #FF9999;
@@ -422,11 +487,19 @@ a.page-nav-link:active {
 .user-right-column > div{
     /*min-height: 600px;*/
 }
+.user-view-hr{
+    margin-top: 0px;
+    margin-bottom: 10px;    
+}
 .user-view-title{
     background-color: #f5f5f5; 
     padding: 15px 10px; 
     font-size: 16px; 
-    color: #337ab7; 
+    color: #246BB2; 
+}
+.user-trips{     
+     padding: 10px;
+     padding-top: 0px;
 }
 .user-main-info{
      margin: 0px; 
@@ -440,28 +513,90 @@ a.page-nav-link:active {
      padding-right: 0px;
 }
 .user-table{
-    margin-top: 22px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 0px;
+    border: 1px solid #eee;
+    padding-left: 10px !important;
+}
+.first-user-table{
+    margin-bottom: 10px !important;    
 }
 .user-table td {
     border-top: 1px solid #eee !important;
     border-bottom: 1px solid #eee !important;
-}
-td{
     padding-left: 10px !important;
 }
 .rating-span{
     display:inline-block;
-    border-bottom: 2px solid #337ab7;
+    border-bottom: 3px solid #246BB2;
     padding-bottom: 1px;
     font-size: 16px; 
     font-weight: 600;
-    color: #337ab7;
+    color: #246BB2;
 }
 .show-hide-user-info{
-    padding: 10px 10px; 
+    padding: 7.5px 10px; 
     font-size: 14px; 
-    color: #337ab7; 
+    color: #246BB2; 
+    border: 1px solid #eee;
+}
+.show-hide-user-info-back{
     background-color: #D6EBFF;
 }
+.about{
+    margin-top: 5px;
+}
+.user-view-rating{
+    padding-right:5px;
+}
 /*User end*/
+
+/*Rating begin*/
+@import "compass/css3";
+
+.rating {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+.rating >  li {
+    padding: 1px;
+    color: #ddd;
+    font-size: 20px;
+    text-shadow: .05em .05em #aaa;
+    list-style-type: none;
+    display: inline-block;
+    cursor: pointer;
+}
+li.filled {
+    color: #fd0;
+}
+.rating.readonly{
+    cursor: default;  
+}
+.rating.readonly > li{
+    cursor: inherit;
+}
+/*Rating end*/
+
+/*User trips begin*/
+.all-trips{
+     padding-right: 0px;
+}
+.driver-trips{
+    padding-left: 0px; 
+    padding-right: 0px;
+}
+.passenger-trips{
+    padding-left: 0px;
+}
+.user-tab{
+    border: 1px solid #eee; 
+    border-top: none; 
+    margin-top: -1px;
+    padding: 20px 20px;    
+}
+.total-trip-count{
+    margin-top: 11px; 
+    margin-bottom: 10px;
+}
+/*User trips end*/

@@ -1,27 +1,26 @@
-﻿<div class="cg-notify-message cg-notify-message-right notify-style notify-fixed-width" ng-click="$close()"
-     ng-class="{'notify-danger': $type == 'danger', 'notify-success': $type == 'success', 'notify-info': $type != 'danger' && $type != 'success'}">
+﻿<div class="cg-notify-message cg-notify-message-right notify-style notify-fixed-width"
+     ng-class="{'notify-danger': $type == 'danger', 'notify-success': $type == 'success', 'notify-info': $type != 'danger' && $type != 'success'}"
+     ng-click="$close()">
 
     <div class="row">
+        <div class="col-xs-12 no-padding">
 
-        <div class="col-xs-1">
+            <div class="notify-icon">
+                <i ng-if="$type == 'danger'"
+                   class="fa fa-exclamation-circle fa-3x"></i>
 
-            <i ng-if="$type == 'danger'"
-               class="fa fa-exclamation-circle fa-3x"></i>
+                <i ng-if="$type == 'success'"
+                   class="fa fa-check-circle fa-3x"></i>
 
-            <i ng-if="$type == 'success'"
-               class="fa fa-check-circle fa-3x"></i>
+                <i ng-if="$type != 'danger' && $type != 'success'"
+                   class="fa fa-info-circle fa-3x"></i>
+            </div>
 
-            <i ng-if="$type != 'danger' && $type != 'success'"
-               class="fa fa-info-circle fa-3x"></i>
-
-        </div>
-
-        <div class="col-xs-11">
             <div class="notify-text">
                 <span ng-bind="$message"></span>
             </div>
-        </div>
 
+        </div>
     </div>
 
 </div>

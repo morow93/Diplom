@@ -118,7 +118,18 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
             .state("user.view", {
                 url: "",
-                templateUrl: "/app/views/user/user.view.html"
+                controller: "userViewController",
+                templateUrl: "/app/views/user/user.view.html",
+                resolve: {
+                    store: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/userViewController.js"]
+                            }
+                        );
+                    }
+                }
             })
             .state("user.my_trips", {
                 url: "my_trips/",
@@ -160,7 +171,7 @@ app.run(function ($rootScope, notify) {
         
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-        displayNotificationOnStageChange(notify, "test", "success");     
+        //displayNotificationOnStageChange(notify, "test", "success");     
 
     });
 
