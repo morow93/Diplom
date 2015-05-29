@@ -47,6 +47,30 @@ body {
 /*Sticky footer end*/
 
 /*General begin*/
+.no-padding{
+    padding: 0px;
+}
+.no-margin{
+    margin: 0px;
+}
+.no-border{
+    border: 0;
+}
+.full-width{
+    width: 100%;
+}
+a.typical-link:link {    
+    text-decoration: none;
+}
+a.typical-link:visited {    
+    text-decoration: none;
+}
+a.typical-link:hover {    
+    text-decoration: none;
+}
+a.typical-link:active {    
+    text-decoration: none;
+}
 
 .pointer{
     cursor: pointer;
@@ -324,8 +348,9 @@ a.header-link:active {
 .page-nav-link-active{
     border-left-color: #428bca;  
 }
-.page-nav-link-hover{
-    background-color: #eee;
+.page-nav-link-hover{    
+    background-color: #D6EBFF;
+    color: #337ab7 !important;
 }
 a.page-nav-link:link {
     text-decoration: none;
@@ -395,6 +420,48 @@ a.page-nav-link:active {
     padding-left: 0px;
 }
 .user-right-column > div{
-    min-height: 600px;
+    /*min-height: 600px;*/
+}
+.user-view-title{
+    background-color: #f5f5f5; 
+    padding: 15px 10px; 
+    font-size: 16px; 
+    color: #337ab7; 
+}
+.user-main-info{
+     margin: 0px; 
+     padding: 10px;
+}
+.user-main-info > div:first-child {
+     padding: 0px;
+}
+.user-main-info > div:last-child {
+     padding-left: 10px; 
+     padding-right: 0px;
+}
+.user-table{
+    margin-top: 22px !important;
+    margin-bottom: 10px !important;
+}
+.user-table td {
+    border-top: 1px solid #eee !important;
+    border-bottom: 1px solid #eee !important;
+}
+td{
+    padding-left: 10px !important;
+}
+.rating-span{
+    display:inline-block;
+    border-bottom: 2px solid #337ab7;
+    padding-bottom: 1px;
+    font-size: 16px; 
+    font-weight: 600;
+    color: #337ab7;
+}
+.show-hide-user-info{
+    padding: 10px 10px; 
+    font-size: 14px; 
+    color: #337ab7; 
+    background-color: #D6EBFF;
 }
 /*User end*/

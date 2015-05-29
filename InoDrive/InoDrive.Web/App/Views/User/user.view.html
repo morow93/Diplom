@@ -1,1 +1,103 @@
-﻿USER.VIEW
+﻿<div class="row">
+    <div class="col-xs-12">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="user-view-title">
+                    <b>Александр Чепурной</b>
+                </div>                
+            </div>
+        </div>
+
+        <div class="row user-main-info">
+            <div class="col-xs-3">
+                <img class="full-width" src="content/images/avatar.jpg" />
+            </div>
+            <div class="col-xs-9">
+
+                <div class="row">                    
+                    <div class="col-xs-6">
+                        <span class="rating-span">Рейтинг: 75%</span>
+                    </div>                
+                </div>   
+                          
+                <div class="no-border">
+                    <table class="table table-condensed user-table">
+                        <colgroup>
+                            <col class="col-md-7 col-xs-6">
+                            <col class="col-md-5 col-xs-6">
+                        </colgroup>
+                        <caption>Основная информация:</caption>
+                        <tbody>
+                            <tr>
+                                <td>Пол:</td>
+                                <td>Мужской</td>
+                            </tr>
+                            <tr>
+                                <td>Возраст:</td>
+                                <td>17 лет</td>
+                            </tr>
+                            <tr>
+                                <td>Водительский стаж:</td>
+                                <td>3 года</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>          
+                
+                <a href="javascript:void(0)" ng-click="showInfo = !showInfo" class="typical-link">
+                    <div class="show-hide-user-info">
+                        <span ng-if="showInfo">Скрыть дополнительную информацию</span>
+                        <span ng-if="!showInfo">Показать дополнительную информацию</span>
+                    </div>
+                </a>                 
+  
+                <div class="table-responsive no-border am-fade" ng-if="showInfo">
+                    <table class="table table-condensed user-table">
+                        <colgroup>
+                            <col class="col-md-7 col-xs-6">
+                            <col class="col-md-5 col-xs-6">
+                        </colgroup>
+                        <caption>Информация о поездках:</caption>
+                        <tbody>
+                            <tr>
+                                <td>Всего совершено поездок:</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>В качестве водителя:</td>
+                                <td>9</td>
+                            </tr>
+                            <tr>
+                                <td>В качестве пассажира:</td>
+                                <td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>    
+
+                <div class="table-responsive no-border am-fade" ng-if="showInfo">
+                    <table class="table table-condensed user-table">
+                        <colgroup>
+                            <col class="col-md-7 col-xs-6">
+                            <col class="col-md-5 col-xs-6">
+                        </colgroup>
+                        <caption>Контактная инфомация:</caption>
+                        <tbody>
+                            <tr>
+                                <td>Email:</td>
+                                <td>derchepur@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td>Телефон:</td>
+                                <td>Не указан</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>      
+
+            </div>
+        </div>
+
+    </div>  
+</div>
