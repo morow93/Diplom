@@ -3,7 +3,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <div class="user-view-title">
+                <div class="page-view-title">
                     <b>Александр Чепурной</b>
                 </div>                
             </div>
@@ -53,7 +53,7 @@
                 </div>          
                 
                 <a href="javascript:void(0)" ng-click="showInfo = !showInfo" class="typical-link">
-                    <div class="show-hide-user-info" ng-mouseenter="back = true" ng-mouseleave="back = false" ng-class="{'show-hide-user-info-back': back}">
+                    <div class="show-hide-user-info">
                         <span ng-if="showInfo">Скрыть дополнительную информацию</span>
                         <span ng-if="!showInfo">Показать дополнительную информацию</span>
                     </div>
@@ -176,7 +176,7 @@
                     <div ng-if="tripsType == 'all'">
                         <hr class="no-margin" />
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-7">
                                 <div class="checkbox checkbox-primary">
                                     <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer">
                                     <label for="showEnded">
@@ -184,7 +184,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-xs-6 text-right">
+                            <div class="col-xs-5 text-right">
                                 <div class="total-trip-count">
                                     <b>Поездок: 55</b>
                                 </div>
@@ -192,654 +192,211 @@
                         </div>
                         <hr class="no-margin" />
 
-                        <style>
-                            .short-trip {
-                                border: 1px solid #eee;
-                                margin-top: 20px;
-                                cursor: pointer;
-                                padding: 10px;
-                            }
-                        </style>
-
                         <div class="list-trips">
 
                             <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
+
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
+                                        <div class="user-trip-header">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <a href="javascript:void(0)" class="typical-link">
+                                                        <span class="user-trip-driver">Чепурной Александр</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>    
+                                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>                                                
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+
+                                <div class="trip-padding">
+
+                                    <div class="row">
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="trip-points">
+                                                        Таганрог, Ростовская область &#8594;
+                                                        Ростов-на-Дону, Ростовская область &#8594;
+                                                        Москва, Московская область &#8594;
+                                                        Санкт-Петербург
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 contrast-color">
+                                                    07/07/2015
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="trip-price">
+                                                <span class="trip-price-title">10000 руб.</span><br />
+                                                <span class="contrast-color">с человека</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        07/07/2015
+                                        <div class="trip-places">
+                                            <div class="row">
+                                                <div class="col-xs-7 contrast-color">
+                                                    <span>Осталось свободных мест: 10</span>
+                                                </div>
+                                                <div class="col-xs-5 text-right">
+                                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                            </div>                            
+                            
+                            <div class="short-trip">
+
                                 <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
+                                    <div class="col-xs-12">
+                                        <div class="user-trip-header">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <a href="javascript:void(0)" class="typical-link">
+                                                        <span class="user-trip-driver">Чепурной Александр</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <!--<a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>
+                                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>-->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
+
+                                <div class="trip-padding">
+
+                                    <div class="row">
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="trip-points">
+                                                        Таганрог, Ростовская область &#8594;
+                                                        Ростов-на-Дону, Ростовская область &#8594;
+                                                        Москва, Московская область &#8594;
+                                                        Санкт-Петербург
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 contrast-color">
+                                                    07/07/2015
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="trip-price">
+                                                <span class="trip-price-title">Бесплатная</span><br />    
+                                                <span class="contrast-color">поездка</span>                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="trip-places light-background">
+                                            <div class="row">
+                                                <div class="col-xs-7 contrast-color">
+                                                    <span>Поездка завершена</span>
+                                                </div>
+                                                <div class="col-xs-5 text-right">
+                                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>      
 
                             <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
+                                        <div class="user-trip-header">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <a href="javascript:void(0)" class="typical-link">
+                                                        <span class="user-trip-driver">Чепурной Александр</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <!--<a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>
+                                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>-->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
+                                <div class="trip-padding">
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
+                                    <div class="row">
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="trip-points">
+                                                        Таганрог, Ростовская область &#8594;
+                                                        Ростов-на-Дону, Ростовская область &#8594;
+                                                        Москва, Московская область &#8594;
+                                                        Санкт-Петербург
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 contrast-color">
+                                                    07/07/2015
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                            <div class="trip-price">
+                                                <span class="trip-price-title">Договорная</span><br />
+                                                <span class="contrast-color">цена</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
+                                        <div class="trip-places light-background">
+                                            <div class="row">
+                                                <div class="col-xs-7 contrast-color">
+                                                    <span>Поездка завершена</span>
+                                                </div>
+                                                <div class="col-xs-5 text-right">
+                                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="short-trip">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        Чепурной Александр
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        Удалить\редактировать
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        Таганрог -> Ростов-на-Дону -> Москва -> Санкт-Петербург
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        07/07/2015
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        осталось 3 свободных места
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        200 руб. с человека
-                                    </div>
-                                </div>
-                            </div>
+                            </div>    
 
                         </div>
 

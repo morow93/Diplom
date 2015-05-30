@@ -26,7 +26,6 @@ html {
 body {                    
     margin-bottom: 120px;
     min-width: 700px;
-    color: #246BB2 !important;  
 }
 
 .footer {
@@ -67,6 +66,13 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.ngrs-range-slider{
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+.light-background{
+    background-color: #f5f5f5;
+}
 .contrast-color{
     color: #777;
 }
@@ -84,15 +90,19 @@ body {
 }
 a.typical-link:link {    
     text-decoration: none;
+    color: #246BB2;
 }
 a.typical-link:visited {    
     text-decoration: none;
+    color: #246BB2;
 }
 a.typical-link:hover {    
-    text-decoration: none;
+    text-decoration: underline;
+    color: #246BB2;
 }
 a.typical-link:active {    
     text-decoration: none;
+    color: #246BB2;
 }
 
 .pointer{
@@ -371,8 +381,7 @@ a.header-link:active {
 .page-nav-link-active{
     border-left-color: #246BB2;  
 }
-.page-nav-link-hover{    
-    background-color: #D6EBFF;
+.page-nav-link-hover{        
     color: #246BB2 !important;
 }
 a.page-nav-link:link {
@@ -382,7 +391,7 @@ a.page-nav-link:visited {
     text-decoration: none;
 }
 a.page-nav-link:hover {    
-    text-decoration: none;
+    text-decoration: underline;
 }
 a.page-nav-link:active {
     text-decoration: none;
@@ -491,7 +500,7 @@ a.sub-page-nav-link:active {
     margin-top: 0px;
     margin-bottom: 10px;    
 }
-.user-view-title{
+.page-view-title{
     background-color: #f5f5f5; 
     padding: 15px 10px; 
     font-size: 16px; 
@@ -598,5 +607,49 @@ li.filled {
 .total-trip-count{
     margin-top: 11px; 
     margin-bottom: 10px;
+}
+.short-trip {
+    border: 1px solid #eee;
+    margin-top: 20px;                                
+}
+.user-trip-header{
+    border-bottom: 1px solid #eee; 
+    padding: 9px;
+}
+.user-trip-driver{
+    font-size: 14px; 
+    font-weight: 600;
+}
+.trip-padding{
+    padding: 9px;
+}
+.trip-points{
+    font-size: 18px; 
+    margin-bottom: 5px; 
+    color: black;
+}
+.trip-price{
+    border: 1px solid #eee; 
+    text-align: center;
+    min-height: 49px;
+}
+.trip-price-title{
+    font-size: 19px; 
+    font-weight: 600;
+}
+.trip-places{
+    border-top: 1px solid #eee; 
+    padding: 9px; 
+    padding-right: 10px;
+}
+.trip-info{
+    padding: 7.5px 10px; 
+    font-size: 14px; 
+    color: #777; 
+    border: 1px solid #eee;
+}
+.trip-sub-title{
+    font-weight: 600; 
+    color: #246BB2;
 }
 /*User trips end*/

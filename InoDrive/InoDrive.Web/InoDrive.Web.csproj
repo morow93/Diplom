@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Controllers\createTripController.js" />
     <Content Include="App\Controllers\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
     <Content Include="App\Controllers\resetPasswordController.js" />
@@ -90,6 +91,8 @@
     <Content Include="Scripts\angular-notify.css" />
     <Content Include="Scripts\angular-notify.js" />
     <Content Include="Scripts\angular-scroll.js" />
+    <Content Include="Scripts\angular.rangeSlider.css" />
+    <Content Include="Scripts\angular.rangeSlider.js" />
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />
     <Content Include="Scripts\ocLazyLoad.require.js" />

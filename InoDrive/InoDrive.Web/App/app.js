@@ -13,7 +13,8 @@ var app = angular.module('InoDrive',
     'mgcrea.ngStrap',
     'oc.lazyLoad',
     'duScroll',
-    'cgNotify'
+    'cgNotify',
+    'ui-rangeSlider'
 ]);
 
 //states config
@@ -137,7 +138,18 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("user.create_trip", {
                 url: "create_trip/",
-                templateUrl: "/app/views/user/user.create_trip.html"
+                controller: "createTripController",
+                templateUrl: "/app/views/user/user.create_trip.html",
+                resolve: {
+                    store: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/createTripController.js"]
+                            }
+                        );
+                    }
+                }
             })
             .state("user.find", {
                 url: "find/",
