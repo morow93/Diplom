@@ -26,7 +26,7 @@ html {
 body {                    
     margin-bottom: 120px;
     min-width: 700px;
-    color: #585858 !important;
+    color: black !important;
 }
 
 .footer {
@@ -41,7 +41,7 @@ body {
 }
 
 .footer-text{
-    border-top: 2px solid #f5f5f5;
+    border-top: 2px solid #D0D0D0 ;
     padding-top: 5px;
 }
 
@@ -50,7 +50,7 @@ body {
 /*Loading begin*/
 .loading-wrapper {
     color: #246BB2;
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
     min-height: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -67,6 +67,10 @@ body {
 /*Loading end*/
 
 /*General begin*/
+hr {
+    background-color: #D0D0D0;
+    height: 2px;
+}
 .animated.ng-enter-stagger {
   transition-delay: 0.3s;
   animation-delay: 0.3s;
@@ -76,7 +80,7 @@ body {
     margin-bottom: 0px;
 }
 .light-background{
-    background-color: #f5f5f5;
+    background-color: #D0D0D0 ;
 }
 .contrast-color{
     color: #777;
@@ -138,7 +142,7 @@ button:focus {
 }
 
 .form-submit {
-    border-top: 2px solid #f5f5f5;
+    border-top: 2px solid #D0D0D0 ;
     padding-top: 17px;
     padding-bottom: 17px;
     text-align: center;
@@ -166,7 +170,7 @@ button:focus {
 }
 
 .form-title{
-     border-bottom: 2px solid #f5f5f5;
+     border-bottom: 2px solid #D0D0D0 ;
      margin-bottom: 30px;
 }
 
@@ -180,7 +184,7 @@ button:focus {
 }
 
 .border{
-    border: 2px solid #f5f5f5;
+    border: 2px solid #D0D0D0 ;
 }
 
 .inherit-height {
@@ -300,9 +304,9 @@ a.header-link:active {
 }
 
 .typical-wrapper {
-    border-bottom: 2px solid #f5f5f5; 
-    border-left: 2px solid #f5f5f5; 
-    border-right: 2px solid #f5f5f5;
+    border-bottom: 2px solid #D0D0D0 ; 
+    border-left: 2px solid #D0D0D0 ; 
+    border-right: 2px solid #D0D0D0 ;
     border-top: 1px solid white;
 }
 
@@ -383,7 +387,7 @@ a.header-link:active {
 .page-nav-link{
     padding: 7.5px 10px;
     margin: 10px 0;
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
     border-left-width: 5px;
     border-radius: 5px;
     font-size: 14px;
@@ -411,8 +415,8 @@ a.page-nav-link:active {
 
 .sub-page-nav-link{
     padding: 5px;    
-    border: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
+    border-bottom: 1px solid #D0D0D0 ;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;    
     border-top-width: 4px;
@@ -500,7 +504,7 @@ a.sub-page-nav-link:active {
     padding-right: 10px;
 }
 .user-left-column > div{
-    border-bottom: 2px solid #f5f5f5;
+    border-bottom: 2px solid #D0D0D0 ;
 }
 .user-right-column{
     padding-left: 0px;
@@ -513,7 +517,7 @@ a.sub-page-nav-link:active {
     margin-bottom: 10px;    
 }
 .page-view-title{
-    background-color: #f5f5f5; 
+    background-color: #D0D0D0 ; 
     padding: 15px 10px; 
     font-size: 16px; 
     color: #246BB2; 
@@ -535,15 +539,15 @@ a.sub-page-nav-link:active {
 }
 .user-table{
     margin-bottom: 0px;
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
     padding-left: 10px !important;
 }
 .first-user-table{
     margin-bottom: 10px !important;    
 }
 .user-table td {
-    border-top: 1px solid #eee !important;
-    border-bottom: 1px solid #eee !important;
+    border-top: 1px solid #D0D0D0  !important;
+    border-bottom: 1px solid #D0D0D0  !important;
     padding-left: 10px !important;
 }
 .rating-span{
@@ -558,7 +562,7 @@ a.sub-page-nav-link:active {
     padding: 7.5px 10px; 
     font-size: 14px; 
     color: #246BB2; 
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
 }
 .show-hide-user-info-back{
     background-color: #D6EBFF;
@@ -611,7 +615,7 @@ li.filled {
     padding-left: 0px;
 }
 .user-tab{
-    border: 1px solid #eee; 
+    border: 1px solid #D0D0D0 ; 
     border-top: none; 
     margin-top: -1px;
     padding: 20px 20px;    
@@ -621,11 +625,11 @@ li.filled {
     margin-bottom: 10px;
 }
 .short-trip {
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
     margin-top: 20px;                                
 }
 .user-trip-header{
-    border-bottom: 1px solid #eee; 
+    border-bottom: 1px solid #D0D0D0 ; 
     padding: 9px;
 }
 .user-trip-driver{
@@ -641,7 +645,7 @@ li.filled {
     color: black;
 }
 .trip-price{
-    border: 1px solid #eee; 
+    border: 1px solid #D0D0D0 ; 
     text-align: center;
     min-height: 49px;
 }
@@ -651,7 +655,7 @@ li.filled {
     color: black;
 }
 .trip-places{
-    border-top: 1px solid #eee; 
+    border-top: 1px solid #D0D0D0 ; 
     padding: 9px; 
     padding-right: 10px;
 }
@@ -659,7 +663,7 @@ li.filled {
     padding: 7.5px 10px; 
     font-size: 14px; 
     color: #777; 
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
 }
 .trip-sub-title{
     font-weight: 600; 
@@ -671,7 +675,7 @@ li.filled {
 .form-create-trip{
     margin: 10px; 
     padding: 20px; 
-    border: 1px solid #eee;
+    border: 1px solid #D0D0D0 ;
 }
 .trip-row-left{
     padding-left: 10px;
@@ -684,14 +688,14 @@ li.filled {
 }
 .trip-checkbox-wrapper{
     padding: 8px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #D0D0D0 ;
 }
 .trip-checkbox{
     margin-top: 0px;
     margin-bottom: 0px;
 }
 .trip-checkboxes{
-    border: 1px solid #eee; 
+    border: 1px solid #D0D0D0 ; 
     border-bottom: 0px;
 }
 .way-points-icons{

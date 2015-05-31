@@ -10,3 +10,9 @@ E:\Diplom\InoDrive\InoDrive.Web\bin\InoDrive.Web.pdb
 E:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.csprojResolveAssemblyReference.cache
 E:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.dll
 E:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.pdb
+d:\Diplom\InoDrive\InoDrive.Web\bin\InoDrive.Web.dll.config
+d:\Diplom\InoDrive\InoDrive.Web\bin\InoDrive.Web.dll
+d:\Diplom\InoDrive\InoDrive.Web\bin\InoDrive.Web.pdb
+d:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.csprojResolveAssemblyReference.cache
+d:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.dll
+d:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.pdb
