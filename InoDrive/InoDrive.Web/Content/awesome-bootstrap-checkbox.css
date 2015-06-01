@@ -43,6 +43,7 @@
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+  outline:0 !important;
 }
 .checkbox input[type="checkbox"]:checked + label::after {
   font-family: 'FontAwesome';
@@ -148,6 +149,7 @@
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+  outline:0 !important;
 }
 .radio input[type="radio"]:checked + label::after {
   -webkit-transform: scale(1, 1);

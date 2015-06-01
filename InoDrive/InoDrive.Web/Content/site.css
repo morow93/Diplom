@@ -26,6 +26,7 @@ html {
 body {                    
     margin-bottom: 120px;
     min-width: 700px;
+    color: #585858 !important;
 }
 
 .footer {
@@ -66,6 +67,10 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.animated.ng-enter-stagger {
+  transition-delay: 0.3s;
+  animation-delay: 0.3s;
+}
 .ngrs-range-slider{
     margin-top: 8px;
     margin-bottom: 0px;
@@ -78,6 +83,12 @@ body {
 }
 .no-padding{
     padding: 0px;
+}
+.no-padding-left{
+    padding-left: 0px;
+}
+.no-padding-right{
+    padding-right: 0px;
 }
 .no-margin{
     margin: 0px;
@@ -160,7 +171,8 @@ button:focus {
 }
 
 .form-title > h3{
-     margin: 20px;
+    margin: 20px;
+    font-weight: 600;
 }
 
 .no-padding{
@@ -484,7 +496,7 @@ a.sub-page-nav-link:active {
 /*Notify end*/
 
 /*User begin*/
-.user-left-column{
+.user-left-column, .trip-row-right{
     padding-right: 10px;
 }
 .user-left-column > div{
@@ -636,6 +648,7 @@ li.filled {
 .trip-price-title{
     font-size: 19px; 
     font-weight: 600;
+    color: black;
 }
 .trip-places{
     border-top: 1px solid #eee; 
@@ -650,6 +663,53 @@ li.filled {
 }
 .trip-sub-title{
     font-weight: 600; 
+    font-size: 20px;    
+}
+.trip-sub-title-car{
+    margin-top: 5px;  
+}
+.form-create-trip{
+    margin: 10px; 
+    padding: 20px; 
+    border: 1px solid #eee;
+}
+.trip-row-left{
+    padding-left: 10px;
+}
+.trip-row-price{
+    margin-bottom: 27px;
+}
+.trip-row-price > label:first-child{
+    margin-bottom: 5px;
+}
+.trip-checkbox-wrapper{
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+.trip-checkbox{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.trip-checkboxes{
+    border: 1px solid #eee; 
+    border-bottom: 0px;
+}
+.way-points-icons{
+    margin-top: 10px; 
+    text-align: right; 
+    margin-right: 0px; 
     color: #246BB2;
+}
+.trip-price-wrapper{
+    margin-top: 10px; 
+    padding-left: 0px; 
+    font-size: 18px;
+}
+.way-point-input{
+    padding-bottom: 15px;
+}
+.trip-info-label{
+    margin: 10px 0px;
+    margin-top: 30px;
 }
 /*User trips end*/

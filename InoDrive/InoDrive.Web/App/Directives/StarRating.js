@@ -1,4 +1,5 @@
-﻿app.directive("starRating", function () {
+﻿'use strict';
+app.directive("starRating", function () {
     return {
         restrict: "EA",
         template: "<ul class='rating' ng-class='{readonly: readonly}'>" +

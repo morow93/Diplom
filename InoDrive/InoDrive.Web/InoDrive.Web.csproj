@@ -66,6 +66,7 @@
     <Content Include="App\Controllers\signinController.js" />
     <Content Include="App\Controllers\signupController.js" />
     <Content Include="App\Controllers\userViewController.js" />
+    <Content Include="App\Directives\Dynamic.js" />
     <Content Include="App\Directives\Match.js" />
     <Content Include="App\Directives\StarRating.js" />
     <Content Include="App\Services\mapService.js" />

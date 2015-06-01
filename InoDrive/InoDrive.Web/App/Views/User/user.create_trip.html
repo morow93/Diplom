@@ -9,13 +9,13 @@
             </div>
         </div>
 
-        <form name="formCreateTrip" novalidate autocomplete="off" style="margin: 10px; padding: 15px; border: 1px solid #eee;">   
+        <form name="formCreateTrip" class="form-create-trip" novalidate autocomplete="off">   
 
-            <h4 class="trip-sub-title">Основная информация о поездке</h4>
+            <h4 class="trip-sub-title">Основная информация</h4>
             <hr class="no-margin" />
 
             <div class="row">
-                <div class="col-xs-6" style="padding-right: 5px;">
+                <div class="col-xs-6 trip-row-right">
                     <div class="row">
                         <div class="col-xs-12">
 
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-6" style="padding-left: 5px;">
+                <div class="col-xs-6 trip-row-left">
                     <div class="row">
                         <div class="col-xs-12">
 
@@ -133,22 +133,22 @@
                 </div>
             </div>
             
-            <div style="margin-bottom: 27px;">
-                <label class="control-label" style="margin-bottom: 5px;">
+            <div class="trip-row-price">
+                <label class="control-label">
                     Цена за место
                 </label>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="radio radio-info radio-inline">
-                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="trip.price" ng-click="selectNegPrice()">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="trip.price" class="pointer" ng-click="selectNegPrice()" ng-init="trip.price = 'neg'">
                             <label for="inlineRadio1"> Договорная цена </label>
                         </div>
-                        <div class="radio radio-info radio-inline">
-                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="trip.price">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="trip.price" class="pointer">
                             <label for="inlineRadio2"> Указать цену </label>
                         </div>
                     </div>
-                </div>
+                </div>             
 
                 <div class="row am-fade" ng-if="trip.price == 'cur'">
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-10">
@@ -160,49 +160,146 @@
                              data-model-max="rangePrice.maxModel"
                              data-step="50"
                              data-pin-handle="min"></div>
-
+                             
                     </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2 text-center" style="margin-top: 10px; padding-left: 0px; font-size: 18px;">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2 text-center trip-price-wrapper">
                         <b>{{rangePrice.maxModel}} руб. </b>
                     </div>
                 </div>
             </div>
 
-            <h4 class="trip-sub-title">Дополнительная информация о поездке</h4>
+            <h4 class="trip-sub-title">Дополнительная информация</h4>
             <hr class="no-margin" />
 
-            <!--need change-->
-            
-            <!--<div class="col-xs-12">
-                <div class="form-error-padding">
-                    <label>
-                        Промежуточные пункты
-                        <a class="link-line"
-                           href=""
-                           data-trigger="hover"
-                           data-bs-tooltip="waypointsTooltip"
-                           data-placement="top-left">
-                            (?)
-                        </a>
-                    </label>
-                    <tags-input ng-model="trip.selectedWayPoints"
-                                placeholder="Промежуточные пункты"
-                                add-from-autocomplete-only="true"
-                                replace-spaces-with-dashes="false"
-                                display-property="tag">
-                        <auto-complete source="findWayPoints($query)"
-                                       debounce-delay="300"
-                                       max-results-to-show="5"
-                                       highlight-matched-text="false"
-                                       min-length="1">
-                        </auto-complete>
-                    </tags-input>
+            <div class="row">
+                <div class="col-xs-6 trip-row-right">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            
+                            <label class="control-label">Особенности поездки</label>
+
+                            <div class="trip-checkboxes">                               
+
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions0" class="pointer">
+                                        <label for="tripOptions0">
+                                            <b>Возможны отклонения от маршрута</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions1" class="pointer">
+                                        <label for="tripOptions1">
+                                            <b>Можно ехать с детьми</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions2" class="pointer">
+                                        <label for="tripOptions2">
+                                            <b>Можно ехать с животными</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions3" class="pointer">
+                                        <label for="tripOptions3">
+                                            <b>Можно выбирать музыку</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions4" class="pointer">
+                                        <label for="tripOptions4">
+                                            <b>В машине можно есть</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions5" class="pointer">
+                                        <label for="tripOptions5">
+                                            <b>В машине можно пить</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions6" class="pointer">
+                                        <label for="tripOptions6">
+                                            <b>В машине можно курить</b>
+                                        </label>
+                                    </div>
+                                </div>                             
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="form-error text-right">
+                <div class="col-xs-6 trip-row-left">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            
+                            <div class="row">
+                                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+                                    <label class="control-label">Промежуточные пункты</label>
+                                </div>
+                                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding-left">
+
+                                    <div class="way-points-icons">
+                                        <a href="javascript:void(0)"><i class="fa fa-minus-square fa-border pointer" ng-click="removeWayPointer()"></i></a>
+                                        <a href="javascript:void(0)"><i class="fa fa-plus-square fa-border pointer" ng-click="addWayPointer()"></i></a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div ng-repeat="wp in trip.wayPoints track by $index" class="am-fade">
+                                <div class="input-group way-point-input">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-map-marker fa-fw"></i>
+                                    </span>
+                                    <input name="wp{{$index}}"
+                                           class="form-control input-sm"
+                                           type="text"
+                                           placeholder="Промежуточный пункт #{{$index + 1}}"
+                                           ng-autocomplete
+                                           ng-model="trip.wayPoints[$index].model"
+                                           data-options="autocompleteOptions"
+                                           data-details="trip.wayPoints[$index].details"
+                                           required />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-xs-12">
+            <label class="trip-info-label">О поездке</label>
+            <textarea name="info" class="form-control" rows="3" ng-model="trip.info" ng-maxlength="200"></textarea>                
+            <div class="form-error">
+                <span ng-show="formCreateTrip.info.$error.maxlength && formCreateTrip.info.$dirty">
+                    Не более 200 символов!
+                </span>
+            </div>               
+
+            <h4 class="trip-sub-title trip-sub-title-car">Информация о машине</h4>
+            <hr class="no-margin" />
+                      
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="control-label">Фото машины</label>
+
+                </div>
+            </div>  
+            <!--<div class="col-xs-12">
                 <label>Фото машины</label>
                 <div class="row">
                     <div class="col-xs-12">
@@ -292,70 +389,7 @@
                 </div>
                 <div class="form-error">
                 </div>
-            </div>
-
-            <div class="row trip-options">
-                <div class="col-xs-5">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="input-in-label" ng-model="trip.allowDeviates">
-                            <span class="my-label">Возможны отклонения от маршрута</span>
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="input-in-label" ng-model="trip.allowPets">
-                            <span class="my-label">Можно ехать с животными</span>
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="input-in-label" ng-model="trip.allowMusic">
-                            <span class="my-label">Можно выбирать музыку</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="input-in-label" ng-model="trip.allowEat">
-                            <span class="my-label">В машине можно есть</span>
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="input-in-label" ng-model="trip.allowDrink">
-                            <span class="my-label">В машине можно пить</span>
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="input-in-label" ng-model="trip.allowSmoke">
-                            <span class="my-label">В машине можно курить</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row row-block-style" style="margin-bottom: 15px;">
-                <div class="col-xs-12">
-                    <div class="form-error-padding">
-                        <label>Дополнительная информация</label>
-                        <textarea name="info"
-                                  class="form-control"
-                                  rows="3"
-                                  ng-model="trip.info"
-                                  ng-maxlength="200"></textarea>
-                    </div>
-                    <div class="form-error text-right">
-                        <span ng-show="formManageTrip.info.$error.maxlength && formManageTrip.info.$dirty">
-                            <i>Не более 200 символов!</i>
-                        </span>
-                    </div>
-                </div>
-            </div>-->
-
-            <!--need change-->
+            </div>-->                        
 
         </form>
 
