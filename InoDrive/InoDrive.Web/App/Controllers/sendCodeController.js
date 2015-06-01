@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('sendCodeController', function ($scope, $alert, $state) {
+﻿angular.module("InoDrive").controller("sendCodeController", function ($scope, $alert, $state) {
 
     var myAlert;
 
@@ -19,12 +19,12 @@
         else {
 
             $scope.showAlert({
-                title: 'Пожалуйста, укажите email, чтобы мы могли отправиь Вам письмо для восстановления пароля!',
-                content: '',
-                type: 'danger',
+                title: "Пожалуйста, укажите email, чтобы мы могли отправить Вам письмо для восстановления пароля!",
+                content: "",
+                type: "info",
                 show: false,
-                container: '.form-alert',
-                template: '/app/templates/alert.html'
+                container: ".form-alert",
+                template: "/app/templates/alert.html"
             });
 
             angular.forEach(form.$error.required, function (field) {

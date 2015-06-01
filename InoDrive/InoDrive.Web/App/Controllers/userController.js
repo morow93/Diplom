@@ -14,7 +14,7 @@
             value: "user.find"
         },
         {
-            text: "Мои заявки",
+            text: "Мои заявки +999",
             value: "user.my_bids"
         },
         {

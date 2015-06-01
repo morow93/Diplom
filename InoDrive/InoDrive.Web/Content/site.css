@@ -119,6 +119,22 @@ a.typical-link:active {
     text-decoration: none;
     color: #246BB2;
 }
+a.typical-link-reset:link {    
+    text-decoration: none;
+    color: #246BB2;
+}
+a.typical-link-reset:visited {    
+    text-decoration: none;
+    color: #246BB2;
+}
+a.typical-link-reset:hover {    
+    text-decoration: none;
+    color: #246BB2;
+}
+a.typical-link-reset:active {    
+    text-decoration: none;
+    color: #246BB2;
+}
 
 .pointer{
     cursor: pointer;
@@ -161,7 +177,7 @@ button:focus {
     margin-top: 3px;
     min-height: 20px;
     font-size: 13px;
-    color: #FF9999;
+    color: #FF6666;
 }
 
 .control-label{
@@ -489,13 +505,13 @@ a.sub-page-nav-link:active {
     padding-right: 15px;
 }
 .notify-danger{
-    background-color: #FF9999;
+    background-color: #FF6666;
 }
 .notify-success{
-    background-color: #80CC99;
+    background-color: #4DB870;
 }
 .notify-info{
-    background-color: #99E6FF;
+    background-color: #4DFFDB;
 }
 /*Notify end*/
 
@@ -509,17 +525,14 @@ a.sub-page-nav-link:active {
 .user-right-column{
     padding-left: 0px;
 }
-.user-right-column > div{
-    /*min-height: 600px;*/
-}
 .user-view-hr{
     margin-top: 0px;
     margin-bottom: 10px;    
 }
 .page-view-title{
-    background-color: #D0D0D0 ; 
+    background-color: #EBEBFF; 
     padding: 15px 10px; 
-    font-size: 16px; 
+    font-size: 18px; 
     color: #246BB2; 
 }
 .user-trips{     
@@ -554,7 +567,7 @@ a.sub-page-nav-link:active {
     display:inline-block;
     border-bottom: 3px solid #246BB2;
     padding-bottom: 1px;
-    font-size: 16px; 
+    font-size: 18px; 
     font-weight: 600;
     color: #246BB2;
 }
@@ -665,9 +678,13 @@ li.filled {
     color: #777; 
     border: 1px solid #D0D0D0 ;
 }
-.trip-sub-title{
+.trip-sub-title {
+    padding: 5px 0px;
+}
+.trip-sub-title > a{
     font-weight: 600; 
-    font-size: 20px;    
+    font-size: 18px;
+    text-decoration: none;
 }
 .trip-sub-title-car{
     margin-top: 5px;  
@@ -681,7 +698,7 @@ li.filled {
     padding-left: 10px;
 }
 .trip-row-price{
-    margin-bottom: 27px;
+    margin-bottom: 20px;
 }
 .trip-row-price > label:first-child{
     margin-bottom: 5px;
@@ -715,5 +732,17 @@ li.filled {
 .trip-info-label{
     margin: 10px 0px;
     margin-top: 30px;
+}
+.upload-btn {
+    margin-top: 5px;
+}
+.car-class-btn {
+    text-align: left;
+}
+span.caret {
+    display: none;
+}
+.trip-submit-place {
+    padding: 5px 10px;
 }
 /*User trips end*/

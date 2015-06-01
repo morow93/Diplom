@@ -9,9 +9,18 @@
             </div>
         </div>
 
-        <form name="formCreateTrip" class="form-create-trip" novalidate autocomplete="off">   
+        <form name="formCreateTrip" class="form-create-trip" novalidate autocomplete="off">
 
-            <h4 class="trip-sub-title">Основная информация</h4>
+            <div class="trip-sub-title">
+                <a href="javascript:void(0)"
+                   class="typical-link-reset"
+                   data-content="Обязательно для заполнения!"
+                   data-placement="right"
+                   data-trigger="hover"
+                   data-bs-popover>
+                    Основная информация
+                </a>
+            </div>
             <hr class="no-margin" />
 
             <div class="row">
@@ -168,7 +177,16 @@
                 </div>
             </div>
 
-            <h4 class="trip-sub-title">Дополнительная информация</h4>
+            <div class="trip-sub-title">
+                <a href="javascript:void(0)"
+                   class="typical-link-reset"
+                   data-content="Необязательно для заполнения"
+                   data-placement="right"
+                   data-trigger="hover"
+                   data-bs-popover>
+                    Дополнительная информация
+                </a>
+            </div>
             <hr class="no-margin" />
 
             <div class="row">
@@ -288,108 +306,125 @@
                 <span ng-show="formCreateTrip.info.$error.maxlength && formCreateTrip.info.$dirty">
                     Не более 200 символов!
                 </span>
-            </div>               
+            </div>
 
-            <h4 class="trip-sub-title trip-sub-title-car">Информация о машине</h4>
+            <div class="trip-sub-title">
+                <a href="javascript:void(0)"
+                   class="typical-link-reset"
+                   data-content="Данные автоматически подгружаются из вашего личного кабинета"
+                   data-placement="right"
+                   data-trigger="hover"
+                   data-bs-popover>
+                    Информация о машине
+                </a>
+            </div>
             <hr class="no-margin" />
-                      
-            <div class="row">
-                <div class="col-xs-12">
-                    <label class="control-label">Фото машины</label>
 
-                </div>
-            </div>  
-            <!--<div class="col-xs-12">
-                <label>Фото машины</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <label class="control-label">Фото машины</label>
+                <img class="full-width" src="content/images/car.jpg"/>
+
+                <!--<div class="row">
+                    <div class="col-xs-12">
+                        <span class="btn btn-primary btn-sm full-width upload-btn">
+                                Загрузить фото
+                                <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">
+                            </span>
+                    </div>
+                </div>-->
+
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="responsive-container">
-                            <div class="dummy"></div>
-                            <div class="img-container">
-                                <img ng-show="trip.dataUrl != null" ng-src="{{trip.dataUrl}}" class="car" />
-                                <img ng-show="trip.dataUrl == null" ng-src="{{noImage}}" class="car" />
-                            </div>
-                        </div>
+                        <span class="btn btn-primary btn-xs full-width upload-btn">
+                                Изменить фото
+                                <!--<input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">-->
+                            </span>
                     </div>
                 </div>
-                <div class="row" ng-show="trip.dataUrl == null">
+
+                <div class="row">
                     <div class="col-xs-12">
-                        <span class="btn btn-default btn-file avatar-img">
-                            Загрузить фото
-                            <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">
-                        </span>
-                    </div>
-                </div>
-                <div class="row" ng-show="trip.dataUrl != null">
-                    <div class="col-xs-6" style="padding-right: 5px;">
-                        <button class="btn btn-default full-width" ng-click="removeFile()">
-                            Удалить
+                        <button class="btn btn-primary btn-xs full-width upload-btn" ng-click="removeFile()">
+                            Удалить фото
                         </button>
                     </div>
-                    <div class="col-xs-6" style="padding-left: 5px;">
-                        <span class="btn btn-default btn-file full-width">
-                            Изменить
-                            <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">
-                        </span>
-                    </div>
                 </div>
-                <div class="row main-row">
+
+                <div class="row">
                     <div class="col-xs-12">
                         <div class="form-error text-right">
                             <span><i ng-bind="fileErrorMsg"></i></span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-xs-6">
-                <div class="form-error-padding">
-                    <label class="control-label">Модель машины</label>
-                    <input placeholder="Модель машины"
-                           type="text"
-                           name="carDescription"
-                           class="form-control"
-                           ng-maxlength="20"
-                           ng-model="trip.carDescription">
-                </div>
-                <div class="form-error text-right">
-                    <span ng-show="formManageTrip.carDescription.$error.maxlength && formManageTrip.carDescription.$dirty">
-                        <i>Не более 20 символов!</i>
-                    </span>
-                </div>
             </div>
-
             <div class="col-xs-6">
-                <div class="form-error-padding">
-                    <label class="control-label">Уровень комфорта</label><br />
-                    <button type="button"
-                            style="width: 100%;"
-                            class="btn btn-default"
-                            ng-model="trip.comfort"
-                            data-html="1"
-                            ng-options="comfort.value as comfort.label for comfort in comforts"
-                            placeholder="Уровень комфорта"
-                            bs-select></button>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Модель машины</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
+                            <input placeholder="Модель машины"
+                                   type="text"
+                                   name="carDescription"
+                                   class="form-control input-sm"
+                                   ng-model="trip.carDescription">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-error">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Уровень комфорта</label>
+                        <button type="button"
+                                class="btn btn-sm btn-default text-left full-width car-class-btn"
+                                ng-model="selectedIcon"
+                                data-html="1"
+                                data-bs-options="class.value as class.label for class in classes"
+                                data-placeholder="Выберите уровень комфорта"
+                                data-bs-select>
+                            Action <span class="caret"></span>
+                        </button>
+                    </div>
                 </div>
+
             </div>
+        </div>
 
-            <div class="col-xs-6">
-                <div class="form-error-padding">
-                    <label class="control-label">Багажник</label><br />
-                    <button type="button"
-                            style="width: 100%;"
-                            class="btn btn-default text-left"
-                            ng-model="trip.baggage"
-                            data-html="1"
-                            ng-options="baggage.value as baggage.label for baggage in baggages"
-                            placeholder="Багажник"
-                            bs-select></button>
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="border trip-submit-place">
+                    <div class="checkbox checkbox-primary">
+                        <input type="checkbox" id="isGrown" ng-model="trip.isGrown" class="pointer">
+                        <label for="isGrown">
+                            Созданием поездки подтверждаю,
+                            что я являюсь совершеннолетним гражданином Российской Федерации
+                            и обладаю действующим водительским удостоверением.
+                        </label>
+                    </div>
+                    <div class="row am-fade" ng-if="trip.isGrown" style="min-height: 70px;">
+                        <div class="col-xs-3">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary btn-sm form-submit-button"
+                               ng-click="formSubmit(formCreateTrip)">
+                                Создать
+                                <br>
+                                поездку
+                            </a>
+                        </div>
+                        
+                            <div class="col-xs-9">
+                                <div class="form-alert"></div>
+                            </div>
+                        
+                    </div>
                 </div>
-                <div class="form-error">
-                </div>
-            </div>-->                        
+
+            </div>
+        </div>
 
         </form>
 

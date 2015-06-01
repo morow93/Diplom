@@ -87,6 +87,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\avatar.jpg" />
+    <Content Include="Content\images\car.jpg" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\no-avatar.jpg" />
     <Content Include="Scripts\angular-notify.css" />
