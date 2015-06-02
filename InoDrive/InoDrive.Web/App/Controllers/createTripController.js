@@ -5,30 +5,25 @@
         maxModel: 100
     };
 
-    $scope.trip = {};
-
     $scope.selectNegPrice = function () {
         $scope.rangePrice.maxModel = 100;
     };
 
     $scope.trip = {};
-    $scope.trip.wayPoints = [];
-    
+    $scope.trip.wayPoints = [{}];
+
     $scope.autocompleteOptions = {
         types: "(cities)",
         country: "ru"
     };
-    $scope.trip.wayPoints = [{}];
     
     $scope.addWayPointer = function () {
-
         if ($scope.trip.wayPoints.length <= 4) {
             $scope.trip.wayPoints.push({});
         }
-
     };
 
-    $scope.removeWayPointer = function (arg) {
+    $scope.removeWayPointer = function () {
         if ($scope.trip.wayPoints.length > 1) {
             $scope.trip.wayPoints.pop();
         }
@@ -73,7 +68,15 @@
 
         if (form.$valid) {
 
-            $state.go("user.view");
+            $scope.showAlert({
+                title: "Поездка была добавлена!",
+                content: "",
+                type: "success",
+                show: false,
+                container: ".form-alert"
+               , template: "/app/templates/alert.html"
+            });
+            //$state.go("user.view");
         }
         else {
 

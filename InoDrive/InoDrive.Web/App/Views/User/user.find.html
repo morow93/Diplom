@@ -1,1 +1,357 @@
-﻿USER.FIND
+﻿<div class="row">
+    <div class="col-xs-12">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-view-title">
+                    <b>Поиск</b>
+                </div>
+            </div>
+        </div>
+
+        <form name="formFind" class="form-manage-trip" novalidate autocomplete="off">
+
+            <div class="trip-sub-title">
+                <a href="javascript:void(0)"
+                   class="typical-link-reset"
+                   data-content="Щелкните, чтобы изменить параметры поиска!"
+                   data-placement="right"
+                   data-trigger="hover"
+                   data-bs-popover>
+                    Обычный поиск
+                </a>
+            </div>
+            <hr class="no-margin form-hr"/>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="control-label">Сортировать по</label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-6 trip-row-right">
+                    <button type="button"
+                            class="btn btn-primary full-width btn-sm order-sort-input"
+                            ng-model="selectedSortOption"
+                            data-html="1"
+                            data-bs-options="option.value as option.label for option in sortOptions"
+                            data-bs-select>
+                        Action <span class="caret"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6  trip-row-left">
+                    <button type="button"
+                            class="btn btn-primary full-width btn-sm order-sort-input"
+                            ng-model="selectedOrderOption"
+                            data-html="1"
+                            data-bs-options="option.value as option.label for option in orderOptions"
+                            data-bs-select>
+                        Action <span class="caret"></span>
+                    </button>
+                </div>
+
+            </div>
+      
+
+            <div class="row">
+                <div class="col-xs-6 trip-row-right">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label class="control-label">Откуда</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                        <input name="originCity"
+                                               class="form-control input-sm"
+                                               type="text"
+                                               placeholder="Пункт отправления"
+                                               ng-autocomplete
+                                               ng-model="home.originCity.model"
+                                               data-options="autocompleteOptions"
+                                               data-details="home.originCity.details"
+                                               required />
+                                    </div>
+                                    <div class="form-error">
+                                        <span ng-show="formFind.originCity.$invalid && formFind.originCity.$dirty">
+                                            Укажите пункт отправления!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label class="control-label">Куда</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                        <input name="destinationCity"
+                                               class="form-control input-sm"
+                                               type="text"
+                                               placeholder="Пункт назначения"
+                                               ng-autocomplete
+                                               ng-model="home.destinationCity.model"
+                                               data-options="autocompleteOptions"
+                                               data-details="home.destinationCity.details"
+                                               required />
+                                    </div>
+                                    <div class="form-error">
+                                        <span ng-show="formFind.destinationCity.$invalid && formFind.destinationCity.$dirty">
+                                            Укажите пункт назначения!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 trip-row-left">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label class="control-label">Когда</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                        <input placeholder="Дата отправления"
+                                               type="text"
+                                               class="form-control input-sm"
+                                               data-min-date="{{minDate}}"
+                                               ng-model="home.date"
+                                               name="date"
+                                               data-bs-datepicker
+                                               required>
+                                    </div>
+                                    <div class="form-error">
+                                        <span ng-show="formFind.date.$error.required && formFind.date.$dirty">
+                                            Укажите дату отправления!
+                                        </span>
+                                        <span ng-show="!formFind.date.$error.required && formFind.date.$invalid && formFind.date.$dirty">
+                                            Недопустимая дата отправления!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label class="control-label">Мест</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
+                                        <input placeholder="Свободных мест в машине"
+                                               type="number"
+                                               class="form-control input-sm"
+                                               name="places"
+                                               ng-model="home.places"
+                                               min="1"
+                                               max="10"
+                                               required>
+                                    </div>
+                                    <div class="form-error">
+                                        <span ng-show="formFind.places.$error.required && formFind.places.$dirty">
+                                            Укажите количество свободных мест!
+                                        </span>
+                                        <span ng-show="formFind.places.$error.min">
+                                            Как минимум должно быть одно место!
+                                        </span>
+                                        <span ng-show="formFind.places.$error.max">
+                                            Слишком много мест!
+                                        </span>
+                                        <span ng-show="formFind.places.$error.number">
+                                            Должно содержать только цифры!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="find-row-price">
+                <label class="control-label">
+                    Цена за место
+                </label>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio0" value="not" name="radioInline" ng-model="trip.price" class="pointer" ng-init="trip.price = 'not'">
+                            <label for="inlineRadio0"> Не важно </label>
+                        </div>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="trip.price" class="pointer">
+                            <label for="inlineRadio1"> Договорная цена </label>
+                        </div>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="trip.price" class="pointer" ng-click="selectCurPrice()">
+                            <label for="inlineRadio2"> Указать цену </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row am-fade" ng-if="trip.price == 'cur'">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9 find-range">
+                        <div data-range-slider
+                             data-min="0"
+                             data-max="1000"
+                             data-step="50"
+                             data-prevent-equal-min-max="true"
+                             data-model-min="rangePrice.minModel"
+                             data-model-max="rangePrice.maxModel"></div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 text-center trip-price-wrapper">
+                        <b>{{rangePrice.minModel}} - {{rangePrice.maxModel}} руб. </b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 trip-row-right">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <label class="control-label">Особенности поездки</label>
+
+                            <div class="trip-checkboxes">
+
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions0" class="pointer">
+                                        <label for="tripOptions0">
+                                            <b>Возможны отклонения от маршрута</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions1" class="pointer">
+                                        <label for="tripOptions1">
+                                            <b>Можно ехать с детьми</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions2" class="pointer">
+                                        <label for="tripOptions2">
+                                            <b>Можно ехать с животными</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions3" class="pointer">
+                                        <label for="tripOptions3">
+                                            <b>Можно выбирать музыку</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions4" class="pointer">
+                                        <label for="tripOptions4">
+                                            <b>В машине можно есть</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions5" class="pointer">
+                                        <label for="tripOptions5">
+                                            <b>В машине можно пить</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="trip-checkbox-wrapper">
+                                    <div class="checkbox checkbox-primary trip-checkbox">
+                                        <input type="checkbox" id="tripOptions6" class="pointer">
+                                        <label for="tripOptions6">
+                                            <b>В машине можно курить</b>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 trip-row-left">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="row">
+                                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+                                    <label class="control-label">Промежуточные пункты</label>
+                                </div>
+                                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding-left">
+
+                                    <div class="way-points-icons">
+                                        <a href="javascript:void(0)"><i class="fa fa-minus-square fa-border pointer" ng-click="removeWayPointer()"></i></a>
+                                        <a href="javascript:void(0)"><i class="fa fa-plus-square fa-border pointer" ng-click="addWayPointer()"></i></a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div ng-repeat="wp in trip.wayPoints track by $index" class="am-fade">
+                                <div class="input-group way-point-input">
+                                    <span class="input-group-addon">    
+                                        <i class="fa fa-map-marker fa-fw"></i>
+                                    </span>
+                                    <input name="wp{{$index}}"
+                                           class="form-control input-sm"
+                                           type="text"
+                                           placeholder="Промежуточный пункт #{{$index + 1}}"
+                                           ng-autocomplete
+                                           ng-model="trip.wayPoints[$index].model"
+                                           data-options="autocompleteOptions"
+                                           data-details="trip.wayPoints[$index].details" />
+                                </div>
+                            </div>
+                            
+                            {{trip}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-alert fluid-form-alert"></div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="trip-submit-place">
+
+                    <div class="row am-fade">
+
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary btn-sm form-submit-button create-trip-button"
+                               ng-click="formSubmit(formFind)">
+                                Создать поездку
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+

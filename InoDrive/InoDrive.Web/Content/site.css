@@ -71,6 +71,9 @@ hr {
     background-color: #D0D0D0;
     height: 2px;
 }
+.form-hr {
+    margin-bottom: 17px !important;
+}
 .animated.ng-enter-stagger {
   transition-delay: 0.3s;
   animation-delay: 0.3s;
@@ -80,7 +83,7 @@ hr {
     margin-bottom: 0px;
 }
 .light-background{
-    background-color: #D0D0D0 ;
+    background-color: #EBEBFF;
 }
 .contrast-color{
     color: #777;
@@ -172,7 +175,12 @@ button:focus {
     min-height: 30px;   
     margin-top: 1px;
 }
-
+.fluid-form-alert{
+    min-height: 0;   
+}
+.fluid-form-alert > .notify-style, .find-hr {
+    margin-bottom: 20px;
+}
 .form-error{
     margin-top: 3px;
     min-height: 20px;
@@ -617,6 +625,12 @@ li.filled {
 /*Rating end*/
 
 /*User trips begin*/
+.user-hr-bottom, .find-range {
+    margin-bottom: 5px;
+}
+.user-hr-top {
+    margin-top: 5px;
+}
 .all-trips{
      padding-right: 0px;
 }
@@ -689,9 +703,10 @@ li.filled {
 .trip-sub-title-car{
     margin-top: 5px;  
 }
-.form-create-trip{
+.form-manage-trip{
     margin: 10px; 
-    padding: 20px; 
+    padding: 20px;
+    padding-bottom: 0px;
     border: 1px solid #D0D0D0 ;
 }
 .trip-row-left{
@@ -743,6 +758,28 @@ span.caret {
     display: none;
 }
 .trip-submit-place {
-    padding: 5px 10px;
+    padding: 15px;
+    padding-bottom: 0px;
+    border-top: 2px solid #D0D0D0;
+}
+.create-trip-button {
+    margin-bottom: 15px;
+}
+.trip-car {
+    margin-bottom: 10px;
+}
+.comfort-label {
+    margin-top: 35px;
 }
 /*User trips end*/
+
+/*Find begin*/
+.order-sort-input {
+    text-align: left;
+    margin-bottom: 20px;
+    padding-top: 4px;
+}
+.find-row-price {
+    margin-bottom: 17px;
+}
+/*Find end*/

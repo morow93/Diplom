@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Controllers\createTripController.js" />
+    <Content Include="App\Controllers\findController.js" />
     <Content Include="App\Controllers\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
     <Content Include="App\Controllers\resetPasswordController.js" />
@@ -117,7 +118,7 @@
     <Content Include="Content\bootstrap-additions.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App\Views\User\user.view.html" />
-    <Content Include="App\Views\User\user.create_trip.html" />
+    <Content Include="App\Views\User\user.manage_trip.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

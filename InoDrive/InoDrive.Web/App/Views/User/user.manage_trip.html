@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <form name="formCreateTrip" class="form-create-trip" novalidate autocomplete="off">
+        <form name="formManageTrip" class="form-manage-trip" novalidate autocomplete="off">
 
             <div class="trip-sub-title">
                 <a href="javascript:void(0)"
@@ -21,7 +21,7 @@
                     Основная информация
                 </a>
             </div>
-            <hr class="no-margin" />
+            <hr class="no-margin form-hr" />
 
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
@@ -44,7 +44,7 @@
                                                required />
                                     </div>
                                     <div class="form-error">
-                                        <span ng-show="formCreateTrip.originCity.$invalid && formCreateTrip.originCity.$dirty">
+                                        <span ng-show="formManageTrip.originCity.$invalid && formManageTrip.originCity.$dirty">
                                             Укажите пункт отправления!
                                         </span>
                                     </div>
@@ -67,7 +67,7 @@
                                                required />
                                     </div>
                                     <div class="form-error">
-                                        <span ng-show="formCreateTrip.destinationCity.$invalid && formCreateTrip.destinationCity.$dirty">
+                                        <span ng-show="formManageTrip.destinationCity.$invalid && formManageTrip.destinationCity.$dirty">
                                             Укажите пункт назначения!
                                         </span>
                                     </div>
@@ -96,10 +96,10 @@
                                                required>
                                     </div>
                                     <div class="form-error">
-                                        <span ng-show="formCreateTrip.date.$error.required && formCreateTrip.date.$dirty">
+                                        <span ng-show="formManageTrip.date.$error.required && formManageTrip.date.$dirty">
                                             Укажите дату отправления!
                                         </span>
-                                        <span ng-show="!formCreateTrip.date.$error.required && formCreateTrip.date.$invalid && formCreateTrip.date.$dirty">
+                                        <span ng-show="!formManageTrip.date.$error.required && formManageTrip.date.$invalid && formManageTrip.date.$dirty">
                                             Недопустимая дата отправления!
                                         </span>
                                     </div>
@@ -121,16 +121,16 @@
                                                required>
                                     </div>
                                     <div class="form-error">
-                                        <span ng-show="formCreateTrip.places.$error.required && formCreateTrip.places.$dirty">
+                                        <span ng-show="formManageTrip.places.$error.required && formManageTrip.places.$dirty">
                                             Укажите количество свободных мест!
                                         </span>
-                                        <span ng-show="formCreateTrip.places.$error.min">
+                                        <span ng-show="formManageTrip.places.$error.min">
                                             Как минимум должно быть одно место!
                                         </span>
-                                        <span ng-show="formCreateTrip.places.$error.max">
+                                        <span ng-show="formManageTrip.places.$error.max">
                                             Слишком много мест!
                                         </span>
-                                        <span ng-show="formCreateTrip.places.$error.number">
+                                        <span ng-show="formManageTrip.places.$error.number">
                                             Должно содержать только цифры!
                                         </span>
                                     </div>
@@ -187,7 +187,7 @@
                     Дополнительная информация
                 </a>
             </div>
-            <hr class="no-margin" />
+            <hr class="no-margin form-hr" />
 
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
@@ -290,8 +290,7 @@
                                            ng-autocomplete
                                            ng-model="trip.wayPoints[$index].model"
                                            data-options="autocompleteOptions"
-                                           data-details="trip.wayPoints[$index].details"
-                                           required />
+                                           data-details="trip.wayPoints[$index].details"/>
                                 </div>
                             </div>
 
@@ -303,7 +302,7 @@
             <label class="trip-info-label">О поездке</label>
             <textarea name="info" class="form-control" rows="3" ng-model="trip.info" ng-maxlength="200"></textarea>                
             <div class="form-error">
-                <span ng-show="formCreateTrip.info.$error.maxlength && formCreateTrip.info.$dirty">
+                <span ng-show="formManageTrip.info.$error.maxlength && formManageTrip.info.$dirty">
                     Не более 200 символов!
                 </span>
             </div>
@@ -318,9 +317,9 @@
                     Информация о машине
                 </a>
             </div>
-            <hr class="no-margin" />
+            <hr class="no-margin form-hr" />
 
-        <div class="row">
+        <div class="row trip-car">
             <div class="col-xs-6">
                 <label class="control-label">Фото машины</label>
                 <img class="full-width" src="content/images/car.jpg"/>
@@ -377,7 +376,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <label class="control-label">Уровень комфорта</label>
+                        <label class="control-label comfort-label">Уровень комфорта</label>
                         <button type="button"
                                 class="btn btn-sm btn-default text-left full-width car-class-btn"
                                 ng-model="selectedIcon"
@@ -395,38 +394,33 @@
 
         <div class="row">
             <div class="col-xs-12">
+                <div class="form-alert fluid-form-alert"></div>
+            </div>
+        </div>
 
-                <div class="border trip-submit-place">
-                    <div class="checkbox checkbox-primary">
-                        <input type="checkbox" id="isGrown" ng-model="trip.isGrown" class="pointer">
-                        <label for="isGrown">
-                            Созданием поездки подтверждаю,
-                            что я являюсь совершеннолетним гражданином Российской Федерации
-                            и обладаю действующим водительским удостоверением.
-                        </label>
-                    </div>
-                    <div class="row am-fade" ng-if="trip.isGrown" style="min-height: 70px;">
-                        <div class="col-xs-3">
+        </form>
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="trip-submit-place">
+
+                    <div class="row am-fade">
+
+                        <div class="col-xs-4 col-xs-offset-4">
                             <a href="javascript:void(0)"
-                               class="btn btn-primary btn-sm form-submit-button"
-                               ng-click="formSubmit(formCreateTrip)">
-                                Создать
-                                <br>
-                                поездку
+                               class="btn btn-primary btn-sm form-submit-button create-trip-button"
+                               ng-click="formSubmit(formManageTrip)">
+                                Создать поездку
                             </a>
                         </div>
-                        
-                            <div class="col-xs-9">
-                                <div class="form-alert"></div>
-                            </div>
-                        
+
                     </div>
                 </div>
 
             </div>
         </div>
 
-        </form>
 
     </div>
 </div>

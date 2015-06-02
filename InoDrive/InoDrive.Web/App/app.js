@@ -139,7 +139,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             .state("user.create_trip", {
                 url: "create_trip/",
                 controller: "createTripController",
-                templateUrl: "/app/views/user/user.create_trip.html",
+                templateUrl: "/app/views/user/user.manage_trip.html",
                 resolve: {
                     store: function ($ocLazyLoad) {
                         return $ocLazyLoad.load(
@@ -153,7 +153,18 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("user.find", {
                 url: "find/",
-                templateUrl: "/app/views/user/user.find.html"
+                controller: "findController",
+                templateUrl: "/app/views/user/user.find.html",
+                resolve: {
+                    store: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/findController.js"]
+                            }
+                        );
+                    }
+                }
             })
             .state("user.my_bids", {
                 url: "my_bids/",
