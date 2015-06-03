@@ -9,30 +9,49 @@
             </div>
         </div>
 
-        <form name="formFind" class="form-manage-trip" novalidate autocomplete="off">
-
-            <div class="trip-sub-title">
-                <a href="javascript:void(0)"
-                   class="typical-link-reset"
-                   data-content="Щелкните, чтобы изменить параметры поиска!"
-                   data-placement="right"
-                   data-trigger="hover"
-                   data-bs-popover>
-                    Обычный поиск
-                </a>
+        <form name="formFind" class="form-manage-trip form-find-trip" novalidate autocomplete="off">
+        
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="trip-sub-title">
+                        <a href="javascript:void(0)"
+                           class="typical-link-reset"
+                           data-content="Щелкните, чтобы изменить параметры поиска!"
+                           data-placement="right"
+                           data-trigger="hover"
+                           ng-click="triggerFind()"
+                           data-bs-popover>
+                            {{findTitle}}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary btn-sm form-submit-button find-btn"
+                               ng-click="formSubmit(formFind)">
+                                Искать!
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <hr class="no-margin form-hr"/>
+  
+            <hr class="no-margin form-hr" />
+
+            <div class="form-alert fluid-form-alert form-find-alert"></div>
 
             <div class="row">
                 <div class="col-xs-12">
                     <label class="control-label">Сортировать по</label>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
                     <button type="button"
-                            class="btn btn-primary full-width btn-sm order-sort-input"
+                            class="btn btn-default full-width btn-sm order-sort-input"
                             ng-model="selectedSortOption"
                             data-html="1"
                             data-bs-options="option.value as option.label for option in sortOptions"
@@ -42,7 +61,7 @@
                 </div>
                 <div class="col-xs-6  trip-row-left">
                     <button type="button"
-                            class="btn btn-primary full-width btn-sm order-sort-input"
+                            class="btn btn-default full-width btn-sm order-sort-input"
                             ng-model="selectedOrderOption"
                             data-html="1"
                             data-bs-options="option.value as option.label for option in orderOptions"
@@ -52,7 +71,7 @@
                 </div>
 
             </div>
-      
+
 
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
@@ -210,6 +229,7 @@
                 </div>
             </div>
 
+        <div ng-if="extendFind" class="am-fade">
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
                     <div class="row">
@@ -299,9 +319,9 @@
                                 </div>
                             </div>
 
-                            <div ng-repeat="wp in trip.wayPoints track by $index" class="am-fade">
+                            <div ng-repeat="wp in find.wayPoints track by $index" class="am-fade">
                                 <div class="input-group way-point-input">
-                                    <span class="input-group-addon">    
+                                    <span class="input-group-addon">
                                         <i class="fa fa-map-marker fa-fw"></i>
                                     </span>
                                     <input name="wp{{$index}}"
@@ -309,47 +329,34 @@
                                            type="text"
                                            placeholder="Промежуточный пункт #{{$index + 1}}"
                                            ng-autocomplete
-                                           ng-model="trip.wayPoints[$index].model"
+                                           ng-model="find.wayPoints[$index].model"
                                            data-options="autocompleteOptions"
-                                           data-details="trip.wayPoints[$index].details" />
+                                           data-details="find.wayPoints[$index].details" />
                                 </div>
                             </div>
-                            
-                            {{trip}}
+
                         </div>
                     </div>
+
                 </div>
             </div>
-
+            <hr class="last-find-hr"/>
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-alert fluid-form-alert"></div>
-                </div>
-            </div>
-
-        </form>
-
-        <div class="row">
-            <div class="col-xs-12">
-
-                <div class="trip-submit-place">
-
-                    <div class="row am-fade">
-
-                        <div class="col-xs-4 col-xs-offset-4">
+                <div class="col-xs-4 col-xs-offset-8">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2">
                             <a href="javascript:void(0)"
-                               class="btn btn-primary btn-sm form-submit-button create-trip-button"
-                               ng-click="formSubmit(formFind)">
-                                Создать поездку
+                               class="btn btn-primary btn-sm form-submit-button"
+                               ng-click="formSubmit(formFind, true)">
+                                Искать!
                             </a>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
 
+        </form>
 
     </div>
 </div>

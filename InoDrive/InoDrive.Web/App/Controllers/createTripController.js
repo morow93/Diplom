@@ -26,21 +26,11 @@
     $scope.removeWayPointer = function () {
         if ($scope.trip.wayPoints.length > 1) {
             $scope.trip.wayPoints.pop();
+        } else if ($scope.trip.wayPoints.length === 1) {
+            $scope.trip.wayPoints[0] = {};
         }
     };
-
-    $scope.$watch('trip.wayPoints', function (newValue, oldValue) {
-        
-        if (oldValue.length <= newValue.length && newValue[newValue.length - 1].details) {
-            if (!newValue[newValue.length - 1].flag){
-                $scope.addWayPointer();
-            } else {
-                $scope.trip.wayPoints.flag = true;
-            }               
-        }
-
-    }, true);
-
+    
     $scope.classes = [
         { "value": "A",     "label": "<i class=\"fa fa-star\"></i> Класс А (особо малый)" },
         { "value": "B",     "label": "<i class=\"fa fa-star\"></i> Класс B (малый)" },

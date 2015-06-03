@@ -709,6 +709,9 @@ li.filled {
     padding-bottom: 0px;
     border: 1px solid #D0D0D0 ;
 }
+.form-find-trip {
+    padding-bottom: 20px;
+} 
 .trip-row-left{
     padding-left: 10px;
 }
@@ -780,6 +783,16 @@ span.caret {
     padding-top: 4px;
 }
 .find-row-price {
-    margin-bottom: 17px;
+    margin-bottom: 15px;
+}
+.find-btn {
+    margin-bottom: 5px;
+}
+.form-find-alert > div:first-child{
+    margin-bottom: 3px;
+}
+.last-find-hr {
+    margin-top: 40px; 
+    margin-bottom: 5px;
 }
 /*Find end*/
