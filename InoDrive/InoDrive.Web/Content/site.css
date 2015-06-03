@@ -79,7 +79,7 @@ hr {
   animation-delay: 0.3s;
 }
 .ngrs-range-slider{
-    margin-top: 8px;
+    margin-top: 10px;
     margin-bottom: 0px;
 }
 .light-background{
@@ -98,7 +98,7 @@ hr {
     padding-right: 0px;
 }
 .no-margin{
-    margin: 0px;
+    margin: 0px !important;
 }
 .no-border{
     border: 0;
@@ -693,7 +693,7 @@ li.filled {
     border: 1px solid #D0D0D0 ;
 }
 .trip-sub-title {
-    padding: 5px 0px;
+    padding-top: 4px;
 }
 .trip-sub-title > a{
     font-weight: 600; 
@@ -786,13 +786,35 @@ span.caret {
     margin-bottom: 15px;
 }
 .find-btn {
-    margin-bottom: 5px;
+    
 }
 .form-find-alert > div:first-child{
-    margin-bottom: 3px;
+    margin-bottom: 0px;
 }
 .last-find-hr {
     margin-top: 40px; 
     margin-bottom: 5px;
+}
+.form-block{
+    border: 2px solid #D0D0D0; 
+    padding: 10px; 
+    margin-bottom: 20px;
+}
+.second-form-block{
+    margin-top: 35px;
+}
+.thrid-form-block{
+    margin-top: 15px;
+}
+.form-sort-title{
+    margin-top: 20px;
+}
+.trip-options{
+    margin-bottom: 40px;
+}
+.form-bottom-block{
+    border: 2px solid #D0D0D0; 
+    padding: 10px; 
+    margin-bottom: 20px;
 }
 /*Find end*/

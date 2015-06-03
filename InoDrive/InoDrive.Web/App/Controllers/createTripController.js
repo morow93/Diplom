@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('createTripController', function ($scope, $state, $alert) {
+﻿angular.module('InoDrive').controller('createTripController', function ($scope, $state, $alert, $document) {
 
     $scope.rangePrice = {
         minModel: 0,
@@ -54,7 +54,7 @@
         myAlert.$promise.then(myAlert.show);
     };
 
-    $scope.formSubmit = function (form) {
+    $scope.formSubmit = function (form, needUp) {
 
         if (form.$valid) {
 
@@ -67,22 +67,30 @@
                , template: "/app/templates/alert.html"
             });
             //$state.go("user.view");
-        }
-        else {
+        } else {
 
-            $scope.showAlert({
-                title: "Для того чтобы создать поездку, пожалуйста, исправьте отмеченные поля!",
-                content: "",
-                type: "danger",
-                show: false,
-                container: ".form-alert"
-                , template: "/app/templates/alert.html"
-            });
+            function showErrorFormAlert() {
+                $scope.showAlert({
+                    title: "Для того чтобы создать поездку, пожалуйста, исправьте отмеченные поля!",
+                    content: "",
+                    type: "danger",
+                    show: false,
+                    container: ".form-alert"
+                    , template: "/app/templates/alert.html"
+                });
 
-            angular.forEach(form.$error.required, function (field) {
-                field.$setDirty();
-            });
+                angular.forEach(form.$error.required, function (field) {
+                    field.$setDirty();
+                });
+            };
 
+            if (needUp) {
+                $document.scrollTopAnimated(0, 500).then(function () {
+                    showErrorFormAlert();
+                });
+            } else {
+                showErrorFormAlert();
+            }
         }
 
     };

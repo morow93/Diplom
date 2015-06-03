@@ -11,19 +11,37 @@
 
         <form name="formManageTrip" class="form-manage-trip" novalidate autocomplete="off">
 
-            <div class="trip-sub-title">
-                <a href="javascript:void(0)"
-                   class="typical-link-reset"
-                   data-content="Обязательно для заполнения!"
-                   data-placement="right"
-                   data-trigger="hover"
-                   data-bs-popover>
-                    Основная информация (?)
-                </a>
-            </div>
-            <hr class="no-margin form-hr" />
+            <div class="form-block">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="trip-sub-title">
+                            <a href="javascript:void(0)"
+                               class="typical-link-reset"
+                               data-content="Раздел обязателен для заполнения!"
+                               data-placement="right"
+                               data-trigger="hover"
+                               data-bs-popover>
+                                Основная информация (?)
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm full-width"
+                                   ng-click="formSubmit(formManageTrip)">
+                                    Создать поездку
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
 
-            <div class="row">
+            <div class="form-alert fluid-form-alert form-find-alert"></div>
+
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-6 trip-row-right">
                     <div class="row">
                         <div class="col-xs-12">
@@ -177,17 +195,22 @@
                 </div>
             </div>
 
-            <div class="trip-sub-title">
-                <a href="javascript:void(0)"
-                   class="typical-link-reset"
-                   data-content="Необязательно для заполнения"
-                   data-placement="right"
-                   data-trigger="hover"
-                   data-bs-popover>
-                    Дополнительная информация (?)
-                </a>
-            </div>
-            <hr class="no-margin form-hr" />
+            <div class="form-block second-form-block">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="trip-sub-title">
+                            <a href="javascript:void(0)"
+                               class="typical-link-reset"
+                               data-content="Раздел, необязательный для заполнения"
+                               data-placement="right"
+                               data-trigger="hover"
+                               data-bs-popover>
+                                Дополнительная информация (?)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
 
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
@@ -307,17 +330,22 @@
                 </span>
             </div>
 
-            <div class="trip-sub-title">
-                <a href="javascript:void(0)"
-                   class="typical-link-reset"
-                   data-content="Данные автоматически подгружаются из вашего личного кабинета"
-                   data-placement="right"
-                   data-trigger="hover"
-                   data-bs-popover>
-                    Информация о машине (?)
-                </a>
-            </div>
-            <hr class="no-margin form-hr" />
+            <div class="form-block thrid-form-block">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="trip-sub-title">
+                            <a href="javascript:void(0)"
+                               class="typical-link-reset"
+                               data-content="Данные автоматически подгружаются из вашего личного кабинета"
+                               data-placement="right"
+                               data-trigger="hover"
+                               data-bs-popover>
+                                Информация о машине (?)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
 
         <div class="row trip-car">
             <div class="col-xs-6">
@@ -392,35 +420,23 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="form-alert fluid-form-alert"></div>
-            </div>
-        </div>
-
-        </form>
-
-        <div class="row">
-            <div class="col-xs-12">
-
-                <div class="trip-submit-place">
-
-                    <div class="row am-fade">
-
-                        <div class="col-xs-4 col-xs-offset-4">
-                            <a href="javascript:void(0)"
-                               class="btn btn-primary btn-sm form-submit-button create-trip-button"
-                               ng-click="formSubmit(formManageTrip)">
-                                Создать поездку
-                            </a>
+            <div class="form-bottom-block">
+                <div class="row">
+                    <div class="col-xs-4 col-xs-offset-8">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm full-width"    
+                                   ng-click="formSubmit(formManageTrip, true)">
+                                    Создать поездку
+                                </a>
+                            </div>
                         </div>
-
                     </div>
                 </div>
+            </div> 
 
-            </div>
-        </div>
-
+        </form>
 
     </div>
 </div>

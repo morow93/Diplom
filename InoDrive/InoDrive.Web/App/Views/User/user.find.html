@@ -11,38 +11,38 @@
 
         <form name="formFind" class="form-manage-trip form-find-trip" novalidate autocomplete="off">
         
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="trip-sub-title">
-                        <a href="javascript:void(0)"
-                           class="typical-link-reset"
-                           data-content="Щелкните, чтобы изменить параметры поиска!"
-                           data-placement="right"
-                           data-trigger="hover"
-                           ng-click="triggerFind()"
-                           data-bs-popover>
-                            {{findTitle}}
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="row">
-                        <div class="col-xs-10 col-xs-offset-2">
+            <div class="form-block">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="trip-sub-title">
                             <a href="javascript:void(0)"
-                               class="btn btn-primary btn-sm form-submit-button find-btn"
-                               ng-click="formSubmit(formFind)">
-                                Искать!
+                               class="typical-link-reset"
+                               data-content="Щелкните, чтобы изменить параметры поиска!"
+                               data-placement="right"
+                               data-trigger="hover"
+                               ng-click="triggerFind()"
+                               data-bs-popover>
+                                {{findTitle}}
                             </a>
                         </div>
                     </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm form-submit-button find-btn"
+                                   ng-click="formSubmit(formFind)">
+                                    Искать!
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-  
-            <hr class="no-margin form-hr" />
+            </div> 
 
             <div class="form-alert fluid-form-alert form-find-alert"></div>
 
-            <div class="row">
+            <div class="row form-sort-title">
                 <div class="col-xs-12">
                     <label class="control-label">Сортировать по</label>
                 </div>
@@ -230,7 +230,8 @@
             </div>
 
         <div ng-if="extendFind" class="am-fade">
-            <div class="row">
+            <hr />
+            <div class="row trip-options">
                 <div class="col-xs-6 trip-row-right">
                     <div class="row">
                         <div class="col-xs-12">
@@ -340,20 +341,23 @@
 
                 </div>
             </div>
-            <hr class="last-find-hr"/>
-            <div class="row">
-                <div class="col-xs-4 col-xs-offset-8">
-                    <div class="row">
-                        <div class="col-xs-10 col-xs-offset-2">
-                            <a href="javascript:void(0)"
-                               class="btn btn-primary btn-sm form-submit-button"
-                               ng-click="formSubmit(formFind, true)">
-                                Искать!
-                            </a>
+
+            <div class="form-bottom-block">
+                <div class="row">
+                    <div class="col-xs-4 col-xs-offset-8">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm form-submit-button find-btn"
+                                   ng-click="formSubmit(formFind, true)">
+                                    Искать!
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
+
         </div>
 
         </form>
