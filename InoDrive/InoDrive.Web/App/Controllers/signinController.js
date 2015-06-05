@@ -14,7 +14,23 @@
 
         if (form.$valid) {
 
-            $state.go("user.view");
+            authService.signIn($scope.signin).then(function (response) {
+
+                $state.go("user", { userName: $scope.signin.userName }, { reload: true });
+
+            }).catch(function (error) {
+
+                showAlert({
+                    title: "Внимание!" + error.error_description,
+                    content: '',
+                    type: "danger",
+                    show: false,
+                    container: '.form-alert'
+                    ,template: '/app/templates/alert.html'
+                });
+
+            });
+
         }
         else {
 

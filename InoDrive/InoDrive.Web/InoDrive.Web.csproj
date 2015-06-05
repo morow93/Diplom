@@ -67,9 +67,10 @@
     <Content Include="App\Controllers\signinController.js" />
     <Content Include="App\Controllers\signupController.js" />
     <Content Include="App\Controllers\userViewController.js" />
-    <Content Include="App\Directives\Dynamic.js" />
-    <Content Include="App\Directives\Match.js" />
-    <Content Include="App\Directives\StarRating.js" />
+    <Content Include="App\Directives\match.js" />
+    <Content Include="App\Directives\starRating.js" />
+    <Content Include="App\Services\authInterceptorService.js" />
+    <Content Include="App\Services\AuthService.js" />
     <Content Include="App\Services\mapService.js" />
     <Content Include="App\Templates\alert.html" />
     <Content Include="App\Templates\notify.html" />
@@ -91,11 +92,13 @@
     <Content Include="Content\images\car.jpg" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\no-avatar.jpg" />
+    <Content Include="Scripts\angular-local-storage.js" />
     <Content Include="Scripts\angular-notify.css" />
     <Content Include="Scripts\angular-notify.js" />
     <Content Include="Scripts\angular-scroll.js" />
     <Content Include="Scripts\angular.rangeSlider.css" />
     <Content Include="Scripts\angular.rangeSlider.js" />
+    <Content Include="Scripts\ng-infinite-scroll.js" />
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />
     <Content Include="Scripts\ocLazyLoad.require.js" />

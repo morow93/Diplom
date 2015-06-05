@@ -25,6 +25,7 @@
     <script src="scripts/angular-resource.js"></script>
     <script src="scripts/i18n/angular-locale_ru-ru.js"></script>
     <script src="scripts/angular-ui-router.js"></script>
+    <script src="scripts/angular-local-storage.js"></script>
     <script src="scripts/sortable.js"></script>
     <script src="scripts/angular-strap.min.js"></script>
     <script src="scripts/angular-strap.tpl.min.js"></script>
@@ -41,9 +42,10 @@
     <script src="app/app.js"></script>
     <script src="app/controllers/indexcontroller.js"></script>
     <script src="app/services/mapservice.js"></script>
+    <script src="app/services/authinterceptorservice.js"></script>
+    <script src="app/services/authservice.js"></script>
     <script src="app/directives/match.js"></script>
     <script src="app/directives/starrating.js"></script>
-    <script src="app/directives/dynamic.js"></script>
 
 </head>
 <body ng-app="InoDrive" ng-controller="indexController">   
@@ -64,8 +66,13 @@
                         <a class="header-link header-left-link logo-font" data-ui-sref="home">Ino Drive</a>                        
                     </div>
                     <div class="col-xs-8 header-right">
-                        <a data-ui-sref="signup" class="header-link header-right-link pull-right">Зарегистрироваться</a>
-                        <a data-ui-sref="signin" class="header-link header-right-link pull-right">Войти</a>
+
+                        <a ng-if="authentication.isAuth" data-ui-sref="user"><span ng-bind="authentication.userName"></span></a>
+                        <a ng-if="authentication.isAuth">Выйти</a>
+
+                        <a ng-if="!authentication.isAuth" data-ui-sref="signup" class="header-link header-right-link pull-right">Зарегистрироваться</a>
+                        <a ng-if="!authentication.isAuth" data-ui-sref="signin" class="header-link header-right-link pull-right">Войти</a>
+
                     </div>
                 </div>
             </div>

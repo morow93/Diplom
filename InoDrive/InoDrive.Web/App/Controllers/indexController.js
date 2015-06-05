@@ -1,9 +1,9 @@
-﻿angular.module('InoDrive').controller('indexController', function ($scope, $document) {
+﻿angular.module('InoDrive').controller('indexController', function ($scope, $document, $state, authService) {
 
     $scope.isVisibleToTop = false;
 
     $scope.toTheTop = function () {
-        $document.scrollTopAnimated(0, 500);//.then(function () { });
+        $document.scrollTopAnimated(0, 500);
     }
 
     $document.on('scroll', function () {    
@@ -13,5 +13,21 @@
         });
 
     });
+
+    $scope.signOut = function () {
+
+        authService.signOut().then(function () {
+
+            $state.go("home", null, { reload: true });
+
+        }).catch(function (e) {
+
+            $state.go("error", null, { reload: true });
+
+        });
+
+    };
+
+    $scope.authentication = authService.authentication;
 
 }).value('duScrollOffset', 30);
