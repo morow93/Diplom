@@ -1,4 +1,3 @@
-e:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.csprojResolveAssemblyReference.cache
 e:\Diplom\InoDrive\InoDrive.Api\bin\AutoMapper.Net4.dll
 e:\Diplom\InoDrive\InoDrive.Api\bin\InoDrive.Api.dll.config
 e:\Diplom\InoDrive\InoDrive.Api\bin\InoDrive.Api.dll
@@ -55,5 +54,6 @@ e:\Diplom\InoDrive\InoDrive.Api\bin\System.Web.Http.WebHost.xml
 e:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Net.Http.Formatting.resources.dll
 e:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Web.Http.resources.dll
 e:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Web.Http.WebHost.resources.dll
+e:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.csprojResolveAssemblyReference.cache
 e:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.dll
 e:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.pdb

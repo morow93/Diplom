@@ -52,8 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthContextMigrations\201506062247569_Initial.cs" />
+    <Compile Include="AuthContextMigrations\201506062247569_Initial.Designer.cs">
+      <DependentUpon>201506062247569_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuthContextMigrations\Configuration.cs" />
     <Compile Include="Contexts\AuthContext.cs" />
     <Compile Include="Contexts\DataContext.cs" />
+    <Compile Include="DataContextMigrations\201506062248121_Initial.cs" />
+    <Compile Include="DataContextMigrations\201506062248121_Initial.Designer.cs">
+      <DependentUpon>201506062248121_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="EntitiesTypeConfigurations\UserMap.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Bid.cs" />
@@ -67,8 +77,6 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Helper.cs" />
-    <Compile Include="MigrationsAuthContext\Configuration.cs" />
-    <Compile Include="MigrationsDataContext\Configuration.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
     <Compile Include="Models\InputModels\InputEmailTemplateModel.cs" />
     <Compile Include="Models\InputModels\InputRemoveRefreshTokenModel.cs" />
@@ -88,6 +96,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\OutputModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AuthContextMigrations\201506062247569_Initial.resx">
+      <DependentUpon>201506062247569_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201506062248121_Initial.resx">
+      <DependentUpon>201506062248121_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
