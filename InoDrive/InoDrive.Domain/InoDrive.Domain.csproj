@@ -52,18 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthContextMigrations\201506062247569_Initial.cs" />
-    <Compile Include="AuthContextMigrations\201506062247569_Initial.Designer.cs">
-      <DependentUpon>201506062247569_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AuthContextMigrations\Configuration.cs" />
     <Compile Include="Contexts\AuthContext.cs" />
     <Compile Include="Contexts\DataContext.cs" />
-    <Compile Include="DataContextMigrations\201506062248121_Initial.cs" />
-    <Compile Include="DataContextMigrations\201506062248121_Initial.Designer.cs">
-      <DependentUpon>201506062248121_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="EntitiesTypeConfigurations\UserMap.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Bid.cs" />
@@ -77,6 +67,16 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="MigrationsAuthContext\201506062316127_Initial.cs" />
+    <Compile Include="MigrationsAuthContext\201506062316127_Initial.Designer.cs">
+      <DependentUpon>201506062316127_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsAuthContext\Configuration.cs" />
+    <Compile Include="MigrationsDataContext\201506062316303_Initial.cs" />
+    <Compile Include="MigrationsDataContext\201506062316303_Initial.Designer.cs">
+      <DependentUpon>201506062316303_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDataContext\Configuration.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
     <Compile Include="Models\InputModels\InputEmailTemplateModel.cs" />
     <Compile Include="Models\InputModels\InputRemoveRefreshTokenModel.cs" />
@@ -98,11 +98,11 @@
     <Folder Include="Models\OutputModels\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AuthContextMigrations\201506062247569_Initial.resx">
-      <DependentUpon>201506062247569_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="MigrationsAuthContext\201506062316127_Initial.resx">
+      <DependentUpon>201506062316127_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201506062248121_Initial.resx">
-      <DependentUpon>201506062248121_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="MigrationsDataContext\201506062316303_Initial.resx">
+      <DependentUpon>201506062316303_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

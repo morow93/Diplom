@@ -1,19 +1,19 @@
-namespace InoDrive.Domain.AuthContextMigrations
+namespace InoDrive.Domain.MigrationsDataContext
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<InoDrive.Domain.Contexts.AuthContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<InoDrive.Domain.Contexts.DataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"AuthContextMigrations";
+            MigrationsDirectory = @"MigrationsDataContext";
         }
 
-        protected override void Seed(InoDrive.Domain.Contexts.AuthContext context)
+        protected override void Seed(InoDrive.Domain.Contexts.DataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

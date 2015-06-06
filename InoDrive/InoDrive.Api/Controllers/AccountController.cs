@@ -52,25 +52,33 @@ namespace InoDrive.Api.Controllers
                 LastName = model.LastName  
             };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
+            try
             {
-                return errorResult;
+                
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+                else
+                {
+                    var code = _userManager.GenerateEmailConfirmationToken(user.Id);
+
+                    var emailModel = new InputEmailTemplateModel { Initials = user.FirstName + " " + user.LastName, UserId = user.Id, Code = code };
+                    var emailHtmlBody = GenerateEmailTemplate(emailModel, "ConfirmEmailTemplateMessage.cshtml");
+
+                    await _userManager.SendEmailAsync(user.Id, AppConstants.LETTER_CONFIRM_EMAIL_TITLE, emailHtmlBody);
+
+                    return Ok(new { status = Statuses.CommonSuccess });
+                }
             }
-            else
+            catch(Exception e)
             {
-                var code = _userManager.GenerateEmailConfirmationToken(user.Id);
-
-                var emailModel = new InputEmailTemplateModel { Initials = user.FirstName + " " + user.LastName, UserId = user.Id, Code = code };
-                var emailHtmlBody = GenerateEmailTemplate(emailModel, "ConfirmEmailTemplateMessage.cshtml");
-
-                await _userManager.SendEmailAsync(user.Id, AppConstants.LETTER_CONFIRM_EMAIL_TITLE, emailHtmlBody);
-
                 return Ok(new { status = Statuses.CommonSuccess });
-            }
+            }           
         }
 
         [HttpPost]

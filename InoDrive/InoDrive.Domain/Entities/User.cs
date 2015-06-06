@@ -15,9 +15,9 @@ namespace InoDrive.Domain.Entities
         public String UserName { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
-        
-        public DateTimeOffset DateOfBirth { get; set; }
-        public DateTimeOffset DateOfStage { get; set; }
+
+        public DateTimeOffset? DateOfBirth { get; set; }
+        public DateTimeOffset? DateOfStage { get; set; }
 
         public String Phone { get; set; }
         public String About { get; set; }
