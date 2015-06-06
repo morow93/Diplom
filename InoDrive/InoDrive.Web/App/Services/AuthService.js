@@ -202,11 +202,49 @@ app.factory("authService", [
             return deferred.promise;
         };
 
-        authServiceFactory.signUp = signUp;
-        authServiceFactory.signIn = signIn;
-        authServiceFactory.signOut = signOut;
-        authServiceFactory.fillAuthData = fillAuthData;
-        authServiceFactory.refreshToken = refreshToken;
+        var sendConfirmEmailCode = function (userData) {
+
+            $http = $http || $injector.get('$http');
+            return $http.post(serviceBase + 'api/Account/SendConfirmEmailCode', userData).then(function (response) {
+                return response;
+            });
+
+        };
+
+        var confirmEmail = function (params) {
+
+            $http = $http || $injector.get('$http');
+            return $http.post(serviceBase + 'api/account/ConfirmEmail', params).then(function (results) {
+                return results;
+            });
+        };
+
+        var sendResetPasswordCode = function (userData) {
+
+            $http = $http || $injector.get('$http');
+            return $http.post(serviceBase + 'api/Account/SendResetPasswordCode', userData).then(function (response) {
+                return response;
+            });
+
+        };
+
+        var resetPassword = function (params) {
+
+            $http = $http || $injector.get('$http');
+            return $http.post(serviceBase + 'api/account/ResetPassword', params).then(function (results) {
+                return results;
+            });
+        };
+
+        authServiceFactory.signUp                   = signUp;
+        authServiceFactory.signIn                   = signIn;
+        authServiceFactory.signOut                  = signOut;
+        authServiceFactory.fillAuthData             = fillAuthData;
+        authServiceFactory.refreshToken             = refreshToken;
+        authServiceFactory.sendConfirmEmailCode     = sendConfirmEmailCode;
+        authServiceFactory.confirmEmail             = confirmEmail;
+        authServiceFactory.sendResetPasswordCode    = sendResetPasswordCode;
+        authServiceFactory.resetPassword            = resetPassword;
 
         authServiceFactory.authentication = authentication;
 

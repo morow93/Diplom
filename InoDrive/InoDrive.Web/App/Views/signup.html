@@ -23,36 +23,6 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="control-label">Никнейм</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                    <input name="username"
-                                           class="form-control input-sm"
-                                           type="text"
-                                           placeholder="Никнейм"
-                                           ng-model="signup.username"
-                                           ng-minlength="1"
-                                           ng-maxlength="20"
-                                           ng-pattern="/^[a-zA-Z0-9]+$/"
-                                           required />
-                                </div>
-                                <div class="form-error">
-                                    <span ng-show="formSignUp.username.$dirty && formSignUp.username.$error.required">
-                                        Укажите никнейм!
-                                    </span>
-                                    <span ng-show="!formSignUp.username.$error.pattern &&
-                                      (formSignUp.username.$error.minlength || formSignUp.username.$error.maxlength)">
-                                        Должен содержать до 20 символов!
-                                    </span>
-                                    <span ng-show="formSignUp.username.$error.pattern">
-                                        Допускаются только цифры и буквы английского алфавита!
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
                                 <label class="control-label">Имя</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>

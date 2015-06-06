@@ -70,7 +70,7 @@
     <Content Include="App\Directives\match.js" />
     <Content Include="App\Directives\starRating.js" />
     <Content Include="App\Services\authInterceptorService.js" />
-    <Content Include="App\Services\AuthService.js" />
+    <Content Include="App\Services\authService.js" />
     <Content Include="App\Services\mapService.js" />
     <Content Include="App\Templates\alert.html" />
     <Content Include="App\Templates\notify.html" />

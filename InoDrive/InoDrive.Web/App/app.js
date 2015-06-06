@@ -14,7 +14,8 @@ var app = angular.module('InoDrive',
     'oc.lazyLoad',
     'duScroll',
     'cgNotify',
-    'ui-rangeSlider'
+    'ui-rangeSlider',
+    'LocalStorageModule',
 ]);
 
 //states config
@@ -187,6 +188,12 @@ app.config(function ($datepickerProvider) {
         startWeek: 1
     });
 
+});
+
+//constants
+app.constant('ngAuthSettings', {
+    apiServiceBaseUri: 'http://localhost:60947/',
+    clientId: 'InoDriveAngularApp'
 });
 
 //run run run

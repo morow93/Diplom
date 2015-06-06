@@ -1,0 +1,31 @@
+﻿@model InoDrive.Domain.Models.UserModels.InputEmailTemplateModel
+
+@{
+    var link = @"http://localhost:11197/#/confirmEmail?" + "userId=" + Model.UserId + "&code=" + Model.Code;
+    var leftDateTime = DateTime.Now.AddHours(1);
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Подтверждение электронного адреса</title>
+</head>
+<body>
+    Здравствуйте, <b>@Model.Initials</b>!
+    <br /><br />
+
+    Перейдите по этой ссылке, чтобы <b>подтвердить свой электронный адрес</b>:
+    <br />
+
+    <a href="@link">@link</a>
+    <br /><br />
+
+    Ссылка является одноразовой и станет недействительной спустя один час
+    (@leftDateTime.ToShortDateString() в @leftDateTime.ToShortTimeString()), а также в случае
+    получения новой ссылки для подтверждения электронного адреса.
+    <br /><br />
+
+    Если Вы не зарегистрированы в <b>InoDrive</b> и считаете, что данное письмо пришло Вам по ошибке -
+    просто <b>проигнорируйте</b> его.
+</body>
+</html>  

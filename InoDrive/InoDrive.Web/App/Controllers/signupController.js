@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signupController', function ($scope, $alert, $state) {
+﻿angular.module('InoDrive').controller('signupController', function ($scope, $alert, $state, $timeout, authService) {
 
     var myAlert;
 
@@ -16,8 +16,10 @@
 
             authService.signUp($scope.signup).then(function (response) {
 
-                showAlert({
-                    title: "Завершен первый этап регистрации! На указанную почту было выслано письмо для подтверждения аккаунта.",
+                $scope.showAlert({
+                    title:
+                        "На указанную почту было выслано письмо для подтверждения аккаунта! " +
+                        "А сейчас Вы будете перенаправлены на главную страницу сайта.",
                     content: "",
                     type: "success",
                     show: false,
@@ -25,19 +27,25 @@
                     template: '/app/templates/alert.html'
                 });
 
+                $timeout(function () { $state.go("home"); }, 3000);
 
             }).catch(function (response) {
 
-                //var errors = [];
-                //for (var key in response.data.modelState) {
-                //    for (var i = 0; i < response.data.modelState[key].length; i++) {
-                //        errors.push(response.data.modelState[key][i]);
-                //    }
-                //}
+                var errors = [];
+                for (var key in response.data.modelState) {
+                    for (var i = 0; i < response.data.modelState[key].length; i++) {
+                        errors.push(response.data.modelState[key][i]);
+                    }
+                }
+                errors = errors.join(" ");
 
-                showAlert({
-                    title: "Error occurred!",
-                    content: "Failed to sign up due to some reasons!",
+                if (errors.indexOf("is already taken") >= 0) {
+                    errors = "Уже зарегистрирвоан пользователь с такой почтой!";
+                }
+
+                $scope.showAlert({
+                    title: "Внимание! " + errors,
+                    content: "",
                     type: "danger",
                     show: false,
                     container: '.form-alert',

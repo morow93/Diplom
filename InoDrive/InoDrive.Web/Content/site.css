@@ -512,6 +512,9 @@ a.sub-page-nav-link:active {
 .notify-text{
     padding-right: 15px;
 }
+.notify-text > div{
+    margin-left: 63px;
+}
 .notify-danger{
     background-color: #FF6666;
 }

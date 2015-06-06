@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signinController', function ($scope, $alert, $state) {
+﻿angular.module('InoDrive').controller('signinController', function ($scope, $alert, $state, authService) {
 
     var myAlert;
 
@@ -15,13 +15,13 @@
         if (form.$valid) {
 
             authService.signIn($scope.signin).then(function (response) {
-
+                debugger;
                 $state.go("user", { userName: $scope.signin.userName }, { reload: true });
 
             }).catch(function (error) {
 
-                showAlert({
-                    title: "Внимание!" + error.error_description,
+                $scope.showAlert({
+                    title: "Внимание! " + error.error_description,
                     content: '',
                     type: "danger",
                     show: false,

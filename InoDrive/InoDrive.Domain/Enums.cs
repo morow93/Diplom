@@ -11,4 +11,10 @@ namespace InoDrive.Domain
         JavaScript = 0,
         NativeConfidential = 1
     };
+
+    public enum Statuses
+    {
+        CommonSuccess           = 0,
+        CommonFailure           = 100
+    };
 }
