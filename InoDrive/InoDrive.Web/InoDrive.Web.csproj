@@ -57,12 +57,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Controllers\confirmEmailController.js" />
     <Content Include="App\Controllers\createTripController.js" />
     <Content Include="App\Controllers\findController.js" />
     <Content Include="App\Controllers\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
     <Content Include="App\Controllers\resetPasswordController.js" />
     <Content Include="App\Controllers\sendCodeController.js" />
+    <Content Include="App\Controllers\signOutController.js" />
     <Content Include="App\Controllers\userController.js" />
     <Content Include="App\Controllers\signinController.js" />
     <Content Include="App\Controllers\signupController.js" />
@@ -72,8 +74,12 @@
     <Content Include="App\Services\authInterceptorService.js" />
     <Content Include="App\Services\authService.js" />
     <Content Include="App\Services\mapService.js" />
+    <Content Include="App\Services\customStorageService.js" />
+    <Content Include="App\Services\tripsService.js" />
     <Content Include="App\Templates\alert.html" />
+    <Content Include="App\Templates\modal.html" />
     <Content Include="App\Templates\notify.html" />
+    <Content Include="App\Views\confirmEmail.html" />
     <Content Include="App\Views\reset_password.html" />
     <Content Include="App\Views\send_code.html" />
     <Content Include="App\Views\User\user.my_bids.html" />
@@ -92,12 +98,16 @@
     <Content Include="Content\images\car.jpg" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\no-avatar.jpg" />
+    <Content Include="Scripts\ladda\angular-ladda.js" />
     <Content Include="Scripts\angular-local-storage.js" />
     <Content Include="Scripts\angular-notify.css" />
     <Content Include="Scripts\angular-notify.js" />
     <Content Include="Scripts\angular-scroll.js" />
     <Content Include="Scripts\angular.rangeSlider.css" />
     <Content Include="Scripts\angular.rangeSlider.js" />
+    <Content Include="Scripts\ladda\ladda-themeless.min.css" />
+    <Content Include="Scripts\ladda\ladda.min.js" />
+    <Content Include="Scripts\ladda\spin.min.js" />
     <Content Include="Scripts\ng-infinite-scroll.js" />
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />

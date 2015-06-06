@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('indexController', function ($scope, $document, $state, authService) {
+﻿angular.module('InoDrive').controller('indexController', function ($scope, $document, $state, $modal, authService) {
 
     $scope.isVisibleToTop = false;
 
@@ -13,7 +13,7 @@
         });
 
     });
-
+    
     $scope.signOut = function () {
 
         authService.signOut().then(function () {

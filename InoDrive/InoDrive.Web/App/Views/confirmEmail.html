@@ -1,0 +1,19 @@
+﻿<div class="general-block-style text-center">
+    <span ng-show="message == undefined">
+        <i><img src="/Content/spinner.gif" /> Подождите пожалуйста...</i>
+    </span>
+    <i>
+        <span ng-show="message != undefined">
+            {{message}}
+            <span ng-show="success">
+                Теперь можете выполнить вход.
+                <br />
+                *После входа вы будете перенаправлены на главную страницу сайта*
+            </span>
+            <br />
+            <span ng-show="!success">
+                {{messageT}}
+            </span>
+        </span>
+    </i>
+</div>

@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('userViewController', function ($scope, $state) {
+﻿angular.module('InoDrive').controller('userViewController', function ($scope, $state, tripsService) {
 
     $scope.userRating = 4;
     $scope.tripsType = "all";
@@ -16,4 +16,10 @@
     };
     
     $scope.showEnded = true;
+
+    tripsService.test().then(function () {
+
+        console.log("was");
+
+    });
 });

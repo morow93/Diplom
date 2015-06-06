@@ -16,6 +16,7 @@ var app = angular.module('InoDrive',
     'cgNotify',
     'ui-rangeSlider',
     'LocalStorageModule',
+    'angular-ladda'
 ]);
 
 //states config
@@ -66,6 +67,22 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     }
                 );
             }
+        }
+    });
+
+    $stateProvider.state("confirm_email", {
+        templateUrl: "/app/views/confirmEmail.html",
+        controller: "confirmEmailController",
+        url: "/confirmEmail?userId&code",
+        resolve: {
+            loadCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+
+                return $ocLazyLoad.load({
+                    name: 'InoDrive',
+                    files: ['App/Controllers/confirmEmailController.js']
+                });
+
+            }]
         }
     });
     
@@ -131,6 +148,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                             }
                         );
                     }
+                    //,auth: true
                 }
             })
             .state("user.my_trips", {
@@ -181,13 +199,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 //other configs must be here
-app.config(function ($datepickerProvider) {
+app.config(function ($datepickerProvider, laddaProvider) {
 
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'dd/MM/yyyy',
         startWeek: 1
     });
 
+    laddaProvider.setOption({
+        style: 'slide-right'
+    });
 });
 
 //constants
@@ -196,12 +217,22 @@ app.constant('ngAuthSettings', {
     clientId: 'InoDriveAngularApp'
 });
 
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
+});
+
 //run run run
-app.run(function ($rootScope, notify) {
-        
+app.run(function ($rootScope, $state, notify, authService, customStorageService, localStorageService) {
+
+    authService.fillAuthorizationData();
+
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-        //displayNotificationOnStageChange(notify, "test", "success");     
+        var notifyToShow = customStorageService.get("notifyToShow");
+        if (notifyToShow) {
+            displayNotificationOnStageChange(notify, notifyToShow.message, notifyToShow.type);
+            customStorageService.remove("notifyToShow");
+        }
 
     });
 

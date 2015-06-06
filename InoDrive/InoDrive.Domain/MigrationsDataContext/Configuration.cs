@@ -5,7 +5,7 @@ namespace InoDrive.Domain.MigrationsDataContext
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    public sealed class Configuration : DbMigrationsConfiguration<InoDrive.Domain.Contexts.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<InoDrive.Domain.Contexts.DataContext>
     {
         public Configuration()
         {

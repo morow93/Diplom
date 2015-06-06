@@ -13,6 +13,7 @@
     <link href="scripts/angular-notify.css" rel="stylesheet" />
     <link href="content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
     <link href="scripts/angular.rangeslider.css" rel="stylesheet" />
+    <link href="scripts/ladda/ladda-themeless.min.css" rel="stylesheet" />
     <link href="content/site.css" rel="stylesheet" />
 
     <script src="scripts/jquery-2.1.4.js"></script>
@@ -38,18 +39,24 @@
     <script src="scripts/angular-scroll.js"></script>
     <script src="scripts/angular-notify.js"></script>
     <script src="scripts/angular.rangeslider.js"></script>
+    <script src="scripts/ladda/spin.min.js"></script>
+    <script src="scripts/ladda/ladda.min.js"></script>
+    <script src="scripts/ladda/angular-ladda.js"></script>
 
     <script src="app/app.js"></script>
     <script src="app/controllers/indexcontroller.js"></script>
     <script src="app/services/mapservice.js"></script>
-    <script src="app/services/authinterceptorservice.js"></script>
     <script src="app/services/authservice.js"></script>
+    <script src="app/services/authinterceptorservice.js"></script>
+    <script src="app/services/tripsservice.js"></script>
+    <script src="app/services/customstorageservice.js"></script>
     <script src="app/directives/match.js"></script>
     <script src="app/directives/starrating.js"></script>
+    <script src="app/controllers/signoutcontroller.js"></script>
 
 </head>
 <body ng-app="InoDrive" ng-controller="indexController">   
-    
+
     <div class="to-top animate-show" ng-show="isVisibleToTop">
         <div class="to-top-text text-center animate-show" ng-show="isVisibleToTop">
             <a href="javascript:void(0)" ng-click="toTheTop()" class="to-top-link">
@@ -67,8 +74,13 @@
                     </div>
                     <div class="col-xs-8 header-right">
 
-                        <a ng-if="authentication.isAuth" data-ui-sref="user"><span ng-bind="authentication.userName"></span></a>
-                        <a ng-if="authentication.isAuth">Выйти</a>
+                        <a ng-if="authentication.isAuth"
+                           ng-controller="signOutController"
+                           ng-click="showModal()"
+                           class="header-link header-right-link pull-right"
+                           href="javascript:void(0)">Выйти</a>
+
+                        <a ng-if="authentication.isAuth" data-ui-sref="user.view" class="header-link header-right-link pull-right" ng-bind="authentication.userName"></a>
 
                         <a ng-if="!authentication.isAuth" data-ui-sref="signup" class="header-link header-right-link pull-right">Зарегистрироваться</a>
                         <a ng-if="!authentication.isAuth" data-ui-sref="signin" class="header-link header-right-link pull-right">Войти</a>

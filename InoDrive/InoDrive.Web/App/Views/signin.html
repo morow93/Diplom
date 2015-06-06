@@ -30,7 +30,7 @@
                                            class="form-control input-sm"
                                            type="text"
                                            placeholder="Email"
-                                           ng-model="signin.username"
+                                           ng-model="signin.userName"
                                            required />
                                 </div>
                                 <div class="form-error">
@@ -83,9 +83,20 @@
                             </div>
                         </div>
 
+                        <div ng-if="sendCodeFlag" class="send-code">
+                            <button class="btn btn-default btn-sm full-width" ng-click="sendEmailCode()" data-ladda="laddaSendCodeFlag" data-spinner-color="black">
+                                Снова выслать письмо для подтверждения email'а?
+                            </button>
+                        </div>
+
                         <div class="row form-submit">
                             <div class="col-xs-6 col-xs-offset-3">
-                                <a href="javascript:void(0)" class="btn btn-primary btn-sm form-submit-button" ng-click="formSubmit(formSignIn)">Выполнить вход</a>
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm form-submit-button"
+                                   data-ladda="laddaSignInFlag"
+                                   ng-click="formSubmit(formSignIn)">
+                                    Выполнить вход
+                                </a>
                             </div>
                         </div>
 

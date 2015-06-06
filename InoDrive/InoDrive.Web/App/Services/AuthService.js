@@ -16,42 +16,34 @@ app.factory("authService", [
 
         var authentication = {
             isAuth: false,
+            userId: "",
             userName: "",
+            initials: "",
             useRefreshTokens: false
-        };
+        }; 
 
         var signOut = function () {
 
-            function removeAuthorizationData() {
-
-                localStorageService.remove("authorizationData");
-                authentication.isAuth = false;
-                authentication.userName = "";
-                authentication.useRefreshTokens = false;
-            }
-
             var deferred = $q.defer();
 
-            var authData = localStorageService.get("authorizationData");
-            if (authData) {
+            var authorizationData = localStorageService.get("authorizationData");
+            if (authorizationData) {
 
-                if (authData.useRefreshTokens) {
+                if (authorizationData.useRefreshTokens) {
 
                     var params = {
-                        userName: authData.userName,
-                        refreshToken: authData.refreshToken
+                        userName: authorizationData.userName,
+                        refreshToken: authorizationData.refreshToken
                     };
 
                     $http = $http || $injector.get("$http");
                     $http.post(serviceBase + "api/account/removeRefreshToken", params).then(function (response) {
 
                         removeAuthorizationData();
+
+                    }).finally(function (error) {
+
                         deferred.resolve();
-
-                    }).catch(function (error) {
-
-                        deferred.reject(error);
-
                     });
 
                 } else {
@@ -63,6 +55,7 @@ app.factory("authService", [
             } else {
                 deferred.resolve();
             }
+
             return deferred.promise;
         };
 
@@ -95,7 +88,7 @@ app.factory("authService", [
             var deferred = $q.defer();
 
             signOut().then(function () {
-
+         
                 var data =
                 "grant_type=password" +
                 "&username=" + params.userName +
@@ -113,7 +106,9 @@ app.factory("authService", [
                             token: response.access_token,
                             userName: params.userName,
                             refreshToken: response.refresh_token,
-                            useRefreshTokens: true
+                            useRefreshTokens: true,
+                            userId: response.userId,
+                            initials: response.initials
                         });
                     }
                     else {
@@ -121,14 +116,18 @@ app.factory("authService", [
                             token: response.access_token,
                             userName: params.userName,
                             refreshToken: "",
-                            useRefreshTokens: false
+                            useRefreshTokens: false,
+                            userId: response.userId,
+                            initials: response.initials
                         });
                     }
-
+        
                     authentication.isAuth = true;
                     authentication.userName = params.userName;
                     authentication.useRefreshTokens = params.useRefreshTokens;
-
+                    authentication.userId = response.userId;
+                    authentication.initials = response.initials;
+                    
                     deferred.resolve(response);
 
                 }).catch(function (error) {
@@ -146,13 +145,16 @@ app.factory("authService", [
             return deferred.promise;
         };
 
-        var fillAuthData = function () {
+        var fillAuthorizationData = function () {
 
-            var authData = localStorageService.get("authorizationData");
-            if (authData) {
-                authentication.isAuth = true;
-                authentication.userName = authData.userName;
-                authentication.useRefreshTokens = authData.useRefreshTokens;
+            var authorizationData = localStorageService.get('authorizationData');
+
+            if (authorizationData) {
+                authentication.isAuth               = true;
+                authentication.userName             = authorizationData.userName;
+                authentication.useRefreshTokens     = authorizationData.useRefreshTokens;
+                authentication.initials             = authorizationData.initials;
+                authentication.userId               = authorizationData.userId;
             }
         };
 
@@ -160,13 +162,13 @@ app.factory("authService", [
 
             var deferred = $q.defer();
 
-            var authData = localStorageService.get("authorizationData");
+            var authorizationData = localStorageService.get("authorizationData");
 
-            if (authData && authData.useRefreshTokens) {
+            if (authorizationData && authorizationData.useRefreshTokens) {
 
                 var data =
                     "grant_type=refresh_token" +
-                    "&refresh_token=" + authData.refreshToken +
+                    "&refresh_token=" + authorizationData.refreshToken +
                     "&client_id=" + ngAuthSettings.clientId;
 
                 localStorageService.remove("authorizationData");
@@ -178,7 +180,9 @@ app.factory("authService", [
                         token: response.access_token,
                         userName: response.userName,
                         refreshToken: response.refresh_token,
-                        useRefreshTokens: true
+                        useRefreshTokens: true,
+                        userId: response.userId,
+                        initials: response.initials
                     });
 
                     deferred.resolve(response);
@@ -188,6 +192,7 @@ app.factory("authService", [
                     signOut().then(function () {
 
                         deferred.reject(err);
+
                     }).catch(function (errorIn) {
 
                         deferred.reject(errorIn);
@@ -203,7 +208,7 @@ app.factory("authService", [
         };
 
         var sendConfirmEmailCode = function (userData) {
-
+      
             $http = $http || $injector.get('$http');
             return $http.post(serviceBase + 'api/Account/SendConfirmEmailCode', userData).then(function (response) {
                 return response;
@@ -236,17 +241,64 @@ app.factory("authService", [
             });
         };
 
+        var changePassword = function (params) {
+
+            $http = $http || $injector.get('$http');
+            return $http.post(serviceBase + 'api/account/ChangePassword', params).then(function (results) {
+                return results;
+            });
+        };
+
+        var changeEmail = function (params) {
+
+            $http = $http || $injector.get('$http');
+            return $http.post(serviceBase + 'api/account/ChangeEmail', params).then(function (results) {
+                return results;
+            });
+        };
+
+        var setAuthorizationData = function (key, value) {
+
+            var authorizationData = localStorageService.get('authorizationData');
+            authorizationData[key] = value;
+
+            localStorageService.remove('authorizationData');
+            localStorageService.set('authorizationData', authorizationData);
+        };
+
+        var getAuthorizationData = function () {
+
+            return localStorageService.get('authorizationData');
+        };
+
+        var removeAuthorizationData = function () {
+
+            localStorageService.remove("authorizationData");
+
+            authentication.isAuth = false;
+            authentication.userId = "";
+            authentication.userName = "";
+            authentication.initials = "";
+            authentication.useRefreshTokens = false;
+        };
+                
         authServiceFactory.signUp                   = signUp;
         authServiceFactory.signIn                   = signIn;
         authServiceFactory.signOut                  = signOut;
-        authServiceFactory.fillAuthData             = fillAuthData;
+        authServiceFactory.fillAuthorizationData    = fillAuthorizationData;
         authServiceFactory.refreshToken             = refreshToken;
         authServiceFactory.sendConfirmEmailCode     = sendConfirmEmailCode;
         authServiceFactory.confirmEmail             = confirmEmail;
         authServiceFactory.sendResetPasswordCode    = sendResetPasswordCode;
         authServiceFactory.resetPassword            = resetPassword;
+        authServiceFactory.changePassword           = changePassword;
+        authServiceFactory.changeEmail              = changeEmail;
+        authServiceFactory.setAuthorizationData     = setAuthorizationData;
+        authServiceFactory.getAuthorizationData     = getAuthorizationData;
+        authServiceFactory.removeAuthorizationData  = removeAuthorizationData;
 
-        authServiceFactory.authentication = authentication;
+        authServiceFactory.authentication           = authentication;
 
         return authServiceFactory;
+
     }]);

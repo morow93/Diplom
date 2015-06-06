@@ -14,11 +14,18 @@
 
         if (form.$valid) {
 
+            $scope.laddaSignInFlag = true;
+
             authService.signIn($scope.signin).then(function (response) {
-                debugger;
-                $state.go("user", { userName: $scope.signin.userName }, { reload: true });
+
+                $state.go("user.view", null, { reload: true });
 
             }).catch(function (error) {
+
+                if (error.error === "not_confirmed_email") {
+                    $scope.sendCodeFlag = true;
+                    $scope.userId = error.error_uri;
+                }
 
                 $scope.showAlert({
                     title: "Внимание! " + error.error_description,
@@ -28,6 +35,10 @@
                     container: '.form-alert'
                     ,template: '/app/templates/alert.html'
                 });
+
+            }).finally(function () {
+
+                $scope.laddaSignInFlag = false;
 
             });
 
@@ -47,6 +58,43 @@
                 field.$setDirty();
             });
 
+        }
+
+    };
+
+    $scope.sendEmailCode = function () {
+
+        if ($scope.sendCodeFlag && $scope.userId) {
+
+            $scope.laddaSendCodeFlag = true;
+
+            authService.sendConfirmEmailCode({ userId: $scope.userId }).then(function (response) {
+
+                $scope.showAlert({
+                    title: 'Письмо для подтверждения аккаунта было отправлено на указанный адрес!',
+                    content: '',
+                    type: 'success',
+                    show: false,
+                    container: '.form-alert'
+                    , template: '/app/templates/alert.html'
+                });
+
+            }).catch(function (err) {
+
+                $scope.showAlert({
+                    title: 'Произошла ошибка при отправлении письма! Попробуйте немного позже.',
+                    content: '',
+                    type: 'danger',
+                    show: false,
+                    container: '.form-alert'
+                    , template: '/app/templates/alert.html'
+                });
+
+            }).finally(function () {
+
+                $scope.laddaSendCodeFlag = false;
+
+            });
         }
 
     };

@@ -27,6 +27,7 @@ body {
     margin-bottom: 120px;
     min-width: 700px;
     color: black !important;
+    overflow: auto !important;
 }
 
 .footer {
@@ -67,6 +68,15 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.modal-dialog{
+    width: 0 !important;
+}
+.modal-title{
+    font-size: 18px; 
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
 hr {
     background-color: #D0D0D0;
     height: 2px;
@@ -404,6 +414,9 @@ a.header-link:active {
      margin: 10px 0px; 
      text-align: right; 
  }
+ .send-code {  
+     margin-bottom: 20px;
+ }
 /*Sign\in\up end*/
 
 /*Page nav begin*/
@@ -522,7 +535,7 @@ a.sub-page-nav-link:active {
     background-color: #4DB870;
 }
 .notify-info{
-    background-color: #4DFFDB;
+    background-color: #85E0FF;
 }
 /*Notify end*/
 

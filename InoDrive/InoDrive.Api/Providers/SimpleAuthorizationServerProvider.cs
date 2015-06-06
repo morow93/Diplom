@@ -120,18 +120,27 @@ namespace InoDrive.Api.Providers
         /// <returns></returns>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            ApplicationUser user = await applicationUserManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await applicationUserManager.FindByNameAsync(context.UserName);
 
             if (user == null)
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                context.SetError("invalid_grant", AppConstants.USER_NOT_FOUND);
                 return;
             }
-            //if (!user.EmailConfirmed)
-            //{
-            //    context.SetError("not_confirmed_email", "Need to confirm your email adress!", user.Id);
-            //    return;
-            //}
+
+            user = await applicationUserManager.FindAsync(context.UserName, context.Password);
+
+            if (user == null)
+            {
+                context.SetError("invalid_grant", AppConstants.WRONG_PASSWORD);
+                return;
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                context.SetError("not_confirmed_email", AppConstants.NEED_CONFIRM_EMAIL_TO_SIGNIN, user.Id);
+                return;
+            }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));

@@ -18,7 +18,7 @@ namespace InoDrive.Api.Identity
             this.UserValidator = new UserValidator<ApplicationUser>(this)
             {
                 AllowOnlyAlphanumericUserNames = false
-                //,RequireUniqueEmail = true
+                ,RequireUniqueEmail = true
             };
 
             // Configure validation logic for passwords
@@ -37,6 +37,8 @@ namespace InoDrive.Api.Identity
             this.UserLockoutEnabledByDefault = true;
             this.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             this.MaxFailedAccessAttemptsBeforeLockout = 5;
+
+            this.EmailService = new EmailService();
 
             if (dataProtectionProvider != null)
             {

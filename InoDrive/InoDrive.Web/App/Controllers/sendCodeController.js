@@ -1,4 +1,4 @@
-﻿angular.module("InoDrive").controller("sendCodeController", function ($scope, $alert, $state) {
+﻿angular.module("InoDrive").controller("sendCodeController", function ($scope, $alert, $state, authService, customStorageService) {
 
     var myAlert;
 
@@ -13,8 +13,30 @@
     $scope.formSubmit = function (form) {
 
         if (form.$valid) {
+            
+            authService.sendResetPasswordCode($scope.sendCode).then(function (response) {
+                
+                customStorageService.set("notifyToShow", {
+                    message: 'На указанную почту было отправлено письмо для сброса пароля!',
+                    type: 'success',
+                });
 
-            $state.go("reset_password");
+                $state.go("home", null, { reload: true });
+
+            }).catch(function (err) {
+
+                $scope.showAlert({
+                    title: 'Внимание!',
+                    content: err.data,
+                    type: 'danger',
+                    show: false,
+                    container: '.reset-rassword-alert'
+                });
+
+            }).finally(function () {
+
+                $scope.disableSend = false;
+            });
         }
         else {
 
