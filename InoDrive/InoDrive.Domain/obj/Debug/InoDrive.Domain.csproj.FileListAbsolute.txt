@@ -9,8 +9,9 @@ e:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\EntityFramework.xml
 e:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\EntityFramework.SqlServer.xml
 e:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 e:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.MigrationsAuthContext.Initial.resources
+e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.MigrationsDataContext.Initial.resources
+e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csproj.GenerateResource.Cache
 e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.dll
 e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.pdb
-e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.MigrationsAuthContext.Initial.resources
-e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csproj.GenerateResource.Cache
-e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.MigrationsDataContext.Initial.resources
+e:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.MigrationsAuthContext.AnotherOne.resources

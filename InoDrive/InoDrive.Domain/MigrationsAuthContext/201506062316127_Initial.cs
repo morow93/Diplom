@@ -75,6 +75,11 @@ namespace InoDrive.Domain.MigrationsAuthContext
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        DateOfBirth = c.DateTimeOffset(precision: 7),
+                        DateOfStage = c.DateTimeOffset(precision: 7),
+                        Phone = c.String(),
+                        About = c.String(),
+                        AvatarImage = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");

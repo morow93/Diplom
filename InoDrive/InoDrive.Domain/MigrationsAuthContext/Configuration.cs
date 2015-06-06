@@ -1,5 +1,7 @@
 namespace InoDrive.Domain.MigrationsAuthContext
 {
+    using InoDrive.Domain.Entities;
+    using InoDrive.Domain.Helpers;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,18 +17,20 @@ namespace InoDrive.Domain.MigrationsAuthContext
 
         protected override void Seed(InoDrive.Domain.Contexts.AuthContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            if (context.Clients.Count() > 0)
+            {
+                return;
+            }
+            context.Clients.Add(new Client
+            {
+                Id = "InoDriveAngularApp",
+                Secret = Helper.GetHash("abc@123"),
+                Name = "Front-End Angualar Based SPA",
+                ApplicationType = ApplicationTypes.JavaScript,
+                Active = true,
+                RefreshTokenLifeTime = 7200
+            });
+            context.SaveChanges(); 
         }
     }
 }

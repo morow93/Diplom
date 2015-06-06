@@ -71,6 +71,10 @@
     <Compile Include="MigrationsAuthContext\201506062316127_Initial.Designer.cs">
       <DependentUpon>201506062316127_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationsAuthContext\201506062322481_AnotherOne.cs" />
+    <Compile Include="MigrationsAuthContext\201506062322481_AnotherOne.Designer.cs">
+      <DependentUpon>201506062322481_AnotherOne.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationsAuthContext\Configuration.cs" />
     <Compile Include="MigrationsDataContext\201506062316303_Initial.cs" />
     <Compile Include="MigrationsDataContext\201506062316303_Initial.Designer.cs">
@@ -100,6 +104,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MigrationsAuthContext\201506062316127_Initial.resx">
       <DependentUpon>201506062316127_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAuthContext\201506062322481_AnotherOne.resx">
+      <DependentUpon>201506062322481_AnotherOne.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsDataContext\201506062316303_Initial.resx">
       <DependentUpon>201506062316303_Initial.cs</DependentUpon>
