@@ -1,0 +1,35 @@
+﻿
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-center">
+                    Редактирование изображения
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="crop-area">
+                    <img-crop on-change="changeCroped($dataURI)"
+                              image="myImage"
+                              area-type="square"
+                              result-image="myCroppedImage"
+                              area-min-size="150"
+                              result-image-size="150"
+                              change-on-fly="true">
+                    </img-crop>
+                </div>
+                <div class="croped-img">
+                    <img ng-src="{{myCroppedImage}}" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-6 crop-cancel text-center">
+                    <button class="btn btn-block btn-primary crop-ok" ng-click="ok()">Сохранить</button>
+                </div>
+                <div class="col-xs-6 crop-ok text-center">
+                    <button class="btn btn-block btn-warning" ng-click="cancel()">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

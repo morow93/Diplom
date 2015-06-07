@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Controllers\Auth\confirmEmailController.js" />
+    <Content Include="App\Controllers\Settings\privateCabinetController.js" />
     <Content Include="App\Controllers\Settings\settingsController.js" />
     <Content Include="App\Controllers\Trips\createTripController.js" />
     <Content Include="App\Controllers\findController.js" />
@@ -77,7 +78,9 @@
     <Content Include="App\Services\mapService.js" />
     <Content Include="App\Services\customStorageService.js" />
     <Content Include="App\Services\tripsService.js" />
+    <Content Include="App\Services\usersService.js" />
     <Content Include="App\Templates\alert.html" />
+    <Content Include="App\Templates\crop_avatar.html" />
     <Content Include="App\Templates\modal.html" />
     <Content Include="App\Templates\notify.html" />
     <Content Include="App\Views\Auth\confirm_email.html" />
@@ -105,6 +108,8 @@
     <Content Include="Content\images\futurama_fry.jpg" />
     <Content Include="Content\images\no-avatar.jpg" />
     <Content Include="Content\images\no-car.png" />
+    <Content Include="Scripts\crop\ng-img-crop.css" />
+    <Content Include="Scripts\crop\ng-img-crop.js" />
     <Content Include="Scripts\file\angular-file-upload-shim.js" />
     <Content Include="Scripts\file\angular-file-upload.js" />
     <Content Include="Scripts\ladda\angular-ladda.js" />

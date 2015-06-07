@@ -69,6 +69,12 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.sub-zero-margin{
+    margin-top: -5px;
+}
+.profile-label{
+    margin-top: 0px !important;
+}
 .image-cropper {
     position: relative;                        
     max-height: 290px;

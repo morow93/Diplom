@@ -34,7 +34,8 @@ namespace InoDrive.Domain.Helpers
         public static String TOKEN_WAS_REMOVED              = "Refresh токен был успешно удален!";
         public static String TOKEN_WASNT_REMOVED            = "Произошла ошибка при удалении refresh токена!";
         public static String TRIP_CREATE_ERROR              = "Ошибка при создании поездки!";
-        public static String TRIP_CREATE_SUCCESS            = "Ино Драйв. Подтверждение электронного адреса";
+        public static String PROFILE_EDIT_ERROR             = "Ошибка редактирования профиля!";
+
         public static String LETTER_CONFIRM_EMAIL_TITLE0 = "Ино Драйв. Подтверждение электронного адреса";
     }
 }

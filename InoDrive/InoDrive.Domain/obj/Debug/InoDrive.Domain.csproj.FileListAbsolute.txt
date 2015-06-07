@@ -13,4 +13,5 @@ E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.Initial.
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csproj.GenerateResource.Cache
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.dll
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.pdb
-E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csprojResolveAssemblyReference.cache
+E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.ChangeStageType.resources
+E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.AddSex.resources

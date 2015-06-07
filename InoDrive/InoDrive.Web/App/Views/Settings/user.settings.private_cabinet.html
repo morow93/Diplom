@@ -1,271 +1,442 @@
-﻿<div class="general-block-style" data-block-ui="myProfileBlock">
-    <div class="form-header">
-        <h3 class="text-center form-header">Редактирование личных данных</h3>
-        <hr class="custom-hr" />
-    </div>
-    <form name="formEditProfile" novalidate>
-        <div class="row profile-up-row">
-            <div class="col-xs-3">
-                <!-- avatar -->
-                <div class="row row-block-style">
-                    <div class="col-xs-12">
-                        <div class="responsive-container">
-                            <div class="dummy"></div>
-                            <div class="img-container">
-                                <img ng-show="dataUrl == null" ng-src="{{noImage}}" class="avatar" />
-                                <img ng-show="dataUrl != null" ng-src="{{dataUrl}}" class="avatar" />
+﻿<style>
+    .crop-area {
+        border: 1px solid #ddd;
+        overflow: hidden;
+        padding: 30px;
+        height: 350px;
+    }
+
+    img-crop > canvas {
+        border: 1px solid #ddd;
+    }
+
+    .croped-img {
+        padding-top: 30px;
+    }
+
+        .croped-img > img {
+            border: 1px solid #ddd;
+        }
+
+    .crop-cancel {
+        padding-left: 0px;
+    }
+
+    .crop-header {
+        margin: 0px !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+
+        <div class="form-block">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="trip-sub-title">
+                            <a href="javascript:void(0)"
+                               class="typical-link-reset"
+                               data-content="Эти данные будут доступны другим посетителя сайта"
+                               data-placement="right"
+                               data-trigger="hover"
+                               data-bs-popover>
+                                Личная информация
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm full-width"
+                                   data-ladda="laddaManageTripFlag"
+                                   ng-click="formSubmit(formManageTrip)">
+                                    Сохранить
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+        <div class="row trip-car">
+            <div class="col-xs-6">
+
+                <label class="control-label">Мое фото</label>
+
+                <div class="image-cropper">
+                    <img ng-show="dataUrl != null" ng-src="{{dataUrl}}" class="resize" />
+                    <img ng-show="dataUrl == null" ng-src="{{noImage}}" class="resize" />
+                </div>
+               
                 <div class="row">
                     <div class="col-xs-12">
-                        <span class="btn btn-default btn-file avatar-img">
-                            <span ng-show="dataUrl == null">Загрузить аватар</span>
-                            <span ng-show="dataUrl != null">Сменить аватар</span>
-                            <input type="file"
-                                   accept="image/*"
-                                   ng-model="files"
-                                   ng-file-select="onFileSelect($files)" title="">
+                        <span class="btn btn-default btn-file btn-sm full-width upload-btn">
+                            <span ng-if="dataUrl == null">Загрузить фото</span>
+                            <span ng-if="dataUrl != null">Изменить фото</span>
+                            <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="" ng-model="files">
                         </span>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" ng-show="dataUrl != null">
                     <div class="col-xs-12">
-                        <button class="btn btn-default btn-remove-img" ng-click="removeFile()" ng-show="dataUrl != null">
+                        <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeFile()">
                             Удалить фото
                         </button>
                     </div>
                 </div>
-                <div class="row main-row">
+
+                <div class="row">
                     <div class="col-xs-12">
                         <div class="form-error text-right">
-                            <span><i ng-bind="fileErrorMsg"></i></span>
+                            <span ng-bind="fileErrorMsg"></span>
                         </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-6">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Age</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="firstName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Имя"
+                                   ng-model="signup.firstName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.firstName.$dirty && formSignUp.firstName.$error.required">
+                                Укажите имя!
+                            </span>
+                            <span ng-show="!formSignUp.firstName.$error.pattern &&
+                                      (formSignUp.firstName.$error.minlength || formSignUp.firstName.$error.maxlength)">
+                                Имя должно содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.firstName.$error.pattern">
+                                Должно состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Имя</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="firstName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Имя"
+                                   ng-model="signup.firstName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.firstName.$dirty && formSignUp.firstName.$error.required">
+                                Укажите имя!
+                            </span>
+                            <span ng-show="!formSignUp.firstName.$error.pattern &&
+                                      (formSignUp.firstName.$error.minlength || formSignUp.firstName.$error.maxlength)">
+                                Имя должно содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.firstName.$error.pattern">
+                                Должно состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Фамилия</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="lastName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="signup.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.lastName.$dirty && formSignUp.lastName.$error.required">
+                                Укажите фамилию!
+                            </span>
+                            <span ng-show="!formSignUp.lastName.$error.pattern &&
+                                      (formSignUp.lastName.$error.minlength || formSignUp.lastName.$error.maxlength)">
+                                Фамилия должна содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.lastName.$error.pattern">
+                                Должна состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Телефон</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="lastName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="signup.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.lastName.$dirty && formSignUp.lastName.$error.required">
+                                Укажите фамилию!
+                            </span>
+                            <span ng-show="!formSignUp.lastName.$error.pattern &&
+                                      (formSignUp.lastName.$error.minlength || formSignUp.lastName.$error.maxlength)">
+                                Фамилия должна содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.lastName.$error.pattern">
+                                Должна состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Пол</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="lastName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="signup.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.lastName.$dirty && formSignUp.lastName.$error.required">
+                                Укажите фамилию!
+                            </span>
+                            <span ng-show="!formSignUp.lastName.$error.pattern &&
+                                      (formSignUp.lastName.$error.minlength || formSignUp.lastName.$error.maxlength)">
+                                Фамилия должна содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.lastName.$error.pattern">
+                                Должна состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">О себе</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="lastName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="signup.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.lastName.$dirty && formSignUp.lastName.$error.required">
+                                Укажите фамилию!
+                            </span>
+                            <span ng-show="!formSignUp.lastName.$error.pattern &&
+                                      (formSignUp.lastName.$error.minlength || formSignUp.lastName.$error.maxlength)">
+                                Фамилия должна содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.lastName.$error.pattern">
+                                Должна состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label form-label">
+                            О себе
+                        </label>
+                        <textarea ng-maxlength="200"
+                                    ng-model="profile.info"
+                                    placeholder="О себе"
+                                    name="info"
+                                    class="form-control profile-info pull-left"
+                                    rows="3"></textarea>
+                        <div class="form-error text-right">
+                            <span ng-show="formEditProfile.info.$error.maxlength">
+                                <i>Не более 200 символов!</i>
+                            </span>
+                        </div>
+                    </div>                   
+                </div>
+ 
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label">Вожу машину с</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            <input name="lastName"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="signup.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
+                        </div>
+                        <div class="form-error">
+                            <span ng-show="formSignUp.lastName.$dirty && formSignUp.lastName.$error.required">
+                                Укажите фамилию!
+                            </span>
+                            <span ng-show="!formSignUp.lastName.$error.pattern &&
+                                      (formSignUp.lastName.$error.minlength || formSignUp.lastName.$error.maxlength)">
+                                Фамилия должна содержать от 2 до 20 букв!
+                            </span>
+                            <span ng-show="formSignUp.lastName.$error.pattern">
+                                Должна состоять только из букв русского алфавита!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        
+        <div class="form-alert fluid-form-alert form-find-alert"></div>
+                            
+        <div class="form-block thrid-form-block">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="trip-sub-title">
+                        <a href="javascript:void(0)"
+                            class="typical-link-reset"
+                            data-content="Данные автоматически подгружаются из вашего личного кабинета"
+                            data-placement="right"
+                            data-trigger="hover"
+                            data-bs-popover>
+                            Информация о машине (?)
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-9">
-                <div class="row main-row">
-                    <div class="col-xs-6">
-                        <div class="form-group-elements">
-                            <!--input for first name-->
-                            <div class="form-element">
-                                <div class="row">
-                                    <div class="col-xs-4 no-padding-right">
-                                        <label class="control-label pull-right form-label">Имя</label>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <input placeholder="Имя"
-                                               name="firstName"
-                                               type="text"
-                                               class="form-control"
-                                               ng-minlength="2"
-                                               ng-maxlength="20"
-                                               ng-model="profile.firstName"
-                                               ng-pattern="/^[a-zA-Zа-яА-Я]+$/"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-error text-right">
-                                            <span ng-show="formEditProfile.firstName.$dirty && formEditProfile.firstName.$error.required">
-                                                <i>Пустое поле!</i>
-                                            </span>
-                                            <span ng-show="formEditProfile.firstName.$error.pattern">
-                                                <i>Должно состоять только из букв!</i>
-                                            </span>
-                                            <span ng-show="!formEditProfile.firstName.$error.pattern &&
-                                                  (formEditProfile.firstName.$error.minlength || formEditProfile.firstName.$error.maxlength)">
-                                                <i>Должно содержать не менее 2, но не более 20 букв!</i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--input for last name-->
-                            <div class="form-element">
-                                <div class="row">
-                                    <div class="col-xs-4 no-padding-right">
-                                        <label class="control-label pull-right form-label">Фамилия</label>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <input placeholder="Фамилия"
-                                               name="lastName"
-                                               type="text"
-                                               class="form-control"
-                                               ng-minlength="2"
-                                               ng-maxlength="20"
-                                               ng-model="profile.lastName"
-                                               ng-pattern="/^[a-zA-Zа-яА-Я]+$/"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-error text-right">
-                                            <span ng-show="formEditProfile.lastName.$dirty && formEditProfile.lastName.$error.required">
-                                                <i>Пустое поле!</i>
-                                            </span>
-                                            <span ng-show="formEditProfile.lastName.$error.pattern">
-                                                <i>Должна состоять только из букв!</i>
-                                            </span>
-                                            <span ng-show="!formEditProfile.lastName.$error.pattern &&
-                                                  (formEditProfile.lastName.$error.minlength || formEditProfile.lastName.$error.maxlength)">
-                                                <i>Должна содержать не менее 2, но не более 20 букв!</i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        </div>
+
+        <div class="row trip-car">
+            <div class="col-xs-6">
+
+                <label class="control-label">Фото машины</label>
+
+                <div class="image-cropper">
+                    <img ng-show="trip.dataUrl != null" ng-src="{{trip.dataUrl}}" class="resize" />
+                    <img ng-show="trip.dataUrl == null" ng-src="{{noImage}}" class="resize" />
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="btn btn-default btn-file btn-sm full-width upload-btn">
+                            <span ng-if="trip.dataUrl == null">Загрузить фото</span>
+                            <span ng-if="trip.dataUrl != null">Изменить фото</span>
+                            <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">
+                        </span>
                     </div>
-                    <div class="col-xs-6">
-                        <div class="form-group-elements">
-                            <!--input for age-->
-                            <div class="form-element">
-                                <div class="row">
-                                    <div class="col-xs-4 no-padding-right">
-                                        <label class="control-label pull-right form-label">Возраст</label>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <input placeholder="Возраст"
-                                               name="age"
-                                               type="number"
-                                               class="form-control"
-                                               min="14"
-                                               max="80"
-                                               ng-model="profile.age">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-8 col-xs-offset-4">
-                                        <div class="form-error text-right">
-                                            <span ng-show="formEditProfile.age.$error.min">
-                                                <i>Слишком маленький возраст!</i>
-                                            </span>
-                                            <span ng-show="formEditProfile.age.$error.max">
-                                                <i>Слишком большой возраст!</i>
-                                            </span>
-                                            <span ng-show="formEditProfile.age.$error.number">
-                                                <i>Должен содержать только цифры!</i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--input for phone-->
-                            <div class="form-element">
-                                <div class="row">
-                                    <div class="col-xs-4 no-padding-right">
-                                        <label class="control-label pull-right form-label">Телефон</label>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <input placeholder="Мобильный телефон"
-                                               type="text"
-                                               name="phone"
-                                               class="form-control"
-                                               ng-model="profile.phone"
-                                               data-ui-br-phone-number>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-error text-right">
-                                            <span ng-show="!formEditProfile.phone.$valid">
-                                                <i>Недопустимый мобильный номер!</i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <div class="row" ng-show="trip.dataUrl != null">
+                    <div class="col-xs-12">
+                        <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeFile()">
+                            Удалить фото
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-error text-right">
+                            <span ng-bind="fileErrorMsg"></span>
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="col-xs-6">
+
                 <div class="row">
-                    <div class="col-xs-8">
-                        <!-- input for email -->
-                        <div class="form-element">
-                            <div class="row">
-                                <div class="col-xs-3 no-padding-right">
-                                    <label class="control-label pull-right form-label">
-                                        Почта
-                                        <a class="link-line"
-                                           href=""
-                                           data-trigger="hover"
-                                           data-bs-tooltip="emailTooltip"
-                                           data-placement="top-left">
-                                            (?)
-                                        </a>
-                                    </label>
-                                </div>
-                                <div class="col-xs-9 no-padding-right">
-                                    <input autocomplete="off"
-                                           type="email"
-                                           name="email"
-                                           placeholder="E-mail"
-                                           class="form-control pull-left"
-                                           ng-model="profile.email">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 no-padding-right">
-                                    <div class="form-error text-right">
-                                        <span ng-show="formEditProfile.$error.email">
-                                            <i> Недопустимый e-mail!</i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-xs-12">
+                        <label class="control-label">Модель машины</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
+                            <input placeholder="Модель машины"
+                                    type="text"
+                                    name="car"
+                                    class="form-control input-sm"
+                                    ng-model="trip.car">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <!-- input for info -->
-                        <div class="form-element">
-                            <div class="row">
-                                <div class="col-xs-2 no-padding-right">
-                                    <label class="control-label pull-right form-label">
-                                        О себе
-                                    </label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <textarea ng-maxlength="200"
-                                              ng-model="profile.info"
-                                              placeholder="О себе"
-                                              name="info"
-                                              class="form-control profile-info pull-left"
-                                              rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-error text-right">
-                                        <span ng-show="formEditProfile.info.$error.maxlength">
-                                            <i>Не более 200 символов!</i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                        <label class="control-label comfort-label">Уровень комфорта</label>
+                        <button type="button"
+                                class="btn btn-sm btn-default text-left full-width car-class-btn"
+                                ng-model="trip.carClass"
+                                data-html="1"
+                                data-bs-options="class.value as class.label for class in classes"
+                                data-placeholder="Выберите уровень комфорта"
+                                data-bs-select>
+                            Action <span class="caret"></span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-bottom-block">
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-8">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2">
+                            <a href="javascript:void(0)"
+                                class="btn btn-primary btn-sm full-width"
+                                data-ladda="laddaManageTripFlag"
+                                ng-click="formSubmit(formManageTrip, true)">
+                                Создать поездку
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <hr class="custom-hr" />
-        <div class="row form-down-row">
-            <div class="col-xs-10">
-                <div class="form-alert"></div>
-            </div>
-            <div class="col-xs-2 save-button">
-                <button class="btn btn-primary text-center pull-right"
-                        ng-click="editProfile(formEditProfile)"
-                        ng-disabled="disableSubmit">
-                    Сохранить
-                </button>
-            </div>
-        </div>
-    </form>
+        </div>     
+
+    </div>
 </div>

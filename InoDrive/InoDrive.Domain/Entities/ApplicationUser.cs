@@ -16,7 +16,7 @@ namespace InoDrive.Domain.Entities
         public String LastName { get; set; }
         
         public DateTimeOffset? DateOfBirth { get; set; }
-        public DateTimeOffset? DateOfStage { get; set; }
+        public Int32 Stage { get; set; }
 
         public String Phone { get; set; }
         public String About { get; set; }
@@ -27,6 +27,8 @@ namespace InoDrive.Domain.Entities
         public String CarImage { get; set; }
         public String CarImageExtension { get; set; }
         public String CarClass { get; set;}
+
+        public Boolean Sex { get; set; }
 
         //public ApplicationUser() { }
 

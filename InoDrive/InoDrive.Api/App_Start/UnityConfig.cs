@@ -18,10 +18,12 @@ namespace InoDrive.Api
         {
             var container = new UnityContainer();
 
-            //container.RegisterType<AuthContext>();
-            //container.RegisterType<DataContext>();
+            container.RegisterType<InoDriveContext>();
 
             container.RegisterType<ITripsRepository, TripsRepository>(
+                new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(InoDriveContext)));
+
+            container.RegisterType<IUsersRepository, UsersRepository>(
                 new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(InoDriveContext)));
 
             container.RegisterType<IAuthenticationRepository, AuthenticationRepository>(

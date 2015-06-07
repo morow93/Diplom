@@ -19,6 +19,7 @@ var app = angular.module('InoDrive',
     'angular-ladda',
     'angularFileUpload',
     'angular-loading-bar',
+    'ngImgCrop'
 ]);
 
 //states config
@@ -209,6 +210,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 .state("user.settings.private_cabinet", {
                     url: "",
                     templateUrl: "/app/views/settings/user.settings.private_cabinet.html",
+                    controller: "privateCabinetController",
+                    resolve: {
+                        store: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load(
+                                {
+                                    name: "InoDrive",
+                                    files: ["app/controllers/settings/privateCabinetController.js"]
+                                }
+                            );
+                        }
+                    }
                 })
                 .state("user.settings.change_email", {
                     url: "change_email/",

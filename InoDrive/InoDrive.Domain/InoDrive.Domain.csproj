@@ -71,6 +71,14 @@
     <Compile Include="Migrations\201506071504416_Initial.Designer.cs">
       <DependentUpon>201506071504416_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506072051334_ChangeStageType.cs" />
+    <Compile Include="Migrations\201506072051334_ChangeStageType.Designer.cs">
+      <DependentUpon>201506072051334_ChangeStageType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506072058393_AddSex.cs" />
+    <Compile Include="Migrations\201506072058393_AddSex.Designer.cs">
+      <DependentUpon>201506072058393_AddSex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
@@ -83,12 +91,15 @@
     <Compile Include="Models\InputModels\InputChangeEmailModel.cs" />
     <Compile Include="Models\InputModels\InputChangePasswordModel.cs" />
     <Compile Include="Models\PlaceModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstract\IAuthenticationRepository.cs" />
     <Compile Include="Repositories\Abstract\ITripsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IUsersRepository.cs" />
     <Compile Include="Repositories\Concrete\AuthenticationRepository.cs" />
     <Compile Include="Repositories\Concrete\TripsRepository.cs" />
+    <Compile Include="Repositories\Concrete\UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -100,6 +111,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201506071504416_Initial.resx">
       <DependentUpon>201506071504416_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506072051334_ChangeStageType.resx">
+      <DependentUpon>201506072051334_ChangeStageType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506072058393_AddSex.resx">
+      <DependentUpon>201506072058393_AddSex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
