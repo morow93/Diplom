@@ -28,6 +28,10 @@ namespace InoDrive.Domain.Helpers
         public static String EMAIL_WASNT_RESETED            = "Email не был сменен!";
         public static String NEED_CONFIRM_EMAIL_TO_SIGNIN   = "Вы должны подтвердить email, чтобы выполнить вход!";
         public static String WRONG_PASSWORD                 = "Вы ввели неверный пароль!";
+        public static String REGISTRATION_ERROR             = "Произошла ошибка при регистрации пользователя!";
+        public static String REGISTRATION_SUCCESS           = "Пользователь был успешно зарегистрирован!";
+        public static String TOKEN_WAS_REMOVED              = "Refresh токен был успешно удален!";
+        public static String TOKEN_WASNT_REMOVED            = "Произошла ошибка при удалении refresh токена!";
         public static String LETTER_CONFIRM_EMAIL_TITLE8 = "Ино Драйв. Подтверждение электронного адреса";
         public static String LETTER_CONFIRM_EMAIL_TITLE9 = "Ино Драйв. Подтверждение электронного адреса";
         public static String LETTER_CONFIRM_EMAIL_TITLE0 = "Ино Драйв. Подтверждение электронного адреса";

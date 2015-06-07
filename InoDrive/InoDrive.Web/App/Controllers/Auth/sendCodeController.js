@@ -14,6 +14,8 @@
 
         if (form.$valid) {
             
+            $scope.laddaSendCodeFlag = true;
+
             authService.sendResetPasswordCode($scope.sendCode).then(function (response) {
                 
                 customStorageService.set("notifyToShow", {
@@ -35,7 +37,7 @@
 
             }).finally(function () {
 
-                $scope.disableSend = false;
+                $scope.laddaSendCodeFlag = false;
             });
         }
         else {

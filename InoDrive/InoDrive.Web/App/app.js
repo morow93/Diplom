@@ -40,14 +40,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state("signin", {
         url: "/signin/",
-        controller: "signinController",
-        templateUrl: "/app/views/signin.html",
+        controller: "signInController",
+        templateUrl: "/app/views/auth/signin.html",
         resolve: {
             store: function ($ocLazyLoad) {
                 return $ocLazyLoad.load(
                     {
                         name: "InoDrive",
-                        files: ["app/controllers/signinController.js"]
+                        files: ["app/controllers/auth/signInController.js"]
                     }
                 );
             }
@@ -56,14 +56,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state("signup", {
         url: "/signup/",
-        controller: "signupController",
-        templateUrl: "/app/views/signup.html",
+        controller: "signUpController",
+        templateUrl: "/app/views/auth/signup.html",
         resolve: {
             store: function ($ocLazyLoad) {
                 return $ocLazyLoad.load(
                     {
                         name: "InoDrive",
-                        files: ["app/controllers/signupController.js"]
+                        files: ["app/controllers/auth/signUpController.js"]
                     }
                 );
             }
@@ -71,15 +71,15 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 
     $stateProvider.state("confirm_email", {
-        templateUrl: "/app/views/confirmEmail.html",
+        templateUrl: "/app/views/auth/confirm_email.html",
         controller: "confirmEmailController",
-        url: "/confirmEmail?userId&code",
+        url: "/confirm_email?userId&code",
         resolve: {
             loadCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
 
                 return $ocLazyLoad.load({
                     name: 'InoDrive',
-                    files: ['App/Controllers/confirmEmailController.js']
+                    files: ['app/controllers/auth/confirmEmailController.js']
                 });
 
             }]
@@ -89,13 +89,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state("send_code", {
         url: "/send_code/",
         controller: "sendCodeController",
-        templateUrl: "/app/views/send_code.html",
+        templateUrl: "/app/views/auth/send_code.html",
         resolve: {
             store: function ($ocLazyLoad) {
                 return $ocLazyLoad.load(
                     {
                         name: "InoDrive",
-                        files: ["app/controllers/sendCodeController.js"]
+                        files: ["app/controllers/auth/sendCodeController.js"]
                     }
                 );
             }
@@ -103,15 +103,15 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 
     $stateProvider.state("reset_password", {
-        url: "/reset_password/?userId&code",
+        url: "/reset_password?userId&code",
         controller: "resetPasswordController",
-        templateUrl: "/app/views/reset_password.html",
+        templateUrl: "/app/views/auth/reset_password.html",
         resolve: {
             store: function ($ocLazyLoad) {
                 return $ocLazyLoad.load(
                     {
                         name: "InoDrive",
-                        files: ["app/controllers/resetPasswordController.js"]
+                        files: ["app/controllers/auth/resetPasswordController.js"]
                     }
                 );
             }
@@ -222,7 +222,7 @@ app.config(function ($httpProvider) {
 });
 
 //run run run
-app.run(function ($rootScope, $state, notify, authService, customStorageService, localStorageService) {
+app.run(function ($rootScope, $state, notify, authService, customStorageService) {
 
     authService.fillAuthorizationData();
 
@@ -232,6 +232,18 @@ app.run(function ($rootScope, $state, notify, authService, customStorageService,
         if (notifyToShow) {
             displayNotificationOnStageChange(notify, notifyToShow.message, notifyToShow.type);
             customStorageService.remove("notifyToShow");
+        }
+
+        if (toState.resolve.auth) {
+            var authorizationData = authService.getAuthorizationData();
+            if (!authorizationData || !authorizationData.isAuth) {
+
+                customStorageService.set("notifyToShow", {
+                    message: 'В доступе отказано! Для того, чтобы получить доступ необходимо выполнить вход!',
+                    type: 'danger',
+                });
+                $state.go("signin", null, { reload: true });
+            }
         }
 
     });
@@ -244,7 +256,7 @@ function displayNotificationOnStageChange(notify, message, type) {
         startTop: 15,
         verticalSpacing: 15,
         maximumOpen: 5,
-        duration: 5000
+        duration: 10000
     });
     notify({
         type: type,

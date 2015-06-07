@@ -7,7 +7,7 @@ namespace InoDrive.Domain.MigrationsAuthContext
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<InoDrive.Domain.Contexts.AuthContext>
+    public sealed class Configuration : DbMigrationsConfiguration<InoDrive.Domain.Contexts.AuthContext>
     {
         public Configuration()
         {

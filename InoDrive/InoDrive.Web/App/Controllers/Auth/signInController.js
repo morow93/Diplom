@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signinController', function ($scope, $alert, $state, authService) {
+﻿angular.module('InoDrive').controller('signInController', function ($scope, $alert, $state, customStorageService, authService) {
 
     var myAlert;
 
@@ -18,6 +18,11 @@
 
             authService.signIn($scope.signin).then(function (response) {
 
+                customStorageService.set("notifyToShow", {
+                    message: 'Поздрвляем! Вы успешно вполнили вход!',
+                    type: 'success',
+                });
+                
                 $state.go("user.view", null, { reload: true });
 
             }).catch(function (error) {
@@ -78,6 +83,8 @@
                     container: '.form-alert'
                     , template: '/app/templates/alert.html'
                 });
+
+                $scope.sendCodeFlag = false;
 
             }).catch(function (err) {
 

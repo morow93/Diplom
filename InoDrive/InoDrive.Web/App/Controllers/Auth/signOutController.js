@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signOutController', function ($scope, $state, $modal, authService) {
+﻿angular.module('InoDrive').controller('signOutController', function ($scope, $state, $modal, customStorageService, authService) {
 
     $scope.message = "Вы действительно хотите выйти?"
 
@@ -23,6 +23,12 @@
         authService.signOut().then(function () {
 
             signOutModal.$promise.then(signOutModal.hide);
+
+            customStorageService.set("notifyToShow", {
+                message: 'Поздрвляем! Вы успешно вполнили выход!',
+                type: 'success',
+            });
+
             $state.go("home", null, { reload: true });
 
         }).catch(function (e) {

@@ -14,7 +14,7 @@
 
         if (form.$valid) {
 
-            $state.go("find");
+            $state.go("find", null, { reload: true });
         }
         else {
 

@@ -54,13 +54,15 @@ app.factory("authInterceptorService", [
                     
                     authService.signOut().then(function () {
 
+                        var authorizationData = authService.getAuthorizationData();
+                        if (authorizationData && authorizationData.isAuth) {
+                            customStorageService = customStorageService || $injector.get("customStorageService");
+                            customStorageService.set("notifyToShow", {
+                                message: 'Ваша сессия была завершена!',
+                                type: 'info',
+                            });
+                        }
                         authService.removeAuthorizationData();
-
-                        customStorageService = customStorageService || $injector.get("customStorageService");
-                        customStorageService.set("notifyToShow", {
-                            message: 'Ваша сессия была завершена!',
-                            type: 'info',
-                        });
 
                         $state = $state || $injector.get("$state");
                         $state.go("home", null, { reload: true });

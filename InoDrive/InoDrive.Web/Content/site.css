@@ -68,6 +68,16 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.confirm-email-title{
+    font-size: 20px; 
+    font-weight: 600;
+}
+.confirm-email-subtitle{
+    margin-top: 10px;
+}
+.common-padding{
+    padding: 50px;
+}
 .modal-dialog{
     width: 0 !important;
 }

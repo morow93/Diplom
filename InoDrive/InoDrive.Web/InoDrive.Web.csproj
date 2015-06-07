@@ -57,17 +57,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\Controllers\confirmEmailController.js" />
+    <Content Include="App\Controllers\Auth\confirmEmailController.js" />
     <Content Include="App\Controllers\createTripController.js" />
     <Content Include="App\Controllers\findController.js" />
     <Content Include="App\Controllers\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
-    <Content Include="App\Controllers\resetPasswordController.js" />
-    <Content Include="App\Controllers\sendCodeController.js" />
-    <Content Include="App\Controllers\signOutController.js" />
+    <Content Include="App\Controllers\Auth\resetPasswordController.js" />
+    <Content Include="App\Controllers\Auth\sendCodeController.js" />
+    <Content Include="App\Controllers\Auth\signOutController.js" />
     <Content Include="App\Controllers\userController.js" />
-    <Content Include="App\Controllers\signinController.js" />
-    <Content Include="App\Controllers\signupController.js" />
+    <Content Include="App\Controllers\Auth\signInController.js" />
+    <Content Include="App\Controllers\Auth\signUpController.js" />
     <Content Include="App\Controllers\userViewController.js" />
     <Content Include="App\Directives\match.js" />
     <Content Include="App\Directives\starRating.js" />
@@ -79,9 +79,9 @@
     <Content Include="App\Templates\alert.html" />
     <Content Include="App\Templates\modal.html" />
     <Content Include="App\Templates\notify.html" />
-    <Content Include="App\Views\confirmEmail.html" />
-    <Content Include="App\Views\reset_password.html" />
-    <Content Include="App\Views\send_code.html" />
+    <Content Include="App\Views\Auth\confirm_email.html" />
+    <Content Include="App\Views\Auth\reset_password.html" />
+    <Content Include="App\Views\Auth\send_code.html" />
     <Content Include="App\Views\User\user.my_bids.html" />
     <Content Include="App\Views\User\user.html" />
     <Content Include="App\Views\User\user.my_trips.html" />
@@ -96,7 +96,9 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\avatar.jpg" />
     <Content Include="Content\images\car.jpg" />
+    <Content Include="Content\images\fallout_boy.png" />
     <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\futurama_fry.jpg" />
     <Content Include="Content\images\no-avatar.jpg" />
     <Content Include="Scripts\ladda\angular-ladda.js" />
     <Content Include="Scripts\angular-local-storage.js" />
@@ -143,8 +145,8 @@
     <Content Include="App\app.js" />
     <Content Include="App\Views\User\user.find.html" />
     <Content Include="App\Views\home.html" />
-    <Content Include="App\Views\signin.html" />
-    <Content Include="App\Views\signup.html" />
+    <Content Include="App\Views\Auth\signin.html" />
+    <Content Include="App\Views\Auth\signup.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

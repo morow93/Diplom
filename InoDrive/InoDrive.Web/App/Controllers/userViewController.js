@@ -17,8 +17,8 @@
     
     $scope.showEnded = true;
 
-    tripsService.test().then(function () {
-
+    tripsService.test().then(function (ddd) {
+        debugger;
         console.log("was");
 
     });

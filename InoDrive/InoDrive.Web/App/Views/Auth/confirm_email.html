@@ -1,0 +1,23 @@
+﻿<div class="typical-wrapper common-padding" ng-if="wasLoaded">
+
+    <div ng-if="success || failure">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="confirm-email-title">
+                    <span ng-if="failure">Внимание! Что-то пошло не так! Возможно email уже был подтвержден...</span>
+                    <span ng-if="success">Поздравляем! Вы подтвердили свой электронный адрес!</span>
+                </div>
+                <div class="contrast-color confirm-email-subtitle">
+                    <span ng-if="failure">...А сейчас вы будете перенаправлены на главную страницу сайта</span>
+                    <span ng-if="success">...И сейчас вы будете перенаправлены на страницу входа</span>              
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <img class="full-width" src="content/images/futurama_fry.jpg" ng-if="failure" />
+                <img class="full-width" src="content/images/fallout_boy.png" ng-if="success" />
+            </div>
+        </div>
+
+    </div>
+</div>

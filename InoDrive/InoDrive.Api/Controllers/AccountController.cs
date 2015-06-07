@@ -72,12 +72,12 @@ namespace InoDrive.Api.Controllers
 
                     await _userManager.SendEmailAsync(user.Id, AppConstants.LETTER_CONFIRM_EMAIL_TITLE, emailHtmlBody);
 
-                    return Ok(new { status = Statuses.CommonSuccess });
+                    return Ok(new { status = Statuses.CommonSuccess, message = AppConstants.REGISTRATION_SUCCESS });
                 }
             }
             catch(Exception e)
             {
-                return Ok(new { status = Statuses.CommonSuccess });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.REGISTRATION_ERROR }));
             }           
         }
 
@@ -93,7 +93,7 @@ namespace InoDrive.Api.Controllers
             var user = _userManager.FindById(model.UserId);
             if (user == null)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND }));
             }
 
             model.Code = model.Code.Replace(" ", "+");//fix wrong encoding
@@ -105,9 +105,9 @@ namespace InoDrive.Api.Controllers
                 var strError = String.Join(" ", result.Errors);
                 if (strError.Contains("Invalid token"))
                 {
-                    return Ok(new { status = Statuses.CommonFailure, message = AppConstants.INVALID_CONFIRM_EMAIL_CODE });
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.INVALID_CONFIRM_EMAIL_CODE }));
                 }
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_CONFIRMED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_CONFIRMED }));
             }
 
             _userManager.UpdateSecurityStamp(model.UserId);//for invalidate current token
@@ -123,10 +123,15 @@ namespace InoDrive.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            _authenticationRepository.RemoveRefreshToken(model);
-
-            return Ok("Refresh token was successfuly removed.");
+            try
+            {
+                _authenticationRepository.RemoveRefreshToken(model);
+                return Ok(new { status = Statuses.CommonSuccess, message = AppConstants.TOKEN_WAS_REMOVED });
+            }
+            catch
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.TOKEN_WASNT_REMOVED }));
+            }
         }
 
         [HttpPost]
@@ -137,30 +142,23 @@ namespace InoDrive.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            try
+            
+            var user = _userManager.FindById(model.UserId);
+            if (user != null)
             {
-                var user = _userManager.FindById(model.UserId);
-                if (user != null)
-                {
-                    _userManager.UpdateSecurityStamp(model.UserId);//for invalidate token(previous)
-                    var code = _userManager.GenerateEmailConfirmationToken(user.Id);
+                _userManager.UpdateSecurityStamp(model.UserId);//for invalidate token(previous)
+                var code = _userManager.GenerateEmailConfirmationToken(user.Id);
 
-                    //create html body for email template
-                    var emailModel = new InputEmailTemplateModel { Initials = user.FirstName + " " + user.LastName, UserId = user.Id, Code = code };
-                    var emailHtmlBody = GenerateEmailTemplate(emailModel, "ConfirmEmailTemplateMessage.cshtml");
-                    //send
-                    await _userManager.SendEmailAsync(user.Id, AppConstants.LETTER_CONFIRM_EMAIL_TITLE, emailHtmlBody);
-                    return Ok(new { status = Statuses.CommonSuccess, message = AppConstants.CONFRIM_LETTER_WAS_SENDED });
-                }
-                else
-                {
-                    return Ok(new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND });
-                }
+                //create html body for email template
+                var emailModel = new InputEmailTemplateModel { Initials = user.FirstName + " " + user.LastName, UserId = user.Id, Code = code };
+                var emailHtmlBody = GenerateEmailTemplate(emailModel, "ConfirmEmailTemplateMessage.cshtml");
+                //send
+                await _userManager.SendEmailAsync(user.Id, AppConstants.LETTER_CONFIRM_EMAIL_TITLE, emailHtmlBody);
+                return Ok(new { status = Statuses.CommonSuccess, message = AppConstants.CONFRIM_LETTER_WAS_SENDED });
             }
-            catch
+            else
             {
-                return BadRequest();
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND }));
             }
         }
 
@@ -180,11 +178,11 @@ namespace InoDrive.Api.Controllers
             var user = _userManager.FindByEmail(model.Email);
             if (user == null)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND }));
             }
             if (!user.EmailConfirmed)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_CONFIRMED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_CONFIRMED }));
             }
 
             try
@@ -202,7 +200,7 @@ namespace InoDrive.Api.Controllers
             }
             catch
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.RESET_PASSWORD_WASNT_SENDED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.RESET_PASSWORD_WASNT_SENDED }));
             }
         }
 
@@ -218,11 +216,11 @@ namespace InoDrive.Api.Controllers
             var user = _userManager.FindById(model.UserId);
             if (user == null)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND }));
             }
             if (!user.EmailConfirmed)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_CONFIRMED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_CONFIRMED }));
             }
 
             model.Code = model.Code.Replace(" ", "+") + "==";//fix wrong encoding 
@@ -234,13 +232,14 @@ namespace InoDrive.Api.Controllers
                 var strError = String.Join(" ", result.Errors);
                 if (strError.Contains("Invalid token"))
                 {
-                    return Ok(new { status = Statuses.CommonFailure, message = AppConstants.INVALID_RESET_PASSWORD_CODE });
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.INVALID_RESET_PASSWORD_CODE }));
                 }
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.PASSWORD_WASNT_RESETED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.PASSWORD_WASNT_RESETED }));
             }
 
             _userManager.UpdateSecurityStamp(model.UserId);//for invalidate token(current)
             return Ok(new { status = Statuses.CommonSuccess, message = AppConstants.PASSWORD_WAS_RESETED });
+
         }
 
         #endregion
@@ -260,11 +259,11 @@ namespace InoDrive.Api.Controllers
             var user = _userManager.FindById(model.UserId);
             if (user == null)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND }));
             }
             if (!_userManager.CheckPassword(user, model.OldPassword))
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.WRONG_OLD_PASSWORD_VALUE });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.WRONG_OLD_PASSWORD_VALUE }));
             }
 
             try
@@ -274,7 +273,7 @@ namespace InoDrive.Api.Controllers
             }
             catch
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.PASSWORD_WASNT_RESETED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.PASSWORD_WASNT_RESETED }));
             }
         }
 
@@ -291,15 +290,15 @@ namespace InoDrive.Api.Controllers
             var user = _userManager.FindById(model.UserId);
             if (user == null)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.USER_NOT_FOUND }));
             }
             if (user.UserName != model.OldEmail)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.WRONG_OLD_EMAIL_VALUE });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.WRONG_OLD_EMAIL_VALUE }));
             }
             if (_userManager.FindByEmail(model.NewEmail) != null)
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_ALREADY_EXIST });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_ALREADY_EXIST }));
             }
 
             try
@@ -313,7 +312,7 @@ namespace InoDrive.Api.Controllers
             }
             catch
             {
-                return Ok(new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_RESETED });
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.EMAIL_WASNT_RESETED }));
             }
         }
 

@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signupController', function ($scope, $alert, $state, $timeout, authService) {
+﻿angular.module('InoDrive').controller('signUpController', function ($scope, $alert, $state, $timeout, authService) {
 
     var myAlert;
 
@@ -27,7 +27,7 @@
                     template: '/app/templates/alert.html'
                 });
 
-                $timeout(function () { $state.go("home"); }, 3000);
+                $timeout(function () { $state.go("home", null, { reload: true }); }, 3000);
 
             }).catch(function (response) {
 
