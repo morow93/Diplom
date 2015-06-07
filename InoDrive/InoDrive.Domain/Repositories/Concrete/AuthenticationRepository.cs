@@ -13,12 +13,12 @@ namespace InoDrive.Domain.Repositories.Concrete
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
-        public AuthenticationRepository(AuthContext authContext)
+        public AuthenticationRepository(InoDriveContext authContext)
         {
             _ctx = authContext;
         }
 
-        private AuthContext _ctx;
+        private InoDriveContext _ctx;
 
         /// <summary>
         /// Find reshresh token by its id

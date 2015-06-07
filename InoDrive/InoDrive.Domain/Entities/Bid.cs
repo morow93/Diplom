@@ -18,7 +18,7 @@ namespace InoDrive.Domain.Entities
         public String UserId { get; set; }
         public Int32 TripId { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual Trip Trip { get; set; }
     }
 }

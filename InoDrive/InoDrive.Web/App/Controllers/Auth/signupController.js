@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('signUpController', function ($scope, $alert, $state, $timeout, authService) {
+﻿angular.module('InoDrive').controller('signUpController', function ($scope, $alert, $state, $timeout, authService, customStorageService) {
 
     var myAlert;
 
@@ -14,20 +14,17 @@
 
         if (form.$valid) {
 
+            $scope.laddaSignUpFlag = true;
+
             authService.signUp($scope.signup).then(function (response) {
-
-                $scope.showAlert({
-                    title:
-                        "На указанную почту было выслано письмо для подтверждения аккаунта! " +
-                        "А сейчас Вы будете перенаправлены на главную страницу сайта.",
-                    content: "",
-                    type: "success",
-                    show: false,
-                    container: '.form-alert',
-                    template: '/app/templates/alert.html'
+                
+                customStorageService.set("notifyToShow", {
+                    message:
+                        'Вы успешно зарегистрирвоались! Но чтобы войти, Вы должны подтвердить свой аккаунт! ' +
+                        '(на указанную почту было выслано письмо для подтверждения).',
+                    type: 'success',
                 });
-
-                $timeout(function () { $state.go("home", null, { reload: true }); }, 3000);
+                $state.go("home", null, { reload: true });                
 
             }).catch(function (response) {
 
@@ -51,6 +48,10 @@
                     container: '.form-alert',
                     template: '/app/templates/alert.html'
                 });
+
+            }).finally(function () {
+
+                $scope.laddaSignUpFlag = false;
 
             });
         }

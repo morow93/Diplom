@@ -28,6 +28,7 @@ body {
     min-width: 700px;
     color: black !important;
     overflow: auto !important;
+    overflow-y: scroll !important; 
 }
 
 .footer {
@@ -68,6 +69,35 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.image-cropper {
+    position: relative;                        
+    max-height: 290px;
+    overflow: hidden;      
+    border: 1px solid #eee;                
+}
+img.resize {
+    width: 100%;
+    height: auto;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
 .confirm-email-title{
     font-size: 20px; 
     font-weight: 600;
@@ -178,6 +208,10 @@ button:focus {
 .alert{
     border-radius: 0px;
     margin: 0px;
+}
+
+.loading-block{
+    margin: 10px;
 }
 
 .form-submit {
@@ -735,7 +769,7 @@ li.filled {
     padding-bottom: 0px;
     border: 1px solid #D0D0D0 ;
 }
-.form-find-trip {
+.form-find-bottom-block {
     padding-bottom: 20px;
 } 
 .trip-row-left{
@@ -795,7 +829,7 @@ span.caret {
     margin-bottom: 15px;
 }
 .trip-car {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .comfort-label {
     margin-top: 35px;

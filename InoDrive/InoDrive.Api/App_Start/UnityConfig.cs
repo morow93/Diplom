@@ -21,14 +21,14 @@ namespace InoDrive.Api
             //container.RegisterType<AuthContext>();
             //container.RegisterType<DataContext>();
 
-            //container.RegisterType<IPostRepository, PostRepository>(
-            //    new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(DataContext)));
+            container.RegisterType<ITripsRepository, TripsRepository>(
+                new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(InoDriveContext)));
 
             container.RegisterType<IAuthenticationRepository, AuthenticationRepository>(
-                new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(AuthContext)));
+                new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(InoDriveContext)));
 
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
-                new InjectionConstructor(typeof(AuthContext)));
+                new InjectionConstructor(typeof(InoDriveContext)));
 
             container.RegisterInstance(dataProtectionProvider);
 

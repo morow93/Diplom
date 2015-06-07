@@ -58,7 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Controllers\Auth\confirmEmailController.js" />
-    <Content Include="App\Controllers\createTripController.js" />
+    <Content Include="App\Controllers\Settings\settingsController.js" />
+    <Content Include="App\Controllers\Trips\createTripController.js" />
     <Content Include="App\Controllers\findController.js" />
     <Content Include="App\Controllers\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
@@ -82,10 +83,13 @@
     <Content Include="App\Views\Auth\confirm_email.html" />
     <Content Include="App\Views\Auth\reset_password.html" />
     <Content Include="App\Views\Auth\send_code.html" />
+    <Content Include="App\Views\Settings\user.settings.change_email.html" />
+    <Content Include="App\Views\Settings\user.settings.change_password.html" />
+    <Content Include="App\Views\Settings\user.settings.private_cabinet.html" />
     <Content Include="App\Views\User\user.my_bids.html" />
     <Content Include="App\Views\User\user.html" />
     <Content Include="App\Views\User\user.my_trips.html" />
-    <Content Include="App\Views\User\user.settings.html" />
+    <Content Include="App\Views\Settings\user.settings.html" />
     <Content Include="Content\angular-motion.css" />
     <Content Include="Content\angular-motion.min.css" />
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
@@ -100,6 +104,9 @@
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\futurama_fry.jpg" />
     <Content Include="Content\images\no-avatar.jpg" />
+    <Content Include="Content\images\no-car.png" />
+    <Content Include="Scripts\file\angular-file-upload-shim.js" />
+    <Content Include="Scripts\file\angular-file-upload.js" />
     <Content Include="Scripts\ladda\angular-ladda.js" />
     <Content Include="Scripts\angular-local-storage.js" />
     <Content Include="Scripts\angular-notify.css" />
@@ -110,6 +117,7 @@
     <Content Include="Scripts\ladda\ladda-themeless.min.css" />
     <Content Include="Scripts\ladda\ladda.min.js" />
     <Content Include="Scripts\ladda\spin.min.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\ng-infinite-scroll.js" />
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />

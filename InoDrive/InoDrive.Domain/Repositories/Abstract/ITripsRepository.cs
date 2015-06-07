@@ -1,4 +1,5 @@
-﻿using InoDrive.Domain.Models.InputModels;
+﻿using InoDrive.Domain.Models;
+using InoDrive.Domain.Models.InputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,12 @@ namespace InoDrive.Domain.Repositories.Abstract
     {
         #region Select
 
+        CarModel GetCar(ShortUserModel model);
         //DetailsTripModel GetDetailsTrip(ManageTripModel model);
         //EditTripModel GetFullTripInfo(ManageTripModel model);
-        //LastTripInfo GetLastTripInfo(ShortUserModel model);
         //ResultFindTripsModel FindTrips(FindTripsPagedOrderModel model);
         //ResultFindTripsModel ExtendFindTrips(ExtendTripsPagedOrderModel model);
         //ResultMyTripsModel GetMyTrips(MyTripsPagedOrderModel model);
-        //List<CityModel> GetCities(string city);
 
         #endregion
 

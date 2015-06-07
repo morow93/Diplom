@@ -1,15 +1,41 @@
 ﻿<div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 user-left-column">
-        <div ng-if="authentication.isAuth">
-            <div ng-repeat="item in list">
-                <a ng-class="{'page-nav-link-active': isActiveNav(item.value), 'page-nav-link-hover': hover}"
-                   ng-mouseenter="hover = true"
-                   ng-mouseleave="hover = false"
-                   ui-sref="{{item.value}}"
-                   ng-bind="item.text"
-                   class="page-nav-link">
-                </a>
-            </div>
+        <div ng-if="authentication.isAuth">            
+            <a ng-class="{'page-nav-link-active': isActiveNav('user.view'), 'page-nav-link-hover': hover}"
+               ng-mouseenter="hover = true"
+               ng-mouseleave="hover = false"
+               data-ui-sref="user.view"
+               class="page-nav-link">
+                Моя страница
+            </a>            
+            <a ng-class="{'page-nav-link-active': isActiveNav('user.create_trip'), 'page-nav-link-hover': hover}"
+               ng-mouseenter="hover = true"
+               ng-mouseleave="hover = false"
+               data-ui-sref="user.create_trip"
+               class="page-nav-link">
+                Создать поездку
+            </a>           
+            <a ng-class="{'page-nav-link-active': isActiveNav('user.find'), 'page-nav-link-hover': hover}"
+               ng-mouseenter="hover = true"
+               ng-mouseleave="hover = false"
+               data-ui-sref="user.find"
+               class="page-nav-link">
+                Искать поездку
+            </a>           
+            <a ng-class="{'page-nav-link-active': isActiveNav('user.my_bids'), 'page-nav-link-hover': hover}"
+               ng-mouseenter="hover = true"
+               ng-mouseleave="hover = false"
+               data-ui-sref="user.my_bids"
+               class="page-nav-link">
+                Мои заявки
+            </a>           
+            <a ng-class="{'page-nav-link-active': isActiveInherited('user.settings'), 'page-nav-link-hover': hover}"
+               ng-mouseenter="hover = true"
+               ng-mouseleave="hover = false"
+               data-ui-sref="user.settings.private_cabinet"
+               class="page-nav-link">
+                Мои настройки
+            </a>           
         </div>
         <div ng-if="!authentication.isAuth">
             Войти

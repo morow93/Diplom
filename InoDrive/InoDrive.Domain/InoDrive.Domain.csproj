@@ -52,8 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\AuthContext.cs" />
-    <Compile Include="Contexts\DataContext.cs" />
+    <Compile Include="Contexts\InoDirveContext.cs" />
     <Compile Include="EntitiesTypeConfigurations\UserMap.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Bid.cs" />
@@ -62,21 +61,18 @@
     <Compile Include="Entities\Like.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Entities\Trip.cs" />
-    <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\WayPoint.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Exceptions\AlertException.cs" />
+    <Compile Include="Exceptions\RedirectException.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Helper.cs" />
-    <Compile Include="MigrationsAuth\201506071202571_Initial.cs" />
-    <Compile Include="MigrationsAuth\201506071202571_Initial.Designer.cs">
-      <DependentUpon>201506071202571_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201506071504416_Initial.cs" />
+    <Compile Include="Migrations\201506071504416_Initial.Designer.cs">
+      <DependentUpon>201506071504416_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="MigrationsAuth\Configuration.cs" />
-    <Compile Include="MigrationsData\201506071203071_Initial.cs" />
-    <Compile Include="MigrationsData\201506071203071_Initial.Designer.cs">
-      <DependentUpon>201506071203071_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationsData\Configuration.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
     <Compile Include="Models\InputModels\InputCreateTripModel.cs" />
     <Compile Include="Models\InputModels\InputEmailTemplateModel.cs" />
@@ -90,7 +86,7 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstract\IAuthenticationRepository.cs" />
-    <Compile Include="Repositories\Abstract\ITripRepository.cs" />
+    <Compile Include="Repositories\Abstract\ITripsRepository.cs" />
     <Compile Include="Repositories\Concrete\AuthenticationRepository.cs" />
     <Compile Include="Repositories\Concrete\TripsRepository.cs" />
   </ItemGroup>
@@ -102,11 +98,8 @@
     <Folder Include="Models\OutputModels\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MigrationsAuth\201506071202571_Initial.resx">
-      <DependentUpon>201506071202571_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationsData\201506071203071_Initial.resx">
-      <DependentUpon>201506071203071_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201506071504416_Initial.resx">
+      <DependentUpon>201506071504416_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

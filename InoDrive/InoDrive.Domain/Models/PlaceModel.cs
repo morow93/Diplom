@@ -8,7 +8,7 @@ namespace InoDrive.Domain.Models
 {
     public class PlaceModel
     {
-        public String GooglePlaceId { get; set; }
+        public String PlaceId { get; set; }
         public String Name { get; set; }
         public Double Latitude { get; set; }
         public Double Longitude { get; set; }

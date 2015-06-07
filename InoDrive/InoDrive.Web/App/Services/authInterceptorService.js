@@ -12,6 +12,7 @@ app.factory("authInterceptorService", [
 
         var $http;
         var $state;
+        var myUpload;
         var authService;
         var customStorageService;
 
@@ -28,14 +29,27 @@ app.factory("authInterceptorService", [
         }
 
         var retryHttpRequest = function (config, deferred) {
+            
+            if (config.file) {
 
-            $http = $http || $injector.get("$http");
+                myUpload = myUpload || $injector.get('$upload');
 
-            $http(config).then(function (response) {
-                deferred.resolve(response);
-            }, function (response) {
-                deferred.reject(response);
-            });
+                myUpload.http(config).then(function (response) {
+                    deferred.resolve(response);
+                }, function (response) {
+                    deferred.reject(response);
+                });
+
+            } else {
+
+                $http = $http || $injector.get('$http');
+
+                $http(config).then(function (response) {
+                    deferred.resolve(response);
+                }, function (response) {
+                    deferred.reject(response);
+                });
+            }
 
         }
 

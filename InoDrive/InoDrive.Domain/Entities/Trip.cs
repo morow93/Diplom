@@ -45,7 +45,7 @@ namespace InoDrive.Domain.Entities
         [Column(TypeName = "Money")]
         public decimal? Pay { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual Place OriginPlace { get; set; }
         public virtual Place DestinationPlace { get; set; }
 

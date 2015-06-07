@@ -1,0 +1,54 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-view-title">
+                    <b>Настройки</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="row user-trips thrid-form-block">
+            <div class="col-xs-12">
+
+                <div class="row">
+                    <div class="col-xs-4 all-trips">
+
+                        <a href="javascript:void(0)" class="typical-link" ng-click="selectPrivateCabinet()" data-ui-sref="user.settings.private_cabinet">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : settingsType == 'cabinet'}">
+                                Личный кабинет
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="col-xs-4 driver-trips">
+
+                        <a href="javascript:void(0)" class="typical-link" ng-click="selectChangeEmail()" data-ui-sref="user.settings.change_email">
+                            <div class="sub-page-nav-link sub-page-nav-link-middle" ng-class="{'sub-page-nav-link-active' : settingsType == 'email'}">
+                                Сменить email
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="col-xs-4 passenger-trips">
+
+                        <a href="javascript:void(0)" class="typical-link" ng-click="selectChangePassword()" data-ui-sref="user.settings.change_password">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : settingsType == 'password'}">
+                                Сменить пароль
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="user-tab">
+
+                    <div data-ui-view></div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

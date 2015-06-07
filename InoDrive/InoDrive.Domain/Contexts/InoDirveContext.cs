@@ -1,4 +1,5 @@
 ﻿using InoDrive.Domain.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,15 +10,17 @@ using System.Threading.Tasks;
 
 namespace InoDrive.Domain.Contexts
 {
-    public class DataContext : DbContext
+    public class InoDriveContext : IdentityDbContext<ApplicationUser>
     {
-        public DataContext()
-            : base("InoDrive")
+        public InoDriveContext()
+            : base("InoDirveContext")
         {
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<Like> Likes { get; set; }

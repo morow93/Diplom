@@ -16,7 +16,9 @@ var app = angular.module('InoDrive',
     'cgNotify',
     'ui-rangeSlider',
     'LocalStorageModule',
-    'angular-ladda'
+    'angular-ladda',
+    'angularFileUpload',
+    'angular-loading-bar',
 ]);
 
 //states config
@@ -163,7 +165,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                         return $ocLazyLoad.load(
                             {
                                 name: "InoDrive",
-                                files: ["app/controllers/createTripController.js"]
+                                files: ["app/controllers/trips/createTripController.js"]
                             }
                         );
                     }
@@ -190,8 +192,32 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("user.settings", {
                 url: "settings/",
-                templateUrl: "/app/views/user/user.settings.html"
-            });
+                templateUrl: "/app/views/settings/user.settings.html",
+                controller: "settingsController",
+                abstract: true,
+                resolve: {
+                    store: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/settings/settingsController.js"]
+                            }
+                        );
+                    }
+                }
+            })
+                .state("user.settings.private_cabinet", {
+                    url: "",
+                    templateUrl: "/app/views/settings/user.settings.private_cabinet.html",
+                })
+                .state("user.settings.change_email", {
+                    url: "change_email/",
+                    templateUrl: "/app/views/settings/user.settings.change_email.html"
+                })
+                .state("user.settings.change_password", {
+                    url: "change_password/",
+                    templateUrl: "/app/views/settings/user.settings.change_password.html"
+                });
 
     $urlRouterProvider.otherwise("/greeting/");
 
@@ -213,6 +239,7 @@ app.config(function ($datepickerProvider, laddaProvider) {
 //constants
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: 'http://localhost:60947/',
+    clientAppBaseUri: 'http://localhost:56023/',
     clientId: 'InoDriveAngularApp'
 });
 

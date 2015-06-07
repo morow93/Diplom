@@ -1,0 +1,271 @@
+﻿<div class="general-block-style" data-block-ui="myProfileBlock">
+    <div class="form-header">
+        <h3 class="text-center form-header">Редактирование личных данных</h3>
+        <hr class="custom-hr" />
+    </div>
+    <form name="formEditProfile" novalidate>
+        <div class="row profile-up-row">
+            <div class="col-xs-3">
+                <!-- avatar -->
+                <div class="row row-block-style">
+                    <div class="col-xs-12">
+                        <div class="responsive-container">
+                            <div class="dummy"></div>
+                            <div class="img-container">
+                                <img ng-show="dataUrl == null" ng-src="{{noImage}}" class="avatar" />
+                                <img ng-show="dataUrl != null" ng-src="{{dataUrl}}" class="avatar" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="btn btn-default btn-file avatar-img">
+                            <span ng-show="dataUrl == null">Загрузить аватар</span>
+                            <span ng-show="dataUrl != null">Сменить аватар</span>
+                            <input type="file"
+                                   accept="image/*"
+                                   ng-model="files"
+                                   ng-file-select="onFileSelect($files)" title="">
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-default btn-remove-img" ng-click="removeFile()" ng-show="dataUrl != null">
+                            Удалить фото
+                        </button>
+                    </div>
+                </div>
+                <div class="row main-row">
+                    <div class="col-xs-12">
+                        <div class="form-error text-right">
+                            <span><i ng-bind="fileErrorMsg"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-9">
+                <div class="row main-row">
+                    <div class="col-xs-6">
+                        <div class="form-group-elements">
+                            <!--input for first name-->
+                            <div class="form-element">
+                                <div class="row">
+                                    <div class="col-xs-4 no-padding-right">
+                                        <label class="control-label pull-right form-label">Имя</label>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <input placeholder="Имя"
+                                               name="firstName"
+                                               type="text"
+                                               class="form-control"
+                                               ng-minlength="2"
+                                               ng-maxlength="20"
+                                               ng-model="profile.firstName"
+                                               ng-pattern="/^[a-zA-Zа-яА-Я]+$/"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-error text-right">
+                                            <span ng-show="formEditProfile.firstName.$dirty && formEditProfile.firstName.$error.required">
+                                                <i>Пустое поле!</i>
+                                            </span>
+                                            <span ng-show="formEditProfile.firstName.$error.pattern">
+                                                <i>Должно состоять только из букв!</i>
+                                            </span>
+                                            <span ng-show="!formEditProfile.firstName.$error.pattern &&
+                                                  (formEditProfile.firstName.$error.minlength || formEditProfile.firstName.$error.maxlength)">
+                                                <i>Должно содержать не менее 2, но не более 20 букв!</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--input for last name-->
+                            <div class="form-element">
+                                <div class="row">
+                                    <div class="col-xs-4 no-padding-right">
+                                        <label class="control-label pull-right form-label">Фамилия</label>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <input placeholder="Фамилия"
+                                               name="lastName"
+                                               type="text"
+                                               class="form-control"
+                                               ng-minlength="2"
+                                               ng-maxlength="20"
+                                               ng-model="profile.lastName"
+                                               ng-pattern="/^[a-zA-Zа-яА-Я]+$/"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-error text-right">
+                                            <span ng-show="formEditProfile.lastName.$dirty && formEditProfile.lastName.$error.required">
+                                                <i>Пустое поле!</i>
+                                            </span>
+                                            <span ng-show="formEditProfile.lastName.$error.pattern">
+                                                <i>Должна состоять только из букв!</i>
+                                            </span>
+                                            <span ng-show="!formEditProfile.lastName.$error.pattern &&
+                                                  (formEditProfile.lastName.$error.minlength || formEditProfile.lastName.$error.maxlength)">
+                                                <i>Должна содержать не менее 2, но не более 20 букв!</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group-elements">
+                            <!--input for age-->
+                            <div class="form-element">
+                                <div class="row">
+                                    <div class="col-xs-4 no-padding-right">
+                                        <label class="control-label pull-right form-label">Возраст</label>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <input placeholder="Возраст"
+                                               name="age"
+                                               type="number"
+                                               class="form-control"
+                                               min="14"
+                                               max="80"
+                                               ng-model="profile.age">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-8 col-xs-offset-4">
+                                        <div class="form-error text-right">
+                                            <span ng-show="formEditProfile.age.$error.min">
+                                                <i>Слишком маленький возраст!</i>
+                                            </span>
+                                            <span ng-show="formEditProfile.age.$error.max">
+                                                <i>Слишком большой возраст!</i>
+                                            </span>
+                                            <span ng-show="formEditProfile.age.$error.number">
+                                                <i>Должен содержать только цифры!</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--input for phone-->
+                            <div class="form-element">
+                                <div class="row">
+                                    <div class="col-xs-4 no-padding-right">
+                                        <label class="control-label pull-right form-label">Телефон</label>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <input placeholder="Мобильный телефон"
+                                               type="text"
+                                               name="phone"
+                                               class="form-control"
+                                               ng-model="profile.phone"
+                                               data-ui-br-phone-number>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-error text-right">
+                                            <span ng-show="!formEditProfile.phone.$valid">
+                                                <i>Недопустимый мобильный номер!</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <!-- input for email -->
+                        <div class="form-element">
+                            <div class="row">
+                                <div class="col-xs-3 no-padding-right">
+                                    <label class="control-label pull-right form-label">
+                                        Почта
+                                        <a class="link-line"
+                                           href=""
+                                           data-trigger="hover"
+                                           data-bs-tooltip="emailTooltip"
+                                           data-placement="top-left">
+                                            (?)
+                                        </a>
+                                    </label>
+                                </div>
+                                <div class="col-xs-9 no-padding-right">
+                                    <input autocomplete="off"
+                                           type="email"
+                                           name="email"
+                                           placeholder="E-mail"
+                                           class="form-control pull-left"
+                                           ng-model="profile.email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 no-padding-right">
+                                    <div class="form-error text-right">
+                                        <span ng-show="formEditProfile.$error.email">
+                                            <i> Недопустимый e-mail!</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- input for info -->
+                        <div class="form-element">
+                            <div class="row">
+                                <div class="col-xs-2 no-padding-right">
+                                    <label class="control-label pull-right form-label">
+                                        О себе
+                                    </label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <textarea ng-maxlength="200"
+                                              ng-model="profile.info"
+                                              placeholder="О себе"
+                                              name="info"
+                                              class="form-control profile-info pull-left"
+                                              rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-error text-right">
+                                        <span ng-show="formEditProfile.info.$error.maxlength">
+                                            <i>Не более 200 символов!</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="custom-hr" />
+        <div class="row form-down-row">
+            <div class="col-xs-10">
+                <div class="form-alert"></div>
+            </div>
+            <div class="col-xs-2 save-button">
+                <button class="btn btn-primary text-center pull-right"
+                        ng-click="editProfile(formEditProfile)"
+                        ng-disabled="disableSubmit">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

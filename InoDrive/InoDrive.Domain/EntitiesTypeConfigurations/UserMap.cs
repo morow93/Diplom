@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace InoDrive.Domain.EntitiesTypeConfigurations
 {
-    public class UserMap : EntityTypeConfiguration<User>
-    {
-        public UserMap()
-        {
-            // without modelBuilder.Entity<T>().
-        }
-    } 
+    //public class UserMap : EntityTypeConfiguration<User>
+    //{
+    //    public UserMap()
+    //    {
+    //        // without modelBuilder.Entity<T>().
+    //    }
+    //} 
 }

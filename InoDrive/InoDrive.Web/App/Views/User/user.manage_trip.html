@@ -1,4 +1,16 @@
-﻿<div class="row">
+﻿<div class="row" ng-if="!wasLoaded">
+    <div class="col-xs-12">
+        <div class="loading-wrapper loading-block">
+            <div class="loading-icon">
+                <i class="fa fa-refresh fa-spin fa-2x"></i>
+            </div>
+            <div class="loading-text">
+                <span class="contrast-color">Пожалуйста, подождите...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-if="wasLoaded">
     <div class="col-xs-12">
 
         <div class="row">
@@ -30,6 +42,7 @@
                             <div class="col-xs-10 col-xs-offset-2">
                                 <a href="javascript:void(0)"
                                    class="btn btn-primary btn-sm full-width"
+                                   data-ladda="laddaManageTripFlag"
                                    ng-click="formSubmit(formManageTrip)">
                                     Создать поездку
                                 </a>
@@ -37,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="form-alert fluid-form-alert form-find-alert"></div>
 
@@ -51,18 +64,18 @@
                                     <label class="control-label">Откуда</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
-                                        <input name="originCity"
+                                        <input name="originPlace"
                                                class="form-control input-sm"
                                                type="text"
                                                placeholder="Пункт отправления"
                                                ng-autocomplete
-                                               ng-model="home.originCity.model"
+                                               ng-model="trip.rawOriginPlace.model"
                                                data-options="autocompleteOptions"
-                                               data-details="home.originCity.details"
+                                               data-details="trip.rawOriginPlace.details"
                                                required />
                                     </div>
                                     <div class="form-error">
-                                        <span ng-show="formManageTrip.originCity.$invalid && formManageTrip.originCity.$dirty">
+                                        <span ng-show="formManageTrip.originPlace.$invalid && formManageTrip.originPlace.$dirty">
                                             Укажите пункт отправления!
                                         </span>
                                     </div>
@@ -74,18 +87,18 @@
                                     <label class="control-label">Куда</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
-                                        <input name="destinationCity"
+                                        <input name="destinationPlace"
                                                class="form-control input-sm"
                                                type="text"
                                                placeholder="Пункт назначения"
                                                ng-autocomplete
-                                               ng-model="home.destinationCity.model"
+                                               ng-model="trip.rawDestinationPlace.model"
                                                data-options="autocompleteOptions"
-                                               data-details="home.destinationCity.details"
+                                               data-details="trip.rawDestinationPlace.details"
                                                required />
                                     </div>
                                     <div class="form-error">
-                                        <span ng-show="formManageTrip.destinationCity.$invalid && formManageTrip.destinationCity.$dirty">
+                                        <span ng-show="formManageTrip.destinationPlace.$invalid && formManageTrip.destinationPlace.$dirty">
                                             Укажите пункт назначения!
                                         </span>
                                     </div>
@@ -108,7 +121,7 @@
                                                type="text"
                                                class="form-control input-sm"
                                                data-min-date="{{minDate}}"
-                                               ng-model="home.date"
+                                               ng-model="trip.leavingDate"
                                                name="date"
                                                data-bs-datepicker
                                                required>
@@ -133,7 +146,7 @@
                                                type="number"
                                                class="form-control input-sm"
                                                name="places"
-                                               ng-model="home.places"
+                                               ng-model="trip.peopleCount"
                                                min="1"
                                                max="10"
                                                required>
@@ -159,7 +172,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="trip-row-price">
                 <label class="control-label">
                     Цена за место
@@ -167,15 +180,15 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="trip.price" class="pointer" ng-click="selectNegPrice()" ng-init="trip.price = 'neg'">
+                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="trip.price" class="pointer">
                             <label for="inlineRadio1"> Договорная цена </label>
                         </div>
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="trip.price" class="pointer">
+                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="trip.price" class="pointer" ng-click="trip.pay = 100">
                             <label for="inlineRadio2"> Указать цену </label>
                         </div>
                     </div>
-                </div>             
+                </div>
 
                 <div class="row am-fade" ng-if="trip.price == 'cur'">
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-10">
@@ -184,13 +197,13 @@
                              data-min="0"
                              data-max="1000"
                              data-model-min="0"
-                             data-model-max="rangePrice.maxModel"
+                             data-model-max="trip.pay"
                              data-step="50"
                              data-pin-handle="min"></div>
-                             
+
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2 text-center trip-price-wrapper">
-                        <b>{{rangePrice.maxModel}} руб. </b>
+                        <b>{{trip.pay}} руб. </b>
                     </div>
                 </div>
             </div>
@@ -210,20 +223,20 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="row">
                 <div class="col-xs-6 trip-row-right">
                     <div class="row">
                         <div class="col-xs-12">
-                            
+
                             <label class="control-label">Особенности поездки</label>
 
-                            <div class="trip-checkboxes">                               
+                            <div class="trip-checkboxes">
 
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions0" class="pointer">
+                                        <input type="checkbox" id="tripOptions0" class="pointer" ng-model="trip.isAllowdedDeviates">
                                         <label for="tripOptions0">
                                             <b>Возможны отклонения от маршрута</b>
                                         </label>
@@ -231,7 +244,7 @@
                                 </div>
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions1" class="pointer">
+                                        <input type="checkbox" id="tripOptions1" class="pointer" ng-model="trip.isAllowdedChildren">
                                         <label for="tripOptions1">
                                             <b>Можно ехать с детьми</b>
                                         </label>
@@ -239,7 +252,7 @@
                                 </div>
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions2" class="pointer">
+                                        <input type="checkbox" id="tripOptions2" class="pointer" ng-model="trip.isAllowdedPets">
                                         <label for="tripOptions2">
                                             <b>Можно ехать с животными</b>
                                         </label>
@@ -247,7 +260,7 @@
                                 </div>
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions3" class="pointer">
+                                        <input type="checkbox" id="tripOptions3" class="pointer" ng-model="trip.isAllowdedMusic">
                                         <label for="tripOptions3">
                                             <b>Можно выбирать музыку</b>
                                         </label>
@@ -255,7 +268,7 @@
                                 </div>
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions4" class="pointer">
+                                        <input type="checkbox" id="tripOptions4" class="pointer" ng-model="trip.isAllowdedEat">
                                         <label for="tripOptions4">
                                             <b>В машине можно есть</b>
                                         </label>
@@ -263,7 +276,7 @@
                                 </div>
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions5" class="pointer">
+                                        <input type="checkbox" id="tripOptions5" class="pointer" ng-model="trip.isAllowdedDrink">
                                         <label for="tripOptions5">
                                             <b>В машине можно пить</b>
                                         </label>
@@ -271,12 +284,12 @@
                                 </div>
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions6" class="pointer">
+                                        <input type="checkbox" id="tripOptions6" class="pointer" ng-model="trip.isAllowdedSmoke">
                                         <label for="tripOptions6">
                                             <b>В машине можно курить</b>
                                         </label>
                                     </div>
-                                </div>                             
+                                </div>
 
                             </div>
 
@@ -286,7 +299,7 @@
                 <div class="col-xs-6 trip-row-left">
                     <div class="row">
                         <div class="col-xs-12">
-                            
+
                             <div class="row">
                                 <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
                                     <label class="control-label">Промежуточные пункты</label>
@@ -313,7 +326,7 @@
                                            ng-autocomplete
                                            ng-model="trip.wayPoints[$index].model"
                                            data-options="autocompleteOptions"
-                                           data-details="trip.wayPoints[$index].details"/>
+                                           data-details="trip.wayPoints[$index].details" />
                                 </div>
                             </div>
 
@@ -323,7 +336,7 @@
             </div>
 
             <label class="trip-info-label">О поездке</label>
-            <textarea name="info" class="form-control" rows="3" ng-model="trip.info" ng-maxlength="200"></textarea>                
+            <textarea name="info" class="form-control" rows="3" ng-model="trip.about" ng-maxlength="200"></textarea>
             <div class="form-error">
                 <span ng-show="formManageTrip.info.$error.maxlength && formManageTrip.info.$dirty">
                     Не более 200 символов!
@@ -345,80 +358,76 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
-        <div class="row trip-car">
-            <div class="col-xs-6">
-                <label class="control-label">Фото машины</label>
-                <img class="full-width" src="content/images/car.jpg"/>
+            <div class="row trip-car">
+                <div class="col-xs-6">
 
-                <!--<div class="row">
-                    <div class="col-xs-12">
-                        <span class="btn btn-default btn-sm full-width upload-btn">
-                                Загрузить фото
+                    <label class="control-label">Фото машины</label>
+
+                    <div class="image-cropper">
+                        <img ng-show="trip.dataUrl != null" ng-src="{{trip.dataUrl}}" class="resize" />
+                        <img ng-show="trip.dataUrl == null" ng-src="{{noImage}}" class="resize" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="btn btn-default btn-file btn-sm full-width upload-btn">
+                                <span ng-if="trip.dataUrl == null">Загрузить фото</span>
+                                <span ng-if="trip.dataUrl != null">Изменить фото</span>
                                 <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">
                             </span>
-                    </div>
-                </div>-->
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span class="btn btn-default btn-xs full-width upload-btn">
-                                Изменить фото
-                                <!--<input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">-->
-                            </span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <button class="btn btn-default btn-xs full-width upload-btn" ng-click="removeFile()">
-                            Удалить фото
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="form-error text-right">
-                            <span><i ng-bind="fileErrorMsg"></i></span>
                         </div>
                     </div>
-                </div>
-
-            </div>
-            <div class="col-xs-6">
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="control-label">Модель машины</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
-                            <input placeholder="Модель машины"
-                                   type="text"
-                                   name="carDescription"
-                                   class="form-control input-sm"
-                                   ng-model="trip.carDescription">
+                    <div class="row" ng-show="trip.dataUrl != null">
+                        <div class="col-xs-12">
+                            <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeFile()">
+                                Удалить фото
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="control-label comfort-label">Уровень комфорта</label>
-                        <button type="button"
-                                class="btn btn-sm btn-default text-left full-width car-class-btn"
-                                ng-model="selectedIcon"
-                                data-html="1"
-                                data-bs-options="class.value as class.label for class in classes"
-                                data-placeholder="Выберите уровень комфорта"
-                                data-bs-select>
-                            Action <span class="caret"></span>
-                        </button>
-                    </div>
-                </div>
 
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-error text-right">
+                                <span ng-bind="fileErrorMsg"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-6">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="control-label">Модель машины</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
+                                <input placeholder="Модель машины"
+                                       type="text"
+                                       name="car"
+                                       class="form-control input-sm"
+                                       ng-model="trip.car">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="control-label comfort-label">Уровень комфорта</label>
+                            <button type="button"
+                                    class="btn btn-sm btn-default text-left full-width car-class-btn"
+                                    ng-model="trip.carClass"
+                                    data-html="1"
+                                    data-bs-options="class.value as class.label for class in classes"
+                                    data-placeholder="Выберите уровень комфорта"
+                                    data-bs-select>
+                                Action <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
             <div class="form-bottom-block">
                 <div class="row">
@@ -426,7 +435,8 @@
                         <div class="row">
                             <div class="col-xs-10 col-xs-offset-2">
                                 <a href="javascript:void(0)"
-                                   class="btn btn-primary btn-sm full-width"    
+                                   class="btn btn-primary btn-sm full-width"
+                                   data-ladda="laddaManageTripFlag"
                                    ng-click="formSubmit(formManageTrip, true)">
                                     Создать поездку
                                 </a>
@@ -434,7 +444,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
         </form>
 
