@@ -31,7 +31,7 @@ namespace InoDrive.Api
             AutoMapperConfig.Register();
             app.UseWebApi(config);
 
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AuthContext, InoDrive.Domain.MigrationsAuthContext.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<AuthContext, InoDrive.Domain.MigrationsAuth.Configuration>());
         }
 
         public void ConfigureOAuth(IAppBuilder app, HttpConfiguration config)

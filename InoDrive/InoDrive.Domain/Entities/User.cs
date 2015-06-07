@@ -22,6 +22,12 @@ namespace InoDrive.Domain.Entities
         public String Phone { get; set; }
         public String About { get; set; }
         public String AvatarImage { get; set; }
+        public String AvatarImageExtension { get; set; }
+
+        public String Car { get; set; }
+        public String CarImage { get; set; }
+        public String CarImageExtension { get; set; }
+        public String CarClass { get; set;}
 
         public User() { }
 

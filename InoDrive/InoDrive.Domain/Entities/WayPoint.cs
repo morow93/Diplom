@@ -9,12 +9,12 @@ namespace InoDrive.Domain.Entities
     public class WayPoint
     {
         public Int32 WayPointId { get; set; }
-        public Int32 Index { get; set; }
+        public Int32 WayPointIndex { get; set; }
 
         public Int32 TripId { get; set; }
-        public Int32 CityId { get; set; }
+        public String PlaceId { get; set; }
 
-        public virtual Place City { get; set; }
+        public virtual Place Place { get; set; }
         public virtual Trip Trip { get; set; }
     }
 }

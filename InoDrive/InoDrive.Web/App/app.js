@@ -148,7 +148,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                             }
                         );
                     }
-                    //,auth: true
                 }
             })
             .state("user.my_trips", {
@@ -233,19 +232,7 @@ app.run(function ($rootScope, $state, notify, authService, customStorageService)
             displayNotificationOnStageChange(notify, notifyToShow.message, notifyToShow.type);
             customStorageService.remove("notifyToShow");
         }
-
-        if (toState.resolve.auth) {
-            var authorizationData = authService.getAuthorizationData();
-            if (!authorizationData || !authorizationData.isAuth) {
-
-                customStorageService.set("notifyToShow", {
-                    message: 'В доступе отказано! Для того, чтобы получить доступ необходимо выполнить вход!',
-                    type: 'danger',
-                });
-                $state.go("signin", null, { reload: true });
-            }
-        }
-
+        
     });
 
 });

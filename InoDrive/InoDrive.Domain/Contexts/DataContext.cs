@@ -12,7 +12,7 @@ namespace InoDrive.Domain.Contexts
     public class DataContext : DbContext
     {
         public DataContext()
-            : base("InoDriveApp")
+            : base("InoDrive")
         {
 
         }

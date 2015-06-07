@@ -21,7 +21,8 @@ namespace InoDrive.Domain.Entities
         public Int32 PeopleCount { get; set; }
 
         public Boolean IsAllowdedDeviation { get; set; }
-        public Boolean ISAllowdedPets { get; set; }
+        public Boolean IsAllowdedChildren { get; set; }
+        public Boolean IsAllowdedPets { get; set; }
         public Boolean IsAllowdedMusic { get; set; }
         public Boolean IsAllowdedEat { get; set; }
         public Boolean IsAllowdedDrink { get; set; }
@@ -30,25 +31,23 @@ namespace InoDrive.Domain.Entities
 
         public String About { get; set; }
 
-        public String CarDescription { get; set; }
+        public String Car { get; set; }
         public String CarImage { get; set; }
         public String CarImageExtension { get; set; }
         public String CarClass { get; set; }
 
-        [Required]
-        [ForeignKey("OriginCity")]
-        public Int32 OriginCityId { get; set; }
+        [Required, ForeignKey("OriginPlace")]
+        public String OriginPlaceId { get; set; }
 
-        [Required]
-        [ForeignKey("DestinationCity")]
-        public Int32 DestinationCityId { get; set; }
+        [Required, ForeignKey("DestinationPlace")]
+        public String DestinationPlaceId { get; set; }
 
         [Column(TypeName = "Money")]
-        public decimal? PayForOne { get; set; }
+        public decimal? Pay { get; set; }
 
         public virtual User User { get; set; }
-        public virtual Place OriginCity { get; set; }
-        public virtual Place DestinationCity { get; set; }
+        public virtual Place OriginPlace { get; set; }
+        public virtual Place DestinationPlace { get; set; }
 
         private ICollection<Like> _likes;
         public virtual ICollection<Like> Likes

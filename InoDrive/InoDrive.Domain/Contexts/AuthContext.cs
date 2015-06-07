@@ -13,7 +13,7 @@ namespace InoDrive.Domain.Contexts
     public class AuthContext : IdentityDbContext<ApplicationUser>
     {
         public AuthContext()
-            : base("InoDirveApp")
+            : base("InoDirve")
         {
 
         }
