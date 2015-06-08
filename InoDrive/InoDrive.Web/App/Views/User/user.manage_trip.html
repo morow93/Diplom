@@ -54,7 +54,7 @@
 
             <div class="form-alert fluid-form-alert form-find-alert"></div>
 
-            <div class="row" style="margin-top: 20px;">
+            <div class="row">
                 <div class="col-xs-6 trip-row-right">
                     <div class="row">
                         <div class="col-xs-12">
@@ -336,7 +336,7 @@
             </div>
 
             <label class="trip-info-label">О поездке</label>
-            <textarea name="info" class="form-control" rows="3" ng-model="trip.about" ng-maxlength="200"></textarea>
+            <textarea name="info" class="form-control input-sm" rows="3" ng-model="trip.about" ng-maxlength="200"></textarea>
             <div class="form-error">
                 <span ng-show="formManageTrip.info.$error.maxlength && formManageTrip.info.$dirty">
                     Не более 200 символов!

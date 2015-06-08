@@ -1,11 +1,8 @@
-﻿
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog crop-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="text-center">
-                    Редактирование изображения
-                </h3>
+                <h3 class="text-center"><b>Редактирование изображения</b></h3>
             </div>
             <div class="modal-body">
                 <div class="crop-area">
@@ -13,21 +10,18 @@
                               image="myImage"
                               area-type="square"
                               result-image="myCroppedImage"
-                              area-min-size="150"
-                              result-image-size="150"
-                              change-on-fly="true">
+                              area-min-size="300"
+                              result-image-size="300"
+                              change-on-fly="false">
                     </img-crop>
-                </div>
-                <div class="croped-img">
-                    <img ng-src="{{myCroppedImage}}" />
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="col-xs-6 crop-cancel text-center">
-                    <button class="btn btn-block btn-primary crop-ok" ng-click="ok()">Сохранить</button>
+                <div class="col-xs-6 text-center no-padding-left left-col">
+                    <button class="btn btn-block btn-primary crop-ok" ng-click="ok()">Обрезать</button>
                 </div>
-                <div class="col-xs-6 crop-ok text-center">
-                    <button class="btn btn-block btn-warning" ng-click="cancel()">Отмена</button>
+                <div class="col-xs-6 text-center no-padding-right right-col">
+                    <button class="btn btn-block btn-default" ng-click="cancel()">Отмена</button>
                 </div>
             </div>
         </div>

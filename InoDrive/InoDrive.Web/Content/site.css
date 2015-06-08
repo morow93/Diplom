@@ -69,6 +69,12 @@ body {
 /*Loading end*/
 
 /*General begin*/
+.left-col{
+    padding-right: 7px;
+}
+.right-col{
+    padding-left: 7px;
+}
 .sub-zero-margin{
     margin-top: -5px;
 }
@@ -114,7 +120,7 @@ img.resize {
 .common-padding{
     padding: 50px;
 }
-.modal-dialog{
+.small-modal-dialog{
     width: 0 !important;
 }
 .modal-title{
@@ -155,6 +161,9 @@ hr {
 }
 .no-margin{
     margin: 0px !important;
+}
+.no-margin-left{
+    margin-left: 0px;
 }
 .no-border{
     border: 0;
@@ -818,7 +827,7 @@ li.filled {
     margin-top: 30px;
 }
 .upload-btn {
-    margin-top: 5px;
+    margin-top: 8px;
 }
 .car-class-btn {
     text-align: left;
@@ -873,7 +882,7 @@ span.caret {
     margin-top: 15px;
 }
 .form-sort-title{
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 .trip-options{
     margin-bottom: 40px;
@@ -884,3 +893,35 @@ span.caret {
     margin-bottom: 20px;
 }
 /*Find end*/
+
+/*Crop begin*/
+.crop-area {
+    border: 1px solid #ddd;
+    overflow: hidden;
+    padding: 30px;
+    height: 500px;
+}
+
+img-crop > canvas {
+    border: 1px solid #ddd;
+}
+
+.croped-img {
+    padding-top: 15px;
+}
+
+    .croped-img > img {
+        border: 1px solid #ddd;
+    }
+
+.crop-cancel {
+    padding-left: 0px;
+}
+
+.crop-header {
+    margin: 0px !important;
+}
+.crop-dialog {
+    min-width: 750px !important; margin-top: 100px !important;
+}
+/*Crop end*/

@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201506072058393_AddSex.Designer.cs">
       <DependentUpon>201506072058393_AddSex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506072316115_Years.cs" />
+    <Compile Include="Migrations\201506072316115_Years.Designer.cs">
+      <DependentUpon>201506072316115_Years.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
@@ -117,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506072058393_AddSex.resx">
       <DependentUpon>201506072058393_AddSex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506072316115_Years.resx">
+      <DependentUpon>201506072316115_Years.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

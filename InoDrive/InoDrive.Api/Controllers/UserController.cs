@@ -74,7 +74,7 @@ namespace InoDrive.Api.Controllers
                 File.Delete(profile.AvatarImage);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
             }
-            return Ok(new { status = Statuses.CommonSuccess});
+            return Ok(profile);
         }
 
         #region Private functions

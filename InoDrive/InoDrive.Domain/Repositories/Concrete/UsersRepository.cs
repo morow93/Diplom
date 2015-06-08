@@ -33,12 +33,12 @@ namespace InoDrive.Domain.Repositories.Concrete
                     UserId = model.UserId,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    DateOfBirth = user.DateOfBirth,
+                    YearOfBirth = user.YearOfBirth,
                     About = user.About,
                     Phone = user.Phone,
                     AvatarImage = user.AvatarImage,
                     AvatarImageExtension = user.AvatarImageExtension,
-                    Stage = user.Stage,
+                    YearOfStage = user.YearOfStage,
                     Sex = user.Sex
                 };
                 
@@ -66,10 +66,10 @@ namespace InoDrive.Domain.Repositories.Concrete
                     user.LastName = model.LastName;
                     user.About = model.About;
                     user.Phone = model.Phone;
-                    user.DateOfBirth = (DateTimeOffset)model.DateOfBirth;
+                    user.YearOfBirth = model.YearOfBirth;
                     user.AvatarImage = model.AvatarImage;
                     user.AvatarImageExtension = model.AvatarImageExtension;
-                    user.Stage = model.Stage;
+                    user.YearOfStage = model.YearOfStage;
                     user.Sex = model.Sex;
 
                      _ctx.SaveChanges();

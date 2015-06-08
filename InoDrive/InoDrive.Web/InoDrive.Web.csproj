@@ -122,6 +122,7 @@
     <Content Include="Scripts\ladda\ladda-themeless.min.css" />
     <Content Include="Scripts\ladda\ladda.min.js" />
     <Content Include="Scripts\ladda\spin.min.js" />
+    <Content Include="Scripts\masks.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\ng-infinite-scroll.js" />
     <Content Include="Scripts\ngAutocomplete.js" />

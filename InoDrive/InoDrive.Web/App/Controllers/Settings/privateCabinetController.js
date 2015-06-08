@@ -1,5 +1,4 @@
 ﻿'use strict';
-
 app.controller('privateCabinetController', function (
     $scope,
     $q,
@@ -17,6 +16,44 @@ app.controller('privateCabinetController', function (
     $scope.myCroppedImage = '';
     $scope.avatarsFolder = "images/avatars/";
     
+    $scope.yearsOfBirth = []
+    var year = new Date().getFullYear() - 14;
+    for (var i = 0; i < 100; ++i) {
+        year = year - 1;
+        $scope.yearsOfBirth.push(year);
+    }
+
+    $scope.yearsOfStage = []
+    var year = new Date().getFullYear();
+    for (var i = 0; i < 100; ++i) {
+        year = year - 1;
+        $scope.yearsOfStage.push(year);
+    }
+
+    $scope.sexOptions = [
+        {
+            "value": true,
+            "label": "<i class=\"fa fa-mars\"></i>&nbsp;Мужской"
+        },
+        {
+            "value": false,
+            "label": "<i class=\"fa fa-venus\"></i>&nbsp;&nbsp;Женский"
+        }
+    ];
+
+    $scope.classes = [
+        { "value": "A", "label": "<i class=\"fa fa-star\"></i> Класс А (особо малый)" },
+        { "value": "B", "label": "<i class=\"fa fa-star\"></i> Класс B (малый)" },
+        { "value": "C", "label": '<i class=\"fa fa-star\"></i> Класс C ("гольф"-класс)' },
+        { "value": "D", "label": "<i class=\"fa fa-star\"></i> Класс D (средний)" },
+        { "value": "E", "label": '<i class=\"fa fa-star\"></i> Класс E ("бизнес"-класс)' },
+        { "value": "F", "label": '<i class=\"fa fa-star\"></i> Класс F ("люкс"-класс)' },
+        { "value": "G", "label": '<i class=\"fa fa-star\"></i> Купе/кабриолет' },
+        { "value": "H", "label": '<i class=\"fa fa-star\"></i> Внедорожник' },
+        { "value": "I", "label": '<i class=\"fa fa-star\"></i> Минивэн' },
+        { "value": "J", "label": '<i class=\"fa fa-star\"></i> Кроссовер' }
+    ];
+
     $scope.getUserProfile = function () {
 
         usersService.getUserProfile({ userId: $scope.authentication.userId }).then(function (profile) {
@@ -25,7 +62,7 @@ app.controller('privateCabinetController', function (
             $scope.profile.oldAvatarImage = profile.avatarImage;
             $scope.oldProfile = clone($scope.profile);
 
-            if (profile.avatarImage != null && profile.avatarImage != "") {
+            if (profile.avatarImage) {
 
                 var fullPathToFile = ngAuthSettings.apiServiceBaseUri + $scope.avatarsFolder + profile.avatarImage;
 
@@ -37,18 +74,23 @@ app.controller('privateCabinetController', function (
             }
 
         }).catch(function (error) {
-            throw error.data;
+
+            $scope.showAlert({
+                title: 'Произошла ошибка при подгрузке данных о пользователе!',
+                content: '',
+                type: 'danger',
+                show: false,
+                container: '.form-alert',
+                template: '/app/templates/alert.html'
+            });
+
         });
     };
 
-    //initialize
-
-    $scope.getUserProfile();
-
     //edit profile
 
-    $scope.editProfile = function (formEditProfile) {
-
+    $scope.formSubmit = function (formEditProfile) {
+        debugger;
         if (formEditProfile.$valid) {
 
             var oldProfile = angular.toJson($scope.oldProfile);
@@ -63,16 +105,20 @@ app.controller('privateCabinetController', function (
                     $scope.newFile.type = $scope.rememberType;
                     $scope.newFile.name = $scope.rememberName;
                 }
-                $scope.disableSubmit = true;
+
+                $scope.laddaEditProfileFlag = true;
 
                 $upload.upload({
-                    url: ngAuthSettings.apiServiceBaseUri + "api/user/editUserProfile",
+                    url: ngAuthSettings.apiServiceBaseUri + "api/user/setUserProfile",
                     method: "POST",
                     data: { profile: $scope.profile },
                     file: $scope.newFile
                 }).success(function (data, status, headers, config) {
+
                     endUpSuccessfully(data);
+
                 }).error(function (data, status, headers, config) {
+
                     $scope.showAlert({
                         title: 'При сохранении произошла ошибка!',
                         content: 'Попробуйте снова!',
@@ -80,18 +126,22 @@ app.controller('privateCabinetController', function (
                         show: false,
                         container: '.form-alert'
                     });
+
                 }).finally(function (data, status, headers, config) {
-                    $scope.disableSubmit = false;
+
+                    $scope.laddaEditProfileFlag = false;
+
                 });
 
             } else {
 
                 $scope.showAlert({
-                    title: 'Внимание!',
-                    content: 'Для того чтобы сохранить изменения, вначале нужно что-то изменить!',
-                    type: 'info',
+                    title: "Для того чтобы сохранить изменения в профиле, вначале нужно что-то изменить!",
+                    content: "",
+                    type: "info",
                     show: false,
-                    container: '.form-alert'
+                    container: ".form-alert",
+                    template: "/app/templates/alert.html"
                 });
             }
 
@@ -114,7 +164,6 @@ app.controller('privateCabinetController', function (
     //files
 
     $scope.noImage = ngAuthSettings.clientAppBaseUri + "content/images/no-avatar.jpg";
-
     $scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
 
     $scope.onFileSelect = function (files) {
@@ -126,7 +175,7 @@ app.controller('privateCabinetController', function (
             if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
 
                 if (file.size > 4 * 1024 * 1024) {
-                    $scope.fileErrorMsg = "Размер файла должен не превышать 4MB!";
+                    $scope.fileErrorMsg = "Размер файла должен не превышать 4MB";
                 } else {
                     $scope.file = file;
                     $scope.rememberName = file.name;//need when convert
@@ -144,7 +193,7 @@ app.controller('privateCabinetController', function (
                     fileReader.readAsDataURL(file);
                 }
             } else {
-                $scope.fileErrorMsg = "Выберите файл изображения!";
+                $scope.fileErrorMsg = "Выберите файл изображения (не GIF)";
             }
         }
     };
@@ -179,6 +228,7 @@ app.controller('privateCabinetController', function (
     };
 
     //modals
+
     var cropAvatarModal = $modal({
         scope: $scope,
         template: 'App/Templates/crop_avatar.html',
@@ -273,4 +323,9 @@ app.controller('privateCabinetController', function (
         }
         return temp;
     }
+
+    //run run run
+
+    $scope.getUserProfile();
+
 });

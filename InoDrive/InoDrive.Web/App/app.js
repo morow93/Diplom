@@ -19,7 +19,8 @@ var app = angular.module('InoDrive',
     'angular-ladda',
     'angularFileUpload',
     'angular-loading-bar',
-    'ngImgCrop'
+    'ngImgCrop',
+    'ui.utils.masks'
 ]);
 
 //states config
@@ -208,7 +209,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             })
                 .state("user.settings.private_cabinet", {
-                    url: "",
+                    url: "edit/",
                     templateUrl: "/app/views/settings/user.settings.private_cabinet.html",
                     controller: "privateCabinetController",
                     resolve: {
@@ -236,7 +237,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 //other configs must be here
-app.config(function ($datepickerProvider, laddaProvider) {
+app.config(function ($datepickerProvider, laddaProvider, cfpLoadingBarProvider) {
 
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'dd/MM/yyyy',
@@ -246,6 +247,10 @@ app.config(function ($datepickerProvider, laddaProvider) {
     laddaProvider.setOption({
         style: 'slide-right'
     });
+
+    cfpLoadingBarProvider.includeSpinner = false;
+    cfpLoadingBarProvider.latencyThreshold = 300;
+
 });
 
 //constants
