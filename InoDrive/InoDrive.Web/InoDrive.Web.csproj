@@ -57,20 +57,21 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\Controllers\Auth\confirmEmailController.js" />
+    <Content Include="App\Controllers\Home\confirmEmailController.js" />
+    <Content Include="App\Controllers\Home\greetingController.js" />
     <Content Include="App\Controllers\Settings\privateCabinetController.js" />
     <Content Include="App\Controllers\Settings\settingsController.js" />
-    <Content Include="App\Controllers\Trips\createTripController.js" />
-    <Content Include="App\Controllers\findController.js" />
-    <Content Include="App\Controllers\homeController.js" />
+    <Content Include="App\Controllers\User\createTripController.js" />
+    <Content Include="App\Controllers\User\findController.js" />
+    <Content Include="App\Controllers\Home\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
-    <Content Include="App\Controllers\Auth\resetPasswordController.js" />
-    <Content Include="App\Controllers\Auth\sendCodeController.js" />
-    <Content Include="App\Controllers\Auth\signOutController.js" />
-    <Content Include="App\Controllers\userController.js" />
-    <Content Include="App\Controllers\Auth\signInController.js" />
-    <Content Include="App\Controllers\Auth\signUpController.js" />
-    <Content Include="App\Controllers\userViewController.js" />
+    <Content Include="App\Controllers\Home\resetPasswordController.js" />
+    <Content Include="App\Controllers\Home\sendCodeController.js" />
+    <Content Include="App\Controllers\User\signOutController.js" />
+    <Content Include="App\Controllers\User\userController.js" />
+    <Content Include="App\Controllers\Home\signInController.js" />
+    <Content Include="App\Controllers\Home\signUpController.js" />
+    <Content Include="App\Controllers\User\userViewController.js" />
     <Content Include="App\Directives\match.js" />
     <Content Include="App\Directives\starRating.js" />
     <Content Include="App\Services\authInterceptorService.js" />
@@ -83,9 +84,11 @@
     <Content Include="App\Templates\crop_avatar.html" />
     <Content Include="App\Templates\modal.html" />
     <Content Include="App\Templates\notify.html" />
-    <Content Include="App\Views\Auth\confirm_email.html" />
-    <Content Include="App\Views\Auth\reset_password.html" />
-    <Content Include="App\Views\Auth\send_code.html" />
+    <Content Include="App\Views\Home\home.confirm_email.html" />
+    <Content Include="App\Views\Home\home.send_code.html" />
+    <Content Include="App\Views\Home\home.greeting.html" />
+    <Content Include="App\Views\Home\home.signin.html" />
+    <Content Include="App\Views\Home\home.signup.html" />
     <Content Include="App\Views\Settings\user.settings.change_email.html" />
     <Content Include="App\Views\Settings\user.settings.change_password.html" />
     <Content Include="App\Views\Settings\user.settings.private_cabinet.html" />
@@ -148,6 +151,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App\Views\User\user.view.html" />
     <Content Include="App\Views\User\user.manage_trip.html" />
+    <Content Include="App\Views\Home\home.reset_password.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -158,9 +162,7 @@
   <ItemGroup>
     <Content Include="App\app.js" />
     <Content Include="App\Views\User\user.find.html" />
-    <Content Include="App\Views\home.html" />
-    <Content Include="App\Views\Auth\signin.html" />
-    <Content Include="App\Views\Auth\signup.html" />
+    <Content Include="App\Views\Home\home.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

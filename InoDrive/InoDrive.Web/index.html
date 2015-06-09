@@ -50,7 +50,6 @@
     <script src="scripts/masks.js"></script>
 
     <script src="app/app.js"></script>
-    <script src="app/controllers/indexcontroller.js"></script>
     <script src="app/services/mapservice.js"></script>
     <script src="app/services/authservice.js"></script>
     <script src="app/services/authinterceptorservice.js"></script>
@@ -59,7 +58,8 @@
     <script src="app/services/customstorageservice.js"></script>
     <script src="app/directives/match.js"></script>
     <script src="app/directives/starrating.js"></script>
-    <script src="app/controllers/auth/signoutcontroller.js"></script>
+    <script src="app/controllers/indexcontroller.js"></script>
+    <script src="app/controllers/user/signoutcontroller.js"></script>
 
 </head>
 <body ng-app="InoDrive" ng-controller="indexController">   
@@ -77,7 +77,7 @@
             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 header">
                 <div class="row inherit-height">
                     <div class="col-xs-4 header-left">
-                        <a class="header-link header-left-link logo-font" data-ui-sref="home">Ino Drive</a>                        
+                        <a class="header-link header-left-link logo-font" data-ui-sref="home.greeting">Ino Drive</a>                        
                     </div>
                     <div class="col-xs-8 header-right">
 
@@ -87,10 +87,10 @@
                            class="header-link header-right-link pull-right"
                            href="javascript:void(0)">Выйти</a>
 
-                        <a ng-if="authentication.isAuth" data-ui-sref="user.view" class="header-link header-right-link pull-right" ng-bind="authentication.userName"></a>
+                        <a ng-if="authentication.isAuth" data-ui-sref="user.view" class="header-link header-right-link pull-right" ng-bind="authentication.initials"></a>
 
-                        <a ng-if="!authentication.isAuth" data-ui-sref="signup" class="header-link header-right-link pull-right">Зарегистрироваться</a>
-                        <a ng-if="!authentication.isAuth" data-ui-sref="signin" class="header-link header-right-link pull-right">Войти</a>
+                        <a ng-if="!authentication.isAuth" data-ui-sref="home.signup" class="header-link header-right-link pull-right">Зарегистрироваться</a>
+                        <a ng-if="!authentication.isAuth" data-ui-sref="home.signin" class="header-link header-right-link pull-right">Войти</a>
 
                     </div>
                 </div>

@@ -58,7 +58,7 @@
     <Compile Include="Entities\Bid.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\Client.cs" />
-    <Compile Include="Entities\Like.cs" />
+    <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Entities\Trip.cs" />
     <Compile Include="Entities\WayPoint.cs" />
@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201506072316115_Years.cs" />
     <Compile Include="Migrations\201506072316115_Years.Designer.cs">
       <DependentUpon>201506072316115_Years.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506091740328_LikeToCommentSecond.cs" />
+    <Compile Include="Migrations\201506091740328_LikeToCommentSecond.Designer.cs">
+      <DependentUpon>201506091740328_LikeToCommentSecond.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarModel.cs" />
@@ -124,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506072316115_Years.resx">
       <DependentUpon>201506072316115_Years.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506091740328_LikeToCommentSecond.resx">
+      <DependentUpon>201506091740328_LikeToCommentSecond.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

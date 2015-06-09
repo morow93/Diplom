@@ -27,7 +27,7 @@
                ng-mouseleave="hover = false"
                data-ui-sref="user.my_bids"
                class="page-nav-link">
-                Мои заявки
+                Мои заявки (+3)
             </a>           
             <a ng-class="{'page-nav-link-active': isActiveInherited('user.settings'), 'page-nav-link-hover': hover}"
                ng-mouseenter="hover = true"
@@ -38,7 +38,71 @@
             </a>           
         </div>
         <div ng-if="!authentication.isAuth">
-            Войти
+            <form name="sidebarLoginForm" novalidate autocomplete="off">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label sidebar-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <input name="username"
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Email"
+                                   ng-model="signin.userName"
+                                   required />
+                        </div>
+                        <div class="fluid-form-error">
+                            <span ng-show="sidebarLoginForm.username.$invalid && sidebarLoginForm.username.$dirty">
+                                Укажите email!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="control-label sidebar-label">Пароль</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            <input name="password"
+                                   class="form-control input-sm"
+                                   type="password"
+                                   placeholder="Пароль"
+                                   ng-model="signin.password"
+                                   required />
+                        </div>
+                        <div class="fluid-form-error">
+                            <span ng-show="sidebarLoginForm.password.$invalid && sidebarLoginForm.password.$dirty">
+                                Укажите пароль!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary btn-sm full-width" style="margin-top: 15px; margin-bottom: 5px;">
+                            Войти
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        или
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary btn-sm full-width" style="margin-top: 5px; margin-bottom: 15px;">
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 user-right-column">

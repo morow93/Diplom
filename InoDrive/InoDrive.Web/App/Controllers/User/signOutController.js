@@ -29,7 +29,7 @@
                 type: 'success',
             });
 
-            $state.go("home", null, { reload: true });
+            $state.go("home.greeting", null, { reload: true });
 
         }).catch(function (e) {
             $state.go("error", null, { reload: true });

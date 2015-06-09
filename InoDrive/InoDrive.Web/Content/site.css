@@ -163,7 +163,10 @@ hr {
     margin: 0px !important;
 }
 .no-margin-left{
-    margin-left: 0px;
+    margin-left: 0px !important;
+}
+.no-margin-right{
+    margin-right: 0px !important;
 }
 .no-border{
     border: 0;
@@ -256,7 +259,15 @@ button:focus {
     font-size: 13px;
     color: #FF6666;
 }
-
+.fluid-form-error{
+    margin-top: 3px;
+    font-size: 13px;
+    color: #FF6666;
+}
+.sidebar-label{
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+}
 .control-label{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -473,6 +484,10 @@ a.header-link:active {
      margin: 10px 0px; 
      text-align: right; 
  }
+  .form-private-cabinet
+{
+     margin: 45px 15px;
+}
  .send-code {  
      margin-bottom: 20px;
  }
@@ -594,7 +609,7 @@ a.sub-page-nav-link:active {
     background-color: #4DB870;
 }
 .notify-info{
-    background-color: #85E0FF;
+    background-color: #5CE6E6;
 }
 /*Notify end*/
 
@@ -729,6 +744,10 @@ li.filled {
 .short-trip {
     border: 1px solid #D0D0D0 ;
     margin-top: 20px;                                
+}
+.reverse-short-trip {
+    border: 1px solid #D0D0D0 ;
+    margin-bottom: 20px;                                
 }
 .user-trip-header{
     border-bottom: 1px solid #D0D0D0 ; 

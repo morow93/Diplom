@@ -79,7 +79,7 @@ app.factory("authInterceptorService", [
                         authService.removeAuthorizationData();
 
                         $state = $state || $injector.get("$state");
-                        $state.go("home", null, { reload: true });
+                        $state.go("home.greeting", null, { reload: true });
 
                         deferred.resolve(rejection);
 

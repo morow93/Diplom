@@ -49,11 +49,11 @@ namespace InoDrive.Domain.Entities
         public virtual Place OriginPlace { get; set; }
         public virtual Place DestinationPlace { get; set; }
 
-        private ICollection<Like> _likes;
-        public virtual ICollection<Like> Likes
+        private ICollection<Comment> _comments;
+        public virtual ICollection<Comment> Commnents
         {
-            get { return _likes ?? (_likes = new Collection<Like>()); }
-            protected set { _likes = value; }
+            get { return _comments ?? (_comments = new Collection<Comment>()); }
+            protected set { _comments = value; }
         }
 
         private ICollection<WayPoint> _wayPoint;

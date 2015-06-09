@@ -18,7 +18,7 @@
 
         authService.signOut().then(function () {
 
-            $state.go("home", null, { reload: true });
+            $state.go("home.greeting", null, { reload: true });
 
         }).catch(function (e) {
 

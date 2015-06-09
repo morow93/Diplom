@@ -46,11 +46,11 @@ namespace InoDrive.Domain.Entities
             protected set { _trips = value; }
         }
 
-        private ICollection<Like> _likes;
-        public virtual ICollection<Like> Likes
+        private ICollection<Comment> _comments;
+        public virtual ICollection<Comment> Comments
         {
-            get { return _likes ?? (_likes = new Collection<Like>()); }
-            protected set { _likes = value; }
+            get { return _comments ?? (_comments = new Collection<Comment>()); }
+            protected set { _comments = value; }
         }
     }
 }

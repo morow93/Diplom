@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace InoDrive.Domain.Entities
 {
-    public class Like
+    public class Comment
     {
-        public Int32 LikeId { get; set; }
+        public Int32 CommentId { get; set; }
+
+        public String Title { get; set; }
         public Int32 Vote { get; set; }
 
         public String UserId { get; set; }

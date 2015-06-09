@@ -26,101 +26,115 @@ var app = angular.module('InoDrive',
 //states config
 app.config(function ($stateProvider, $urlRouterProvider) {
 
-    $stateProvider.state("home", {
-        url: "/greeting/",
-        controller: "homeController",
-        templateUrl: "/app/views/home.html",
-        resolve: {
-            store: function ($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: "InoDrive",
-                        files: ["app/controllers/homeController.js"]
-                    }
-                );
+    $stateProvider
+        .state("home", {
+            url: "/home/",
+            controller: "homeController",
+            templateUrl: "/app/views/home/home.html",
+            abstract: true,
+            resolve: {
+                loadCtrl: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(
+                        {
+                            name: "InoDrive",
+                            files: ["app/controllers/home/homeController.js"]
+                        }
+                    );
+                }
             }
-        }
-    });
-
-    $stateProvider.state("signin", {
-        url: "/signin/",
-        controller: "signInController",
-        templateUrl: "/app/views/auth/signin.html",
-        resolve: {
-            store: function ($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: "InoDrive",
-                        files: ["app/controllers/auth/signInController.js"]
+        })
+            .state("home.greeting", {
+                url: "",
+                controller: "homeController",
+                templateUrl: "/app/views/home/home.greeting.html",
+                resolve: {
+                    loadCtrl: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/home/greetingController.js"]
+                            }
+                        );
                     }
-                );
-            }
-        }
-    });
-
-    $stateProvider.state("signup", {
-        url: "/signup/",
-        controller: "signUpController",
-        templateUrl: "/app/views/auth/signup.html",
-        resolve: {
-            store: function ($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: "InoDrive",
-                        files: ["app/controllers/auth/signUpController.js"]
+                }
+            })
+            .state("home.signin", {
+                url: "signin/",
+                controller: "signInController",
+                templateUrl: "/app/views/home/home.signin.html",
+                resolve: {
+                    loadCtrl: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/home/signInController.js"]
+                            }
+                        );
                     }
-                );
-            }
-        }
-    });
-
-    $stateProvider.state("confirm_email", {
-        templateUrl: "/app/views/auth/confirm_email.html",
-        controller: "confirmEmailController",
-        url: "/confirm_email?userId&code",
-        resolve: {
-            loadCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-
-                return $ocLazyLoad.load({
-                    name: 'InoDrive',
-                    files: ['app/controllers/auth/confirmEmailController.js']
-                });
-
-            }]
-        }
-    });
-    
-    $stateProvider.state("send_code", {
-        url: "/send_code/",
-        controller: "sendCodeController",
-        templateUrl: "/app/views/auth/send_code.html",
-        resolve: {
-            store: function ($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: "InoDrive",
-                        files: ["app/controllers/auth/sendCodeController.js"]
+                }
+            })
+            .state("home.signup", {
+                url: "signup/",
+                controller: "signUpController",
+                templateUrl: "/app/views/home/home.signup.html",
+                resolve: {
+                    loadCtrl: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/home/signUpController.js"]
+                            }
+                        );
                     }
-                );
-            }
-        }
-    });
-
-    $stateProvider.state("reset_password", {
-        url: "/reset_password?userId&code",
-        controller: "resetPasswordController",
-        templateUrl: "/app/views/auth/reset_password.html",
-        resolve: {
-            store: function ($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: "InoDrive",
-                        files: ["app/controllers/auth/resetPasswordController.js"]
+                }
+            })
+            .state("home.reset_password", {
+                url: "reset_password?userId&code",
+                controller: "resetPasswordController",
+                templateUrl: "/app/views/home/home.reset_password.html",
+                resolve: {
+                    loadCtrl: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/home/resetPasswordController.js"]
+                            }
+                        );
                     }
-                );
-            }
-        }
-    });
+                }
+            })
+            .state("home.confirm_email", {
+                templateUrl: "/app/views/home/home.confirm_email.html",
+                controller: "confirmEmailController",
+                url: "confirm_email?userId&code",
+                resolve: {
+                    loadCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+
+                        return $ocLazyLoad.load({
+                            name: 'InoDrive',
+                            files: ['app/controllers/home/confirmEmailController.js']
+                        });
+
+                    }]
+                }
+            })    
+            .state("home.send_code", {
+                url: "send_code/",
+                controller: "sendCodeController",
+                templateUrl: "/app/views/home/home.send_code.html",
+                resolve: {
+                    loadCtrl: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/home/sendCodeController.js"]
+                            }
+                        );
+                    }
+                }
+            });
+
+
 
     $stateProvider
         .state("user", {
@@ -129,11 +143,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             abstract: true,
             controller: "userController",
             resolve: {
-                store: function ($ocLazyLoad) {
+                loadCtrl: function ($ocLazyLoad) {
                     return $ocLazyLoad.load(
                         {
                             name: "InoDrive",
-                            files: ["app/controllers/userController.js"]
+                            files: ["app/controllers/user/userController.js"]
                         }
                     );
                 }
@@ -144,11 +158,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 controller: "userViewController",
                 templateUrl: "/app/views/user/user.view.html",
                 resolve: {
-                    store: function ($ocLazyLoad) {
+                    loadCtrl: function ($ocLazyLoad) {
                         return $ocLazyLoad.load(
                             {
                                 name: "InoDrive",
-                                files: ["app/controllers/userViewController.js"]
+                                files: ["app/controllers/user/userViewController.js"]
                             }
                         );
                     }
@@ -163,11 +177,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 controller: "createTripController",
                 templateUrl: "/app/views/user/user.manage_trip.html",
                 resolve: {
-                    store: function ($ocLazyLoad) {
+                    loadCtrl: function ($ocLazyLoad) {
                         return $ocLazyLoad.load(
                             {
                                 name: "InoDrive",
-                                files: ["app/controllers/trips/createTripController.js"]
+                                files: ["app/controllers/user/createTripController.js"]
                             }
                         );
                     }
@@ -178,11 +192,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 controller: "findController",
                 templateUrl: "/app/views/user/user.find.html",
                 resolve: {
-                    store: function ($ocLazyLoad) {
+                    loadCtrl: function ($ocLazyLoad) {
                         return $ocLazyLoad.load(
                             {
                                 name: "InoDrive",
-                                files: ["app/controllers/findController.js"]
+                                files: ["app/controllers/user/findController.js"]
                             }
                         );
                     }
@@ -198,7 +212,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 controller: "settingsController",
                 abstract: true,
                 resolve: {
-                    store: function ($ocLazyLoad) {
+                    loadCtrl: function ($ocLazyLoad) {
                         return $ocLazyLoad.load(
                             {
                                 name: "InoDrive",
@@ -213,7 +227,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: "/app/views/settings/user.settings.private_cabinet.html",
                     controller: "privateCabinetController",
                     resolve: {
-                        store: function ($ocLazyLoad) {
+                        loadCtrl: function ($ocLazyLoad) {
                             return $ocLazyLoad.load(
                                 {
                                     name: "InoDrive",
@@ -232,7 +246,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: "/app/views/settings/user.settings.change_password.html"
                 });
 
-    $urlRouterProvider.otherwise("/greeting/");
+    $urlRouterProvider.otherwise("/home/");
 
 });
 
@@ -265,7 +279,7 @@ app.config(function ($httpProvider) {
 });
 
 //run run run
-app.run(function ($rootScope, $state, notify, authService, customStorageService) {
+app.run(function ($rootScope, $state, notify, authService, customStorageService, localStorageService) {
 
     authService.fillAuthorizationData();
 
@@ -276,7 +290,16 @@ app.run(function ($rootScope, $state, notify, authService, customStorageService)
             displayNotificationOnStageChange(notify, notifyToShow.message, notifyToShow.type);
             customStorageService.remove("notifyToShow");
         }
-        
+        displayNotificationOnStageChange(notify, "ad", "info");
+        debugger;
+        if (toState.name.indexOf('home') >= 0) {
+            var authorizationData = localStorageService.get("authorizationData");
+            if (authorizationData) {
+                debugger;
+                event.preventDefault();
+                $state.go('user.view', null, { reload: true });
+            }
+        }           
     });
 
 });

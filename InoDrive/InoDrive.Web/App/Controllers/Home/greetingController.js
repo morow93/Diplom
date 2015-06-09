@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('homeController', function ($scope, $interval, $alert, $state, mapService) {
+﻿angular.module('InoDrive').controller('greetingController', function ($scope, $interval, $alert, $state, mapService) {
 
     var myAlert;
 
@@ -26,7 +26,7 @@
                 container: '.form-alert',
                 template: '/app/templates/alert.html'
             });
-            
+
             angular.forEach(form.$error.required, function (field) {
                 field.$setDirty();
             });
@@ -59,7 +59,7 @@
 
         });
     };
-    
+
     $scope.autocompleteOptions = {
         types: "(cities)",
         country: "ru"
@@ -67,7 +67,7 @@
     $scope.home = {};
     $scope.home.originCity = null;
     $scope.home.destinationCity = null;
-    $scope.minDate = new Date(); 
+    $scope.minDate = new Date();
     $scope.minDate.setDate($scope.minDate.getDate() - 1);
 
     $scope.updateMapUrl();

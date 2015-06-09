@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('privateCabinetController', function (
+angular.module('InoDrive').controller('privateCabinetController', function (
     $scope,
     $q,
     $upload,
@@ -10,8 +10,10 @@ app.controller('privateCabinetController', function (
     $modal,
     ngAuthSettings,
     usersService,
+    customStorageService,
     authService) {
 
+    $scope.newFile = {};
     $scope.myImage = '';
     $scope.myCroppedImage = '';
     $scope.avatarsFolder = "images/avatars/";
@@ -75,13 +77,9 @@ app.controller('privateCabinetController', function (
 
         }).catch(function (error) {
 
-            $scope.showAlert({
-                title: 'Произошла ошибка при подгрузке данных о пользователе!',
-                content: '',
+            customStorageService.set("notifyToShow", {
+                message: 'Произошла ошибка при подгрузке данных о пользователе!',
                 type: 'danger',
-                show: false,
-                container: '.form-alert',
-                template: '/app/templates/alert.html'
             });
 
         });
@@ -95,13 +93,10 @@ app.controller('privateCabinetController', function (
 
             var oldProfile = angular.toJson($scope.oldProfile);
             var newProfile = angular.toJson($scope.profile);
-            var wasInputsChanged = oldProfile != newProfile;
 
-            if (wasInputsChanged || $scope.wasFileChanged) {
+            if (oldProfile != newProfile || $scope.wasFileChanged) {
 
-                if ($scope.newFile == null) {
-                    $scope.newFile = {};
-                } else {
+                if ($scope.newFile) {
                     $scope.newFile.type = $scope.rememberType;
                     $scope.newFile.name = $scope.rememberName;
                 }
@@ -200,7 +195,7 @@ app.controller('privateCabinetController', function (
 
     $scope.removeFile = function () {
 
-        $scope.newFile = null;
+        $scope.newFile = {};
         $scope.dataUrl = null;
         $scope.fileErrorMsg = null;
         $scope.wasFileChanged = true;
@@ -255,22 +250,22 @@ app.controller('privateCabinetController', function (
 
         //change user  
         $scope.authentication.initials = newInitials;
-        authService.changeInitials(newInitials);
+        authService.setAuthorizationData("initials", newInitials);
 
-        //for next changing profile
+        //for next changing 
         $scope.wasFileChanged = false;
-
         $scope.profile = profile;
         $scope.profile.oldAvatarImage = profile.avatarImage;
         $scope.oldProfile = clone($scope.profile);
 
         //notify
         $scope.showAlert({
-            title: 'Поздравляем!',
-            content: 'Изменения были успешно сохранены!',
-            type: 'success',
+            title: "Поздравляем! Изменения в профиле были успешно сохранены!",
+            content: "",
+            type: "success",
             show: false,
-            container: '.form-alert'
+            container: ".form-alert"
+            ,template: "/app/templates/alert.html"
         });
     }
 

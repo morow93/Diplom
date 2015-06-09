@@ -16,3 +16,5 @@ E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.pdb
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.ChangeStageType.resources
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.AddSex.resources
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.Years.resources
+E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csprojResolveAssemblyReference.cache
+E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.LikeToCommentSecond.resources

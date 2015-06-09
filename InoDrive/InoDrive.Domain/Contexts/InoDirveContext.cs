@@ -23,7 +23,7 @@ namespace InoDrive.Domain.Contexts
 
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Place> Places { get; set; }
-        public DbSet<Like> Likes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<WayPoint> WayPoint { get; set; }
 

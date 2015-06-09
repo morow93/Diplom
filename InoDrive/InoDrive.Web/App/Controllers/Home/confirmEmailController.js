@@ -11,12 +11,12 @@ angular.module('InoDrive').controller('confirmEmailController', function ($scope
         authService.confirmEmail(params).then(function (response) {
 
             $scope.success = response.data;
-            $timeout(function () { $state.go("signin"); }, 3500);
+            $timeout(function () { $state.go("home.signin"); }, 3500);
 
         }).catch(function (error) {
 
             $scope.failure = error;
-            $timeout(function () { $state.go("home"); }, 3500);
+            $timeout(function () { $state.go("home.greeting"); }, 3500);
 
         }).finally(function () {
 
@@ -25,6 +25,6 @@ angular.module('InoDrive').controller('confirmEmailController', function ($scope
         });
 
     } else {
-        $state.go("home");
+        $state.go("home.greeting");
     }
 });
