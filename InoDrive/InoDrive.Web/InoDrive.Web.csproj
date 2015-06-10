@@ -61,13 +61,17 @@
     <Content Include="App\Controllers\Home\greetingController.js" />
     <Content Include="App\Controllers\Settings\privateCabinetController.js" />
     <Content Include="App\Controllers\Settings\settingsController.js" />
+    <Content Include="App\Controllers\User\bidsController.js" />
     <Content Include="App\Controllers\User\createTripController.js" />
     <Content Include="App\Controllers\User\findController.js" />
     <Content Include="App\Controllers\Home\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />
     <Content Include="App\Controllers\Home\resetPasswordController.js" />
     <Content Include="App\Controllers\Home\sendCodeController.js" />
+    <Content Include="App\Controllers\User\receivedBidsController.js" />
+    <Content Include="App\Controllers\User\sendedBidsController.js" />
     <Content Include="App\Controllers\User\signOutController.js" />
+    <Content Include="App\Controllers\User\tripsController.js" />
     <Content Include="App\Controllers\User\userController.js" />
     <Content Include="App\Controllers\Home\signInController.js" />
     <Content Include="App\Controllers\Home\signUpController.js" />
@@ -92,6 +96,8 @@
     <Content Include="App\Views\Settings\user.settings.change_email.html" />
     <Content Include="App\Views\Settings\user.settings.change_password.html" />
     <Content Include="App\Views\Settings\user.settings.private_cabinet.html" />
+    <Content Include="App\Views\User\user.my_bids.received.html" />
+    <Content Include="App\Views\User\user.my_bids.sended.html" />
     <Content Include="App\Views\User\user.my_bids.html" />
     <Content Include="App\Views\User\user.html" />
     <Content Include="App\Views\User\user.my_trips.html" />

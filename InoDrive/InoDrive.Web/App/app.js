@@ -204,8 +204,50 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("user.my_bids", {
                 url: "my_bids/",
-                templateUrl: "/app/views/user/user.my_bids.html"
+                templateUrl: "/app/views/user/user.my_bids.html",
+                controller: "bidsController",
+                resolve: {
+                    loadCtrl: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: "InoDrive",
+                                files: ["app/controllers/user/bidsController.js"]
+                            }
+                        );
+                    }
+                },
+                abstract: true
             })
+                .state("user.my_bids.sended", {
+                    url: "",
+                    templateUrl: "/app/views/user/user.my_bids.sended.html",
+                    controller: "sendedBidsController",
+                    resolve: {
+                        loadCtrl: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load(
+                                {
+                                    name: "InoDrive",
+                                    files: ["app/controllers/user/sendedBidsController.js"]
+                                }
+                            );
+                        }
+                    }
+                })
+                .state("user.my_bids.received", {
+                    url: "received/",
+                    templateUrl: "/app/views/user/user.my_bids.received.html",
+                    controller: "receivedBidsController",
+                    resolve: {
+                        loadCtrl: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load(
+                                {
+                                    name: "InoDrive",
+                                    files: ["app/controllers/user/receivedBidsController.js"]
+                                }
+                            );
+                        }
+                    }
+                })
             .state("user.settings", {
                 url: "settings/",
                 templateUrl: "/app/views/settings/user.settings.html",
@@ -290,8 +332,7 @@ app.run(function ($rootScope, $state, notify, authService, customStorageService,
             displayNotificationOnStageChange(notify, notifyToShow.message, notifyToShow.type);
             customStorageService.remove("notifyToShow");
         }
-        displayNotificationOnStageChange(notify, "ad", "info");
-        debugger;
+        
         if (toState.name.indexOf('home') >= 0) {
             var authorizationData = localStorageService.get("authorizationData");
             if (authorizationData) {
