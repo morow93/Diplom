@@ -1,4 +1,6 @@
 ﻿angular.module('InoDrive').controller('greetingController', function ($scope, $interval, $alert, $state, mapService) {
+    debugger;
+    $scope.dt = new Date().toString();
 
     var myAlert;
 
@@ -67,8 +69,6 @@
     $scope.home = {};
     $scope.home.originCity = null;
     $scope.home.destinationCity = null;
-    $scope.minDate = new Date();
-    $scope.minDate.setDate($scope.minDate.getDate() - 1);
 
     $scope.updateMapUrl();
     $interval($scope.updateMapUrl, 15000);

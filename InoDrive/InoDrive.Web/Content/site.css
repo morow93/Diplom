@@ -56,6 +56,7 @@ body {
     min-height: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-top: 25px;
 }
 .loading-icon {
     width: 35px;
@@ -258,6 +259,9 @@ button:focus {
     min-height: 20px;
     font-size: 13px;
     color: #FF6666;
+}
+.border-error{
+    border: 1px solid #FF6666;
 }
 .fluid-form-error{
     margin-top: 3px;
@@ -716,7 +720,7 @@ li.filled {
 
 /*User trips begin*/
 .user-hr-bottom, .find-range {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 .user-hr-top {
     margin-top: 5px;
@@ -735,7 +739,8 @@ li.filled {
     border: 1px solid #D0D0D0 ; 
     border-top: none; 
     margin-top: -1px;
-    padding: 20px 20px;    
+    padding: 20px;
+    padding-top: 0px;    
 }
 .total-trip-count{
     margin-top: 11px; 
@@ -743,7 +748,7 @@ li.filled {
 }
 .short-trip {
     border: 1px solid #D0D0D0 ;
-    margin-top: 20px;                                
+    margin-top: 25px;                                
 }
 .reverse-short-trip {
     border: 1px solid #D0D0D0 ;
@@ -867,6 +872,9 @@ span.caret {
 }
 .comfort-label {
     margin-top: 35px;
+}
+.user-trips-options{
+    padding-top: 25px;
 }
 /*User trips end*/
 

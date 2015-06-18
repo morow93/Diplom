@@ -3,6 +3,7 @@ using InoDrive.Domain;
 using InoDrive.Domain.Models;
 using InoDrive.Domain.Models.InputModels;
 using InoDrive.Domain.Repositories.Abstract;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,83 @@ namespace InoDrive.Api.Controllers
             catch(Exception ex)
             {
                 File.Delete(trip.CarImage);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("RemoveTrip")]
+        public IHttpActionResult RemoveTrip(InputManageTripModel model)
+        {
+            try
+            {
+                _repo.RemoveTrip(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("RecoverTrip")]
+        public IHttpActionResult RecoverTrip(InputManageTripModel model)
+        {
+            try
+            {
+                _repo.RecoverTrip(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Route("GetAllTrips")]
+        public IHttpActionResult GetAllTrips(InputPageSortModel<Int32> model)
+        {
+            try
+            {
+                var result = _repo.GetAllTrips(model);
+                return Ok(result);
+            }
+            catch(Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Route("GetDriverTrips")]
+        public IHttpActionResult GetDriverTrips(InputPageSortModel<Int32> model)
+        {
+            try
+            {
+                var result = _repo.GetDriverTrips(model);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Route("GetPassengerTrips")]
+        public IHttpActionResult GetPassengerTrips(InputPageSortModel<Int32> model)
+        {
+            try
+            {
+                var result = _repo.GetPassengerTrips(model);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
             }
         }

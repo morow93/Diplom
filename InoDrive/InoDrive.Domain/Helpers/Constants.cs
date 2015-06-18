@@ -10,6 +10,7 @@ namespace InoDrive.Domain.Helpers
     {
         public static String USER_NOT_FOUND                 = "Такой пользователь не найден!";
         public static String TRIP_NOT_FOUND                 = "Такая поездка не найдена!";
+        public static String USER_HASNT_SUCH_TRIP           = "У пользователя нет такой поездки";
         public static String LETTER_CONFIRM_EMAIL_TITLE     = "Ино Драйв. Подтверждение электронного адреса.";
         public static String LETTER_RESET_PASSWORD_TITLE    = "Ино Драйв. Сброс пароля.";
         public static String INVALID_CONFIRM_EMAIL_CODE     = "Недействительная ссылка для подтверждения почты!";
@@ -34,6 +35,9 @@ namespace InoDrive.Domain.Helpers
         public static String TOKEN_WAS_REMOVED              = "Refresh токен был успешно удален!";
         public static String TOKEN_WASNT_REMOVED            = "Произошла ошибка при удалении refresh токена!";
         public static String TRIP_CREATE_ERROR              = "Ошибка при создании поездки!";
+        public static String TRIP_REMOVE_ERROR              = "Ошибка при удалении поездки!";
+        public static String TRIP_RECOVER_ERROR             = "Ошибка при восстановлении поездки!";
+        public static String TRIP_REMOVE_CAUSE_DATE_ERROR   = "Нельзя удалить уже начавшуюся поездку!";
         public static String PROFILE_EDIT_ERROR             = "Ошибка редактирования профиля!";
 
         public static String LETTER_CONFIRM_EMAIL_TITLE0 = "Ино Драйв. Подтверждение электронного адреса";

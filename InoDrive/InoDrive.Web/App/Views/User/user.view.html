@@ -22,7 +22,9 @@
                     <div class="col-xs-6 text-right">
                         <div data-star-rating ng-model="userRating" data-readonly="true" class="user-view-rating"></div>
                     </div>           
-                </div>                            
+                </div>       
+                          
+                <span></span><br>
 
                 <p class="about">
                     Очень давно путешествую автостопом!
@@ -115,7 +117,7 @@
                     <div class="col-xs-4 all-trips">
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectAllTrips()">
-                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType == 'all'}">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType === 1}">
                                 Все поездки
                             </div>
                         </a>                        
@@ -124,7 +126,7 @@
                     <div class="col-xs-4 driver-trips">
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectDriverTrips()">
-                            <div class="sub-page-nav-link sub-page-nav-link-middle" ng-class="{'sub-page-nav-link-active' : tripsType == 'driver'}">
+                            <div class="sub-page-nav-link sub-page-nav-link-middle" ng-class="{'sub-page-nav-link-active' : tripsType == 2}">
                                 В качестве водителя
                             </div>
                         </a>  
@@ -133,7 +135,7 @@
                     <div class="col-xs-4 passenger-trips">
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectPassengerTrips()">
-                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType == 'passenger'}">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType == 3}">
                                 В качестве пассажира
                             </div>
                         </a>  
@@ -142,24 +144,28 @@
                 </div>
 
                 <div class="user-tab">                    
-                   
-                    <!--loading begin-->
-                    <div class="row" ng-if="tripsType == 'passenger'">
-                        <div class="col-xs-12">
-                            <div class="loading-wrapper">
-                                <div class="loading-icon">
-                                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+                              
+                    <div ng-show="firstLoad" class="user-trips-options">
+                        <hr class="no-margin user-hr-bottom" />
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer" ng-change="reloadUserTrips(showEnded)">
+                                    <label for="showEnded">
+                                        <b>Показывать завершенные</b>
+                                    </label>
                                 </div>
-                                <div class="loading-text">
-                                    <span class="contrast-color">Пожалуйста, подождите...</span>
+                            </div>
+                            <div class="col-xs-5 text-right">
+                                <div class="total-trip-count" ng-if="showTotalCount">
+                                    <b>Поездок: <span ng-bind="totalCount"></span></b>
                                 </div>
                             </div>
                         </div>
+                        <hr class="no-margin user-hr-top" />
                     </div>
-                    <!--loading end-->
 
-                    <!--no result begin-->
-                    <div class="row" ng-if="tripsType == 'driver'">
+                    <div class="row" ng-if="totalEmptyResults">
                         <div class="col-xs-12">
                             <div class="loading-wrapper">
                                 <div class="loading-icon">
@@ -171,232 +177,151 @@
                             </div>
                         </div>
                     </div>
-                    <!--no result end-->                    
-                    
-                    <div ng-if="tripsType == 'all'">
-                        <hr class="no-margin user-hr-bottom" />
-                        <div class="row">
-                            <div class="col-xs-7">
-                                <div class="checkbox checkbox-primary">
-                                    <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer">
-                                    <label for="showEnded">
-                                        <b>Показывать завершенные</b>
-                                    </label>
+
+                    <div class="list-trips">
+                                     
+                        <div data-infinite-scroll='templateGetUserTrips()' data-infinite-scroll-disabled='emptyResults' data-infinite-scroll-distance='1'>
+
+                            <div ng-repeat='trip in trips track by $index'>
+                  
+                                <div class="short-trip" ng-if="!trip.isDeleted">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="user-trip-header">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <a href="javascript:void(0)" class="typical-link">
+                                                            <span class="user-trip-driver">
+                                                                <span ng-bind="trip.firstName"></span>
+                                                                <span ng-bind="trip.lastName"></span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-6 text-right" ng-if="trip.allowManage">
+                                                        <a href="javascript:void(0)">
+                                                            <i class="fa fa-pencil fa-border"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" ng-click="removeTrip(trip.tripId, $index)">
+                                                            <i class="fa fa-times fa-border"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="trip-padding">
+
+                                        <div class="row">
+                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="trip-points">
+                                                            {{trip.originPlaceName}} &#8594;
+                                                            {{trip.destinationPlaceName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 contrast-color">
+                                                        {{trip.leavingDate | date:'dd MMMM yyyy года'}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                                <div class="trip-price" ng-if="trip.pay > 0">
+                                                    <span class="trip-price-title">
+                                                        <span ng-bind="trip.pay"></span> руб.
+                                                    </span><br />
+                                                    <span class="contrast-color">с человека</span>
+                                                </div>
+                                                <div class="trip-price" ng-if="trip.pay == 0">
+                                                    <span class="trip-price-title">Бесплатная</span><br />
+                                                    <span class="contrast-color">поездка</span>
+                                                </div>
+                                                <div class="trip-price" ng-if="trip.pay == null">
+                                                    <span class="trip-price-title">Договорная</span><br />
+                                                    <span class="contrast-color">цена</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row" ng-if="!trip.isEnded">
+                                        <div class="col-xs-12">
+                                            <div class="trip-places">
+                                                <div class="row">
+                                                    <div class="col-xs-7 contrast-color">
+                                                        <span>
+                                                            Осталось свободных мест:
+                                                            <span ng-bind="trip.freePlaces"></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-5 text-right">
+                                                        <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-if="trip.isEnded">
+                                        <div class="col-xs-12">
+                                            <div class="trip-places light-background">
+                                                <div class="row">
+                                                    <div class="col-xs-7 contrast-color">
+                                                        <span>Поездка завершена</span>
+                                                    </div>
+                                                    <div class="col-xs-5 text-right">
+                                                        <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="short-trip" ng-show="trip.isDeleted">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="user-trip-header">
+                                                <div class="row">
+                                                    <div class="col-xs-6">                                                        
+                                                        <span class="contrast-color">
+                                                            Поездка была удалена!
+                                                        </span>                                                        
+                                                    </div>
+                                                    <div class="col-xs-6 text-right" ng-if="trip.allowManage">
+                                                        <button class="btn btn-xs btn-success pull-right" ng-click="recoverTrip(trip.tripId, $index)">
+                                                            Восстановить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                </div>
+
+                            </div>
+
+                            <div class="row" ng-if="loading">
+                                <div class="col-xs-12">
+                                    <div class="loading-wrapper">
+                                        <div class="loading-icon">
+                                            <i class="fa fa-refresh fa-spin fa-2x"></i>
+                                        </div>
+                                        <div class="loading-text">
+                                            <span class="contrast-color">Пожалуйста, подождите...</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-5 text-right">
-                                <div class="total-trip-count">
-                                    <b>Поездок: 55</b>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="no-margin user-hr-top" />
-
-                        <div class="list-trips">
-
-                            <div class="short-trip">
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="user-trip-header">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <a href="javascript:void(0)" class="typical-link">
-                                                        <span class="user-trip-driver">Чепурной Александр</span>
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-6 text-right">
-                                                    <a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>    
-                                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="trip-padding">
-
-                                    <div class="row">
-                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="trip-points">
-                                                        Таганрог, Ростовская область &#8594;
-                                                        Ростов-на-Дону, Ростовская область &#8594;
-                                                        Москва, Московская область &#8594;
-                                                        Санкт-Петербург
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-12 contrast-color">
-                                                    07/07/2015
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="trip-price">
-                                                <span class="trip-price-title">10000 руб.</span><br />
-                                                <span class="contrast-color">с человека</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="trip-places">
-                                            <div class="row">
-                                                <div class="col-xs-7 contrast-color">
-                                                    <span>Осталось свободных мест: 10</span>
-                                                </div>
-                                                <div class="col-xs-5 text-right">
-                                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>                            
-                            
-                            <div class="short-trip">
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="user-trip-header">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <a href="javascript:void(0)" class="typical-link">
-                                                        <span class="user-trip-driver">Чепурной Александр</span>
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-6 text-right">
-                                                    <!--<a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>
-                                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="trip-padding">
-
-                                    <div class="row">
-                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="trip-points">
-                                                        Таганрог, Ростовская область &#8594;
-                                                        Ростов-на-Дону, Ростовская область &#8594;
-                                                        Москва, Московская область &#8594;
-                                                        Санкт-Петербург
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-12 contrast-color">
-                                                    07/07/2015
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="trip-price">
-                                                <span class="trip-price-title">Бесплатная</span><br />    
-                                                <span class="contrast-color">поездка</span>                                            
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="trip-places light-background">
-                                            <div class="row">
-                                                <div class="col-xs-7 contrast-color">
-                                                    <span>Поездка завершена</span>
-                                                </div>
-                                                <div class="col-xs-5 text-right">
-                                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>      
-
-                            <div class="short-trip">
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="user-trip-header">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <a href="javascript:void(0)" class="typical-link">
-                                                        <span class="user-trip-driver">Чепурной Александр</span>
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-6 text-right">
-                                                    <!--<a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>
-                                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="trip-padding">
-
-                                    <div class="row">
-                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="trip-points">
-                                                        Таганрог, Ростовская область &#8594;
-                                                        Ростов-на-Дону, Ростовская область &#8594;
-                                                        Москва, Московская область &#8594;
-                                                        Санкт-Петербург
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-12 contrast-color">
-                                                    07/07/2015
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                                            <div class="trip-price">
-                                                <span class="trip-price-title">Договорная</span><br />
-                                                <span class="contrast-color">цена</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="trip-places light-background">
-                                            <div class="row">
-                                                <div class="col-xs-7 contrast-color">
-                                                    <span>Поездка завершена</span>
-                                                </div>
-                                                <div class="col-xs-5 text-right">
-                                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>    
 
                         </div>
 

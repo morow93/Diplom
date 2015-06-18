@@ -97,13 +97,13 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                                 <input placeholder="Дата отправления"
-                                        type="text"
-                                        class="form-control input-sm"
-                                        data-min-date="{{minDate}}"
-                                        ng-model="home.date"
-                                        name="date"
-                                        data-bs-datepicker
-                                        required>
+                                       type="text"
+                                       class="form-control input-sm"
+                                       data-min-date="{{dt}}"
+                                       ng-model="home.date"
+                                       name="date"
+                                       data-bs-datepicker
+                                       required>
                             </div>
                             <div class="form-error">
                                 <span ng-show="formHome.date.$error.required && formHome.date.$dirty">

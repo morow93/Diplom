@@ -1,5 +1,6 @@
 ﻿using InoDrive.Domain.Models;
 using InoDrive.Domain.Models.InputModels;
+using InoDrive.Domain.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace InoDrive.Domain.Repositories.Abstract
     public interface ITripsRepository
     {
         #region Select
+
+        OutputList<OutputMyTripModel> GetAllTrips(InputPageSortModel<Int32> model);
+        OutputList<OutputMyTripModel> GetDriverTrips(InputPageSortModel<Int32> model);
+        OutputList<OutputMyTripModel> GetPassengerTrips(InputPageSortModel<Int32> model);
 
         CarModel GetCar(ShortUserModel model);
         //DetailsTripModel GetDetailsTrip(ManageTripModel model);
@@ -24,9 +29,11 @@ namespace InoDrive.Domain.Repositories.Abstract
         #region Modifications
 
         void CreateTrip(InputCreateTripModel model);
+        void RemoveTrip(InputManageTripModel model);
+        void RecoverTrip(InputManageTripModel model);
+
         //void EditTrip(EditTripModel model);
-        //void DeleteTrip(ManageTripModel model);
-        //void RecoverTrip(ManageTripModel model);
+
         //void VoteForTrip(VoteTripModel model);
 
         #endregion

@@ -12,7 +12,48 @@ app.factory('tripsService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         return promise;
     };
 
+    var getAllTrips = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/getAllTrips', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
+    var getDriverTrips = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/getDriverTrips', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
+    var getPassengerTrips = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/getPassengerTrips', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
+    var removeTrip = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/removeTrip', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
+    var recoverTrip = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/recoverTrip', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
     tripsServiceFactory.getCar = getCar;
+    tripsServiceFactory.getAllTrips = getAllTrips;
+    tripsServiceFactory.getDriverTrips = getDriverTrips;
+    tripsServiceFactory.getPassengerTrips = getPassengerTrips;
+
+    tripsServiceFactory.removeTrip = removeTrip;
+    tripsServiceFactory.recoverTrip = recoverTrip;
 
     return tripsServiceFactory;
 

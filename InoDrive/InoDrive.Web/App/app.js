@@ -20,7 +20,8 @@ var app = angular.module('InoDrive',
     'angularFileUpload',
     'angular-loading-bar',
     'ngImgCrop',
-    'ui.utils.masks'
+    'ui.utils.masks',
+    'infinite-scroll'
 ]);
 
 //states config
@@ -293,10 +294,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 //other configs must be here
-app.config(function ($datepickerProvider, laddaProvider, cfpLoadingBarProvider) {
+app.config(function ($httpProvider, $datepickerProvider, laddaProvider, cfpLoadingBarProvider) {
+
+    $httpProvider.defaults.timeout = 500;
 
     angular.extend($datepickerProvider.defaults, {
-        dateFormat: 'dd/MM/yyyy',
+        //dateFormat: 'dd/MM/yyyy',
         startWeek: 1
     });
 

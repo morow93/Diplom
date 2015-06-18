@@ -4,12 +4,14 @@ using InoDrive.Domain.Exceptions;
 using InoDrive.Domain.Helpers;
 using InoDrive.Domain.Models;
 using InoDrive.Domain.Models.InputModels;
+using InoDrive.Domain.Models.OutputModels;
 using InoDrive.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace InoDrive.Domain.Repositories.Concrete
 {
@@ -238,65 +240,7 @@ namespace InoDrive.Domain.Repositories.Concrete
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        //public ResultMyTripsModel GetMyTrips(MyTripsPagedOrderModel model)
-        //{
-        //    var result = new ResultMyTripsModel();
-
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var page = Math.Max(model.PageModel.Page, 1);
-        //        var countExcluded = Math.Max(model.CountExcluded, 0);
-
-        //        var trips = user.Trips.Where(t => !t.IsDeleted).AsQueryable();
-        //        var totalCount = trips.Count();
-
-        //        if (totalCount != 0)
-        //        {
-        //            result.TotalCount = totalCount;
-
-        //            var resultTrips = trips.Select(t => new MyTripModel
-        //            {
-        //                TripId = t.TripId,
-        //                LeavingDate = t.LeavingDate,
-        //                CreationDate = t.CreationDate,
-        //                IsDeleted = false,
-        //                Pay = t.PayForOne,
-        //                OriginCity = new CityModel
-        //                {
-        //                    CityId = t.OriginCityId,
-        //                    CityName = t.OriginCity.RuCityName,
-        //                    RegionName = t.OriginCity.Region.RuRegionName
-        //                },
-        //                DestinationCity = new CityModel
-        //                {
-        //                    CityId = t.DestinationCityId,
-        //                    CityName = t.DestinationCity.RuCityName,
-        //                    RegionName = t.DestinationCity.Region.RuRegionName
-        //                },
-        //                UserOwner = new UserModel
-        //                {
-        //                    UserId = model.UserId,
-        //                    FirstName = user.FirstName,
-        //                    LastName = user.LastName
-        //                },
-        //                TotalPlaces = t.PeopleCount,
-        //                FreePlaces = t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true)
-
-        //            })
-        //            .OrderBy(model.SortOption.Field + (model.SortOption.Order ? " ascending" : " descending"))
-        //            .Skip(model.PageModel.PerPage * (page - 1) - countExcluded).Take(model.PageModel.PerPage)
-        //            .ToList<MyTripModel>();
-
-        //            result.MyTrips = resultTrips;
-        //        }
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Нет такого пользователя!");
-        //    }
-        //}
+       
 
         /// <summary>
         /// Find trips by some params
@@ -481,6 +425,130 @@ namespace InoDrive.Domain.Repositories.Concrete
         //    return result;
         //}
 
+        public OutputList<OutputMyTripModel> GetAllTrips(InputPageSortModel<Int32> model)
+        {
+            var result = new OutputList<OutputMyTripModel>();
+
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var page = Math.Max(model.Page, 1);
+                var perPage = Math.Max(model.PerPage, 1);
+                var countExcluded = Math.Max(model.CountExcluded, 0);
+
+                var driverTrips =
+                    user.
+                    Trips.
+                    Where(t => !t.IsDeleted && (model.ShowEnded || t.EndDate > DateTimeOffset.Now));
+
+                var passengerTrips =
+                    user.
+                    Bids.
+                    Where(b => b.IsAccepted == true).
+                    Select(b => b.Trip).
+                    Where(t => !t.IsDeleted && (model.ShowEnded || t.EndDate > DateTimeOffset.Now));
+
+                var allTrips =
+                    driverTrips.
+                    Concat(passengerTrips)
+                    .OrderByDescending(t => t.CreationDate)
+                    .AsQueryable();   
+
+                var totalCount = allTrips.Count();
+
+                if (totalCount != 0)
+                {
+                    result.TotalCount = totalCount;
+                    result.Results = Mapper.Map<IQueryable<Trip>, List<OutputMyTripModel>>(allTrips.Skip(perPage * (page - 1) - countExcluded).Take(perPage));
+
+                    foreach (var trip in result.Results)                    
+                        if (!trip.IsStarted && (model.IsOwner && model.UserId == trip.UserId))                        
+                            trip.AllowManage = true;                                            
+                }
+                return result;
+            }
+            else
+            {
+                throw new RedirectException(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
+        public OutputList<OutputMyTripModel> GetDriverTrips(InputPageSortModel<Int32> model)
+        {
+            var result = new OutputList<OutputMyTripModel>();
+
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var page = Math.Max(model.Page, 1);
+                var perPage = Math.Max(model.PerPage, 1);
+                var countExcluded = Math.Max(model.CountExcluded, 0);
+
+                var driverTrips =
+                    user.
+                    Trips.
+                    Where(t => !t.IsDeleted && (model.ShowEnded || t.EndDate > DateTimeOffset.Now))
+                    .OrderByDescending(t => t.CreationDate)
+                    .AsQueryable();
+
+                var totalCount = driverTrips.Count();
+
+                if (totalCount != 0)
+                {
+                    result.TotalCount = totalCount;
+                    result.Results = Mapper.Map<IQueryable<Trip>, List<OutputMyTripModel>>(driverTrips.Skip(perPage * (page - 1) - countExcluded).Take(perPage));
+
+                    foreach (var trip in result.Results)
+                        if (!trip.IsStarted && (model.IsOwner && model.UserId == trip.UserId))
+                            trip.AllowManage = true; 
+                }
+                return result;
+            }
+            else
+            {
+                throw new RedirectException(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
+        public OutputList<OutputMyTripModel> GetPassengerTrips(InputPageSortModel<Int32> model)
+        {
+            var result = new OutputList<OutputMyTripModel>();
+
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var page = Math.Max(model.Page, 1);
+                var perPage = Math.Max(model.PerPage, 1);
+                var countExcluded = Math.Max(model.CountExcluded, 0);
+
+                var passengerTrips =
+                    user.
+                    Bids.
+                    Where(b => b.IsAccepted == true).
+                    Select(b => b.Trip).
+                    Where(t => !t.IsDeleted && (model.ShowEnded || t.EndDate > DateTimeOffset.Now))
+                    .OrderByDescending(t => t.CreationDate)
+                    .AsQueryable();
+
+                var totalCount = passengerTrips.Count();
+
+                if (totalCount != 0)
+                {
+                    result.TotalCount = totalCount;
+                    result.Results = Mapper.Map<IQueryable<Trip>, List<OutputMyTripModel>>(passengerTrips.Skip(perPage * (page - 1) - countExcluded).Take(perPage));
+
+                    foreach (var trip in result.Results)
+                        if (!trip.IsStarted && (model.IsOwner && model.UserId == trip.UserId))
+                            trip.AllowManage = true; 
+                }
+                return result;
+            }
+            else
+            {
+                throw new RedirectException(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
         #endregion
 
         #region Modifications
@@ -660,9 +728,20 @@ namespace InoDrive.Domain.Repositories.Concrete
                     UserId = model.UserId,
                     OriginPlaceId = model.OriginPlace.PlaceId,
                     DestinationPlaceId = model.DestinationPlace.PlaceId,
-                    CreationDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(3),
-                    LeavingDate = model.LeavingDate,
+                    CreationDate = DateTimeOffset.Now,
+                    LeavingDate = 
+                        model.
+                        LeavingDate.
+                        AddHours(DateTimeOffset.Now.Hour).
+                        AddMinutes(DateTimeOffset.Now.Minute).
+                        AddSeconds(DateTimeOffset.Now.Second),
+                    EndDate = 
+                        model.
+                        LeavingDate.
+                        AddDays(3).
+                        AddHours(DateTimeOffset.Now.Hour).
+                        AddMinutes(DateTimeOffset.Now.Minute).
+                        AddSeconds(DateTimeOffset.Now.Second),
                     PeopleCount = model.PeopleCount,
                     Pay = model.Pay,
                     WayPoints = wayPointsToAdd
@@ -673,7 +752,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                     _ctx.Trips.Add(trip);
                     _ctx.SaveChanges();
                 }
-                catch(Exception e)
+                catch
                 {
                     throw new AlertException(AppConstants.TRIP_CREATE_ERROR);
                 }
@@ -684,63 +763,67 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
-        //public void DeleteTrip(ManageTripModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            try
-        //            {
-        //                trip.IsDeleted = true;
-        //                _ctx.SaveChanges();
-        //            }
-        //            catch
-        //            {
-        //                throw new AlertException("Ошибка при записи в базу!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("У данного пользователя нет такой поездки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public void RemoveTrip(InputManageTripModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip != null)
+                {
+                    if (trip.LeavingDate < DateTimeOffset.Now)
+                    {
+                        throw new AlertException(AppConstants.TRIP_REMOVE_CAUSE_DATE_ERROR);
+                    }
+                    try
+                    {
+                        trip.IsDeleted = true;
+                        _ctx.SaveChanges();
+                    }
+                    catch
+                    {
+                        throw new AlertException(AppConstants.TRIP_REMOVE_ERROR);
+                    }
+                }
+                else
+                {
+                    throw new AlertException(AppConstants.USER_HASNT_SUCH_TRIP);
+                }
+            }
+            else
+            {
+                throw new AlertException(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
-        //public void RecoverTrip(ManageTripModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            try
-        //            {
-        //                trip.IsDeleted = false;
-        //                _ctx.SaveChanges();
-        //            }
-        //            catch
-        //            {
-        //                throw new AlertException("Ошибка при записи в базу!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("У данного пользователя нет такой поездки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public void RecoverTrip(InputManageTripModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip != null)
+                {
+                    try
+                    {
+                        trip.IsDeleted = false;
+                        _ctx.SaveChanges();
+                    }
+                    catch
+                    {
+                        throw new AlertException(AppConstants.TRIP_RECOVER_ERROR);
+                    }
+                }
+                else
+                {
+                    throw new AlertException(AppConstants.USER_HASNT_SUCH_TRIP);
+                }
+            }
+            else
+            {
+                throw new AlertException(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
         //public void VoteForTrip(VoteTripModel model)
         //{

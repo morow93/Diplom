@@ -69,6 +69,5 @@ namespace InoDrive.Domain.Entities
             get { return _bids ?? (_bids = new Collection<Bid>()); }
             protected set { _bids = value; }
         }
-
     }
 }
