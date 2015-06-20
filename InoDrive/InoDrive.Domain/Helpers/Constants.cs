@@ -37,6 +37,7 @@ namespace InoDrive.Domain.Helpers
         public static String TRIP_CREATE_ERROR              = "Ошибка при создании поездки!";
         public static String TRIP_REMOVE_ERROR              = "Ошибка при удалении поездки!";
         public static String TRIP_RECOVER_ERROR             = "Ошибка при восстановлении поездки!";
+        public static String TRIP_EDIT_ERROR                = "Ошибка при редактировании поездки!";
         public static String TRIP_REMOVE_CAUSE_DATE_ERROR   = "Нельзя удалить уже начавшуюся поездку!";
         public static String PROFILE_EDIT_ERROR             = "Ошибка редактирования профиля!";
 

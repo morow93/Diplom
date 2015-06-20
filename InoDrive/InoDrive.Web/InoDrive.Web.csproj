@@ -63,6 +63,7 @@
     <Content Include="App\Controllers\Settings\settingsController.js" />
     <Content Include="App\Controllers\User\bidsController.js" />
     <Content Include="App\Controllers\User\createTripController.js" />
+    <Content Include="App\Controllers\User\editTripController.js" />
     <Content Include="App\Controllers\User\findController.js" />
     <Content Include="App\Controllers\Home\homeController.js" />
     <Content Include="App\Controllers\indexController.js" />

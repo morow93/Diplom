@@ -16,7 +16,8 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="page-view-title">
-                    <b>Новая поездка</b>
+                    <b ng-bind="formHeader">
+                    </b>
                 </div>
             </div>
         </div>
@@ -43,8 +44,8 @@
                                 <a href="javascript:void(0)"
                                    class="btn btn-primary btn-sm full-width"
                                    data-ladda="laddaManageTripFlag"
+                                   ng-bind="formButton"
                                    ng-click="formSubmit(formManageTrip)">
-                                    Создать поездку
                                 </a>
                             </div>
                         </div>
@@ -120,7 +121,7 @@
                                         <input placeholder="Дата отправления"
                                                type="text"
                                                class="form-control input-sm"
-                                               data-min-date="{{minDate}}"
+                                               data-min-date="{{dt}}"
                                                ng-model="trip.leavingDate"
                                                name="date"
                                                data-bs-datepicker
@@ -195,7 +196,7 @@
 
                         <div data-range-slider
                              data-min="0"
-                             data-max="1000"
+                             data-max="5000"
                              data-model-min="0"
                              data-model-max="trip.pay"
                              data-step="50"
@@ -236,7 +237,7 @@
 
                                 <div class="trip-checkbox-wrapper">
                                     <div class="checkbox checkbox-primary trip-checkbox">
-                                        <input type="checkbox" id="tripOptions0" class="pointer" ng-model="trip.isAllowdedDeviates">
+                                        <input type="checkbox" id="tripOptions0" class="pointer" ng-model="trip.isAllowdedDeviation">
                                         <label for="tripOptions0">
                                             <b>Возможны отклонения от маршрута</b>
                                         </label>
@@ -437,8 +438,8 @@
                                 <a href="javascript:void(0)"
                                    class="btn btn-primary btn-sm full-width"
                                    data-ladda="laddaManageTripFlag"
+                                   ng-bind="formButton"
                                    ng-click="formSubmit(formManageTrip, true)">
-                                    Создать поездку
                                 </a>
                             </div>
                         </div>

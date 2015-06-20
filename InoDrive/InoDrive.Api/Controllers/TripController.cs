@@ -84,6 +84,48 @@ namespace InoDrive.Api.Controllers
 
         [HttpPost]
         [Authorize]
+        [Route("EditTrip")]
+        public async Task<IHttpActionResult> EditTrip()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.UnsupportedMediaType, new { status = Statuses.CommonFailure }));
+            }
+            var provider = GetMultipartProvider();
+            var resultFile = await Request.Content.ReadAsMultipartAsync(provider);
+
+            var trip = (InputCreateTripModel)GetFormData<InputCreateTripModel>(resultFile);
+            var isFileAttached = resultFile.FileData.Count != 0;
+            if (isFileAttached)
+            {
+                var fileInfo = (new FileInfo(resultFile.FileData.First().LocalFileName));
+                trip.CarImage = fileInfo.Name;
+                trip.CarImageExtension = fileInfo.Extension;
+            }
+            if (trip.CarImage != trip.OldCarImage)
+            {
+                var carsFolder = ConfigurationManager.AppSettings["carsFolder"];
+                string fullPathToFile = HttpContext.Current.Server.MapPath(carsFolder + trip.OldCarImage);
+                if (File.Exists(fullPathToFile))
+                {
+                    File.Delete(fullPathToFile);
+                }
+            }
+
+            try
+            {
+                _repo.EditTrip(trip);
+                return Ok(trip);
+            }
+            catch(Exception e)
+            {
+                File.Delete(trip.CarImage);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
         [Route("RemoveTrip")]
         public IHttpActionResult RemoveTrip(InputManageTripModel model)
         {
@@ -162,7 +204,7 @@ namespace InoDrive.Api.Controllers
         [HttpPost]
         [Authorize]
         [Route("GetCar")]
-        public async Task<IHttpActionResult> GetCar(ShortUserModel model)
+        public IHttpActionResult GetCar(ShortUserModel model)
         {
             try
             {
@@ -174,6 +216,22 @@ namespace InoDrive.Api.Controllers
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
             }
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("GetTripForEdit")]
+        public IHttpActionResult GetTripForEdit(InputManageTripModel model)
+        {
+            try
+            {
+                var result = _repo.GetTripForEdit(model);
+                return Ok(result);
+            }
+            catch(Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }        
 
         #region Private functions
 

@@ -19,7 +19,7 @@
             authService.signIn($scope.signin).then(function (response) {
 
                 customStorageService.set("notifyToShow", {
-                    message: 'Поздрвляем! Вы успешно вполнили вход!',
+                    message: 'Поздравляем! Вы успешно выполнили вход!',
                     type: 'success',
                 });
                 

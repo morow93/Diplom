@@ -17,7 +17,9 @@ namespace InoDrive.Domain.Repositories.Abstract
         OutputList<OutputMyTripModel> GetDriverTrips(InputPageSortModel<Int32> model);
         OutputList<OutputMyTripModel> GetPassengerTrips(InputPageSortModel<Int32> model);
 
+        InputEditTripModel GetTripForEdit(InputManageTripModel model);
         CarModel GetCar(ShortUserModel model);
+
         //DetailsTripModel GetDetailsTrip(ManageTripModel model);
         //EditTripModel GetFullTripInfo(ManageTripModel model);
         //ResultFindTripsModel FindTrips(FindTripsPagedOrderModel model);
@@ -31,8 +33,7 @@ namespace InoDrive.Domain.Repositories.Abstract
         void CreateTrip(InputCreateTripModel model);
         void RemoveTrip(InputManageTripModel model);
         void RecoverTrip(InputManageTripModel model);
-
-        //void EditTrip(EditTripModel model);
+        void EditTrip(InputCreateTripModel model);
 
         //void VoteForTrip(VoteTripModel model);
 

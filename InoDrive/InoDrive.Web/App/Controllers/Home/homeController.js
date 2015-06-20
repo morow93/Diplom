@@ -1,5 +1,5 @@
 ﻿angular.module('InoDrive').controller('homeController', function ($scope, $interval, $alert, $state, mapService) {
-    debugger;
+
     $scope.isActiveNav = function (stateName) {
         var isActive = (stateName === $state.current.name);
         return isActive;

@@ -10,7 +10,5 @@ namespace InoDrive.Domain.Models
     {
         public String PlaceId { get; set; }
         public String Name { get; set; }
-        public Double Latitude { get; set; }
-        public Double Longitude { get; set; }
     }
 }

@@ -1,5 +1,9 @@
-﻿angular.module('InoDrive').controller('createTripController', function ($scope, $state, $alert, $document, $timeout, $upload, $q, tripsService, ngAuthSettings, customStorageService) {
+﻿'use strict';
+
+angular.module('InoDrive').controller('createTripController', function ($scope, $state, $alert, $document, $timeout, $upload, $q, tripsService, ngAuthSettings, customStorageService) {
     
+    $scope.formHeader = "Новая поездка";
+    $scope.formButton = "Создать";
     $scope.carsFolder = "images/cars/";
     $scope.file = {};
 
@@ -12,6 +16,8 @@
         types: "(cities)",
         country: "ru"
     };
+
+    $scope.dt = new Date();
     
     $scope.addWayPointer = function () {
         if ($scope.trip.wayPoints.length <= 4) {
@@ -40,8 +46,6 @@
         { "value": "J",     "label": '<i class=\"fa fa-star\"></i> Кроссовер' }
     ];  
 
-    //modal begin
-
     var myAlert;
 
     $scope.showAlert = function (alertData) {
@@ -52,8 +56,6 @@
         myAlert.$promise.then(myAlert.show);
     };
     
-    //modal end
-
     $scope.getCar = function () {
 
         tripsService.getCar({ userId: $scope.authentication.userId }).then(function (car) {
@@ -86,43 +88,52 @@
 
         }).finally(function () {
 
-            $scope.wasLoaded = true;//DON'T REMOVE THIS
+            $scope.wasLoaded = true;
 
         });
     };
 
     $scope.formSubmit = function (form, needUp) {
 
+        function showFormAlert(title, type) {
+
+            $scope.showAlert({
+                title: title,
+                content: "",
+                type: type,
+                show: false,
+                container: ".form-alert"
+                , template: "/app/templates/alert.html"
+            });
+
+            angular.forEach(form.$error.required, function (field) {
+                field.$setDirty();
+            });
+        };
+
         if (form.$valid) {
 
-            var trip = $scope.trip;
-            trip.userId = $scope.authentication.userId;
+            $scope.trip.userId = $scope.authentication.userId;
 
-            var type = (typeof trip.leavingDate);
+            var type = (typeof $scope.trip.leavingDate);
             if (type != "string") {
-                trip.leavingDate = moment(trip.leavingDate).format();
+                $scope.trip.leavingDate = moment($scope.trip.leavingDate).format();
             }
 
             if ($scope.trip.price == "neg") {
                 $scope.trip.pay = null;
             }
 
-            //fill places begin
-
             $scope.trip.originPlace = {
             
                 placeId:    $scope.trip.rawOriginPlace.details.place_id,
-                name:       $scope.trip.rawOriginPlace.details.formatted_address,
-                latitude:   $scope.trip.rawOriginPlace.details.geometry.location.A,
-                longitude:  $scope.trip.rawOriginPlace.details.geometry.location.F
+                name:       $scope.trip.rawOriginPlace.details.formatted_address
             };
 
             $scope.trip.destinationPlace = {
 
                 placeId:    $scope.trip.rawDestinationPlace.details.place_id,
-                name:       $scope.trip.rawDestinationPlace.details.formatted_address,
-                latitude:   $scope.trip.rawDestinationPlace.details.geometry.location.A,
-                longitude:  $scope.trip.rawDestinationPlace.details.geometry.location.F
+                name:       $scope.trip.rawDestinationPlace.details.formatted_address
             };
             
             if ($scope.trip.wayPoints) {
@@ -132,22 +143,18 @@
                     if ($scope.trip.wayPoints[i].details) {
                         $scope.trip.selectedPlaces.push({
                             placeId: $scope.trip.wayPoints[i].details.place_id,
-                            name: $scope.trip.wayPoints[i].details.formatted_address,
-                            latitude: $scope.trip.wayPoints[i].details.geometry.location.A,
-                            longitude: $scope.trip.wayPoints[i].details.geometry.location.F
+                            name: $scope.trip.wayPoints[i].details.formatted_address
                         });
                     }
                 }
             }
 
-            //fill places end
-
             $scope.laddaManageTripFlag = true;
-
+  
             $upload.upload({
                 url: ngAuthSettings.apiServiceBaseUri + "api/trips/createTrip",
                 method: "POST",
-                data: { trip: trip },
+                data: { trip: $scope.trip },
                 file: $scope.file
             }).success(function (data, status, headers, config) {
 
@@ -159,14 +166,13 @@
 
             }).error(function (data, status, headers, config) {
 
-                $scope.showAlert({
-                    title: "Внимание! При сохранении произошла ошибка! Можете попытаться создать поездку опять или связаться в администратором.",
-                    content: "",
-                    type: "danger",
-                    show: false,
-                    container: ".form-alert"
-                    ,template: "/app/templates/alert.html"
-                });
+                if (needUp) {
+                    $document.scrollTopAnimated(0, 500).then(function () {
+                        showFormAlert("Внимание! При сохранении произошла ошибка! Можете попытаться создать поездку опять или связаться в администратором.", "danger");
+                    });
+                } else {
+                    showFormAlert("Внимание! При сохранении произошла ошибка! Можете попытаться создать поездку опять или связаться в администратором.", "danger");
+                }
 
             }).finally(function (data, status, headers, config) {
 
@@ -176,40 +182,22 @@
 
         } else {
 
-            function showErrorFormAlert() {
-                $scope.showAlert({
-                    title: "Для того чтобы создать поездку, пожалуйста, исправьте отмеченные поля!",
-                    content: "",
-                    type: "danger",
-                    show: false,
-                    container: ".form-alert"
-                    , template: "/app/templates/alert.html"
-                });
-
-                angular.forEach(form.$error.required, function (field) {
-                    field.$setDirty();
-                });
-            };
-
             if (needUp) {
                 $document.scrollTopAnimated(0, 500).then(function () {
-                    showErrorFormAlert();
+                    showFormAlert("Для того чтобы создать поездку, пожалуйста, исправьте отмеченные поля!", "danger");
                 });
             } else {
-                showErrorFormAlert();
+                showFormAlert("Для того чтобы создать поездку, пожалуйста, исправьте отмеченные поля!", "danger");
             }
         }
 
     };
 
-    //work with file begin
-
     $scope.noImage = ngAuthSettings.clientAppBaseUri + "content/images/no-car.png";
     $scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
 
     $scope.removeFile = function () {
-        debugger;
-        $scope.fileNature = 1;
+
         $scope.trip.dataUrl = null;
         $scope.trip.carImage = null;
         $scope.trip.carImageExtension = null;
@@ -218,7 +206,7 @@
     };
 
     $scope.onFileSelect = function (files) {
-        debugger;
+
         var file = files[0];
         $scope.fileErrorMsg = null;
 
@@ -230,14 +218,13 @@
                 } else {
 
                     $scope.file = file;
-                    $scope.trip.carImageName = file.name;//need when convert
-                    $scope.trip.carImageExtension = file.type;//from uri to blob
+                    $scope.trip.carImageName = file.name;       //need when convert
+                    $scope.trip.carImageExtension = file.type;  //from uri to blob
 
                     var fileReader = new FileReader();
                     fileReader.onload = function (e) {
                         $timeout(function () {
                             $scope.trip.dataUrl = e.target.result;
-                            $scope.fileNature = 3;// img from form input
                         });
                     }
                     fileReader.readAsDataURL(file);
@@ -263,10 +250,6 @@
 
         return deferred.promise;
     };
-
-    //work with file end
-
-    //run run run
 
     $scope.getCar();
 

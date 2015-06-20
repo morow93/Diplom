@@ -1,6 +1,4 @@
 ﻿angular.module('InoDrive').controller('greetingController', function ($scope, $interval, $alert, $state, mapService) {
-    debugger;
-    $scope.dt = new Date().toString();
 
     var myAlert;
 
@@ -17,6 +15,7 @@
         if (form.$valid) {
 
             $state.go("find", null, { reload: true });
+
         }
         else {
 
@@ -37,30 +36,8 @@
 
     };
 
-    $scope.updateMapUrl = function () {
-
-        mapService.getCities().then(function (data) {
-
-            var max = data.cities.length - 1;
-            var index = getRandomArbitrary(0, max).toFixed();
-
-            var currentCity = data.cities[index];
-            var zoom = parseInt(getRandomArbitrary(10, 15).toFixed());
-
-            $scope.map = {
-                center: {
-                    latitude: currentCity.latitude,
-                    longitude: currentCity.longitude
-                },
-                zoom: zoom,
-                options: {
-                    disableDefaultUI: true
-                },
-                dragging: false
-            };
-
-        });
-    };
+    $scope.dt = new Date();
+    $scope.dt.setDate($scope.dt.getDate() - 1);
 
     $scope.autocompleteOptions = {
         types: "(cities)",
@@ -69,9 +46,6 @@
     $scope.home = {};
     $scope.home.originCity = null;
     $scope.home.destinationCity = null;
-
-    $scope.updateMapUrl();
-    $interval($scope.updateMapUrl, 15000);
 
 });
 

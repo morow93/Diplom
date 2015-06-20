@@ -199,10 +199,10 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-xs-6 text-right" ng-if="trip.allowManage">
-                                                        <a href="javascript:void(0)">
+                                                        <a href="javascript:void(0)" ng-click="editTrip(trip.tripId)" class="typical-link-reset">
                                                             <i class="fa fa-pencil fa-border"></i>
                                                         </a>
-                                                        <a href="javascript:void(0)" ng-click="removeTrip(trip.tripId, $index)">
+                                                        <a href="javascript:void(0)" ng-click="removeTrip(trip.tripId)" class="typical-link-reset">
                                                             <i class="fa fa-times fa-border"></i>
                                                         </a>
                                                     </div>
@@ -210,8 +210,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-
+                                    
                                     <div class="trip-padding">
 
                                         <div class="row">
@@ -297,7 +296,7 @@
                                                         </span>                                                        
                                                     </div>
                                                     <div class="col-xs-6 text-right" ng-if="trip.allowManage">
-                                                        <button class="btn btn-xs btn-success pull-right" ng-click="recoverTrip(trip.tripId, $index)">
+                                                        <button class="btn btn-xs btn-success pull-right" ng-click="recoverTrip(trip.tripId)">
                                                             Восстановить
                                                         </button>
                                                     </div>

@@ -25,7 +25,7 @@
             signOutModal.$promise.then(signOutModal.hide);
 
             customStorageService.set("notifyToShow", {
-                message: 'Поздрвляем! Вы успешно вполнили выход!',
+                message: 'Поздравляем! Вы успешно выполнили выход!',
                 type: 'success',
             });
 

@@ -43,6 +43,34 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
+        public InputEditTripModel GetTripForEdit(InputManageTripModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user == null)
+            {
+                throw new RedirectException(AppConstants.USER_NOT_FOUND);
+            }
+            var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+            if (trip == null)
+            {
+                throw new RedirectException(AppConstants.USER_HASNT_SUCH_TRIP);
+            }
+            var result = Mapper.Map<Trip, InputEditTripModel>(trip);
+
+            if (trip.WayPoints != null && trip.WayPoints.Count != 0)
+            {
+                result.WayPoints = new List<PlaceModel>();
+                foreach (var item in trip.WayPoints.OrderBy(w => w.WayPointIndex).ToList())
+                {
+                    result.WayPoints.Add(new PlaceModel {
+                        PlaceId = item.Place.PlaceId,
+                        Name    = item.Place.Name
+                    });
+                }
+            }
+            return result;
+        }
+
         #region Select
 
         /// <summary>
@@ -130,40 +158,6 @@ namespace InoDrive.Domain.Repositories.Concrete
         //}
 
         /// <summary>
-        /// Get info about last added trip
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        //public LastTripInfo GetLastTripInfo(ShortUserModel model)
-        //{
-        //    var result = new LastTripInfo();
-
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var lastUserTrip = user.Trips.Where(t => !t.IsDeleted).OrderByDescending(t => t.CreationDate).FirstOrDefault();
-        //        if (lastUserTrip != null)
-        //        {
-        //            var lastUserTripProfile = lastUserTrip.TripProfile;
-        //            if (lastUserTripProfile != null)
-        //            {
-        //                result.CarImage = lastUserTripProfile.CarImage;
-        //                result.CarDescription = lastUserTripProfile.CarDescription;
-        //                result.Baggage = lastUserTripProfile.Baggage;
-        //                result.Comfort = lastUserTripProfile.Comfort;
-        //                result.Stage = lastUserTripProfile.Stage;
-        //            }
-        //        }
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-
-        //}
-
-        /// <summary>
         /// Get full trip info for edit
         /// </summary>
         /// <param name="model"></param>
@@ -234,13 +228,6 @@ namespace InoDrive.Domain.Repositories.Concrete
         //        throw new RedirectException("Такого пользователя не существует!");
         //    }
         //}
-
-        /// <summary>
-        /// Get trips of current user
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-       
 
         /// <summary>
         /// Find trips by some params
@@ -552,75 +539,6 @@ namespace InoDrive.Domain.Repositories.Concrete
         #endregion
 
         #region Modifications
-
-        //public void EditTrip(EditTripModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            trip.OriginCityId = model.OriginCity.CityId;
-        //            trip.DestinationCityId = model.DestinationCity.CityId;
-        //            trip.LeavingDate = model.Date;
-        //            trip.PeopleCount = model.Places;
-        //            trip.PayForOne = model.Pay;
-
-        //            if (trip.WayPoints.Count != 0)
-        //            {
-        //                foreach (var wayPoint in trip.WayPoints.ToList())
-        //                    _ctx.WayPoint.Remove(wayPoint);
-        //            }
-        //            for (int i = 0; i < model.SelectedWayPoints.Count; i++)
-        //            {
-        //                trip.WayPoints.Add(new WayPoint
-        //                {
-        //                    TripId = model.TripId,
-        //                    CityId = model.SelectedWayPoints[i].CityId,
-        //                    IndexNumber = (i + 1)
-        //                });
-        //            }
-
-        //            var tripProfile = trip.TripProfile;
-        //            if (tripProfile == null)
-        //            {
-        //                throw new RedirectException("У поездки нет своих настроек (задаются при создании)!");
-        //            }
-        //            else
-        //            {
-        //                tripProfile.CarDescription = model.CarDescription;
-        //                tripProfile.CarImage = model.CarImage;
-        //                tripProfile.Stage = model.Stage;
-        //                tripProfile.Comfort = model.Comfort ?? 0;
-        //                tripProfile.Baggage = model.Baggage ?? 0;
-        //                tripProfile.IsAllowdedDeviation = model.AllowDeviates;
-        //                tripProfile.ISAllowdedPets = model.AllowPets;
-        //                tripProfile.IsAllowdedMusic = model.AllowMusic;
-        //                tripProfile.IsAllowdedEat = model.AllowEat;
-        //                tripProfile.IsAllowdedDrink = model.AllowDrink;
-        //                tripProfile.IsAllowdedSmoke = model.AllowSmoke;
-        //                tripProfile.MoreInfo = model.Info;
-        //            }
-        //            try
-        //            {
-        //                _ctx.SaveChanges();
-        //            }
-        //            catch
-        //            {
-        //                throw new AlertException("Ошибка при редактировании поездки!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("У данного пользователя нет такой поездки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
         
         private void AddNotExistedPlaces(InputCreateTripModel model)
         {
@@ -630,9 +548,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                 originPlace = new Place
                 {
                     PlaceId = model.OriginPlace.PlaceId,
-                    Name = model.OriginPlace.Name,
-                    Latitude = model.OriginPlace.Latitude,
-                    Longitude = model.OriginPlace.Longitude
+                    Name = model.OriginPlace.Name
                 };
                 _ctx.Places.Add(originPlace);
                 _ctx.SaveChanges();
@@ -644,9 +560,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                 destinationPlace = new Place
                 {
                     PlaceId = model.DestinationPlace.PlaceId,
-                    Name = model.DestinationPlace.Name,
-                    Latitude = model.DestinationPlace.Latitude,
-                    Longitude = model.DestinationPlace.Longitude
+                    Name = model.DestinationPlace.Name
                 };
                 _ctx.Places.Add(destinationPlace);
                 _ctx.SaveChanges();
@@ -664,9 +578,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                         place = new Place
                         {
                             PlaceId = model.SelectedPlaces[i].PlaceId,
-                            Name = model.SelectedPlaces[i].Name,
-                            Latitude = model.SelectedPlaces[i].Latitude,
-                            Longitude = model.SelectedPlaces[i].Longitude
+                            Name = model.SelectedPlaces[i].Name
                         };
                         _ctx.Places.Add(place);
                         _ctx.SaveChanges();
@@ -713,7 +625,7 @@ namespace InoDrive.Domain.Repositories.Concrete
 
                 var trip = new Trip
                 {
-                    IsAllowdedDeviation = model.IsAllowdedDeviates,
+                    IsAllowdedDeviation = model.IsAllowdedDeviation,//
                     IsAllowdedChildren = model.IsAllowdedChildren,
                     IsAllowdedPets = model.IsAllowdedPets,                   
                     IsAllowdedMusic = model.IsAllowdedMusic,
@@ -726,8 +638,8 @@ namespace InoDrive.Domain.Repositories.Concrete
                     CarImageExtension = model.CarImageExtension,
                     CarClass = model.CarClass,
                     UserId = model.UserId,
-                    OriginPlaceId = model.OriginPlace.PlaceId,
-                    DestinationPlaceId = model.DestinationPlace.PlaceId,
+                    OriginPlaceId = model.OriginPlace.PlaceId,//
+                    DestinationPlaceId = model.DestinationPlace.PlaceId,//
                     CreationDate = DateTimeOffset.Now,
                     LeavingDate = 
                         model.
@@ -744,7 +656,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                         AddSeconds(DateTimeOffset.Now.Second),
                     PeopleCount = model.PeopleCount,
                     Pay = model.Pay,
-                    WayPoints = wayPointsToAdd
+                    WayPoints = wayPointsToAdd//
                 };
 
                 try
@@ -755,6 +667,96 @@ namespace InoDrive.Domain.Repositories.Concrete
                 catch
                 {
                     throw new AlertException(AppConstants.TRIP_CREATE_ERROR);
+                }
+            }
+            else
+            {
+                throw new AlertException(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
+        public void EditTrip(InputCreateTripModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip == null)
+                {
+                    throw new AlertException(AppConstants.USER_HASNT_SUCH_TRIP);
+                }
+
+                AddNotExistedPlaces(model);
+
+                if (trip.WayPoints != null && trip.WayPoints.Count != 0)
+                {
+                    foreach (var wayPoint in trip.WayPoints.ToList())
+                    {
+                        _ctx.WayPoint.Remove(wayPoint);
+                    }
+                }
+                
+                List<WayPoint> wayPointsToAdd = null;
+                if (model.SelectedPlaces != null)
+                {
+                    wayPointsToAdd = new List<WayPoint>();
+                    var i = 0;
+                    foreach (var wp in model.SelectedPlaces)
+                    {
+                        var wayPoint = new WayPoint
+                        {
+                            PlaceId = wp.PlaceId,
+                            WayPointIndex = (++i)
+                        };
+                        wayPointsToAdd.Add(wayPoint);
+                    }
+                }
+
+                trip.IsAllowdedDeviation = model.IsAllowdedDeviation;
+                trip.IsAllowdedChildren = model.IsAllowdedChildren;
+                trip.IsAllowdedPets = model.IsAllowdedPets;
+                trip.IsAllowdedMusic = model.IsAllowdedMusic;
+                trip.IsAllowdedDrink = model.IsAllowdedDrink;
+                trip.IsAllowdedEat = model.IsAllowdedEat;
+                trip.IsAllowdedSmoke = model.IsAllowdedSmoke;
+
+                trip.About = model.About;
+                trip.Car = model.Car;
+                trip.CarImage = model.CarImage;
+                trip.CarImageExtension = model.CarImageExtension;
+                trip.CarClass = model.CarClass;
+                trip.UserId = model.UserId;
+                trip.OriginPlaceId = model.OriginPlace.PlaceId;
+                trip.DestinationPlaceId = model.DestinationPlace.PlaceId;
+
+                trip.CreationDate = DateTimeOffset.Now;
+
+                trip.LeavingDate =
+                    model.
+                    LeavingDate.
+                    AddHours(DateTimeOffset.Now.Hour).
+                    AddMinutes(DateTimeOffset.Now.Minute).
+                    AddSeconds(DateTimeOffset.Now.Second);
+
+                trip.EndDate =
+                    model.
+                    LeavingDate.
+                    AddDays(3).
+                    AddHours(DateTimeOffset.Now.Hour).
+                    AddMinutes(DateTimeOffset.Now.Minute).
+                    AddSeconds(DateTimeOffset.Now.Second);
+
+                trip.PeopleCount = model.PeopleCount;
+                trip.Pay = model.Pay;
+                trip.WayPoints = wayPointsToAdd;
+
+                try
+                {
+                    _ctx.SaveChanges();
+                }
+                catch
+                {
+                    throw new AlertException(AppConstants.TRIP_EDIT_ERROR);
                 }
             }
             else

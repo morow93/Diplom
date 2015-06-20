@@ -192,4 +192,7 @@
         });
     };
 
+    $scope.editTrip = function (tripId) {
+        $state.go("user.edit_trip", { tripId: tripId }, { reload: true });
+    };
 });

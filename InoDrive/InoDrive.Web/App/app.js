@@ -24,7 +24,6 @@ var app = angular.module('InoDrive',
     'infinite-scroll'
 ]);
 
-//states config
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider
@@ -46,7 +45,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
             .state("home.greeting", {
                 url: "",
-                controller: "homeController",
+                controller: "greetingController",
                 templateUrl: "/app/views/home/home.greeting.html",
                 resolve: {
                     loadCtrl: function ($ocLazyLoad) {
@@ -148,7 +147,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     return $ocLazyLoad.load(
                         {
                             name: "InoDrive",
-                            files: ["app/controllers/user/userController.js"]
+                            files: [
+                                "app/controllers/user/userController.js",
+                                "app/controllers/user/editTripController.js"
+                            ]
                         }
                     );
                 }
@@ -187,6 +189,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                         );
                     }
                 }
+            })
+            .state("user.edit_trip", {
+                url: "edit_trip/:tripId",
+                controller: "editTripController",
+                templateUrl: "/app/views/user/user.manage_trip.html"
             })
             .state("user.find", {
                 url: "find/",
@@ -293,7 +300,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 });
 
-//other configs must be here
 app.config(function ($httpProvider, $datepickerProvider, laddaProvider, cfpLoadingBarProvider) {
 
     $httpProvider.defaults.timeout = 500;
@@ -312,7 +318,6 @@ app.config(function ($httpProvider, $datepickerProvider, laddaProvider, cfpLoadi
 
 });
 
-//constants
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: 'http://localhost:60947/',
     clientAppBaseUri: 'http://localhost:56023/',
@@ -323,7 +328,6 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 });
 
-//run run run
 app.run(function ($rootScope, $state, notify, authService, customStorageService, localStorageService) {
 
     authService.fillAuthorizationData();
@@ -339,7 +343,7 @@ app.run(function ($rootScope, $state, notify, authService, customStorageService,
         if (toState.name.indexOf('home') >= 0) {
             var authorizationData = localStorageService.get("authorizationData");
             if (authorizationData) {
-                debugger;
+
                 event.preventDefault();
                 $state.go('user.view', null, { reload: true });
             }
