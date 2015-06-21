@@ -1,7 +1,20 @@
-﻿<form name="formEditProfile" novalidate autocomplete="off">
+﻿<div class="row" ng-if="!wasLoaded">
+    <div class="col-xs-12">
+        <div class="loading-wrapper loading-block no-margin">
+            <div class="loading-icon">
+                <i class="fa fa-refresh fa-spin fa-2x"></i>
+            </div>
+            <div class="loading-text">
+                <span class="contrast-color">Пожалуйста, подождите...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div class="row">
-        <div class="col-xs-12">
+<div class="row" ng-if="wasLoaded">
+    <div class="col-xs-12">
+
+        <form name="formEditProfile" novalidate autocomplete="off">
 
             <div class="form-block">
                 <div class="row">
@@ -23,7 +36,7 @@
                                 <a href="javascript:void(0)"
                                    class="btn btn-primary btn-sm full-width"
                                    data-ladda="laddaEditProfileFlag"
-                                   ng-click="formSubmit(formEditProfile)">
+                                   ng-click="formProfileSubmit(formEditProfile)">
                                     Сохранить
                                 </a>
                             </div>
@@ -32,8 +45,8 @@
                 </div>
             </div>
 
-            <div class="form-alert fluid-form-alert form-find-alert"></div>
-            
+            <div class="form-profile-alert fluid-form-alert form-find-alert"></div>
+
             <div class="row trip-car">
 
                 <div class="col-xs-6">
@@ -41,22 +54,24 @@
                     <label class="control-label">Мое фото</label>
 
                     <div class="image-cropper">
-                        <img ng-show="dataUrl != null" ng-src="{{dataUrl}}" class="resize" />
-                        <img ng-show="dataUrl == null" ng-src="{{noImage}}" class="resize" />
+                        <img ng-show="avatarDataUrl != null" ng-src="{{avatarDataUrl}}" class="resize" />
+                        <img ng-show="avatarDataUrl == null" ng-src="{{noAvatarImage}}" class="resize" />
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
                             <span class="btn btn-default btn-file btn-sm full-width upload-btn">
-                                <span ng-if="dataUrl == null">Загрузить фото</span>
-                                <span ng-if="dataUrl != null">Изменить фото</span>
+                                <span ng-if="avatarDataUrl == null">Загрузить фото</span>
+                                <span ng-if="avatarDataUrl != null">Изменить фото</span>
                                 <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="" ng-model="files">
+                                <!--<button class="button btn" ng-file-select ng-model="files">Select File</button>-->
                             </span>
                         </div>
                     </div>
-                    <div class="row" ng-show="dataUrl != null">
+
+                    <div class="row" ng-show="avatarDataUrl != null">
                         <div class="col-xs-12">
-                            <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeFile()">
+                            <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeAvatarFile()">
                                 Удалить фото
                             </button>
                         </div>
@@ -73,25 +88,25 @@
                 </div>
 
                 <div class="col-xs-6">
-                    
+
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label">Имя</label>                           
+                            <label class="control-label">Имя</label>
                             <input name="firstName"
-                                    class="form-control input-sm"
-                                    type="text"
-                                    placeholder="Имя"
-                                    ng-model="profile.firstName"
-                                    ng-minlength="2"
-                                    ng-maxlength="20"
-                                    ng-pattern="/^[а-яА-Я]+$/"
-                                    required />                           
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Имя"
+                                   ng-model="profile.firstName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
                             <div class="form-error">
                                 <span ng-show="formEditProfile.firstName.$dirty && formEditProfile.firstName.$error.required">
                                     Укажите имя!
                                 </span>
                                 <span ng-show="!formEditProfile.firstName.$error.pattern &&
-                                      (formEditProfile.firstName.$error.minlength || formEditProfile.firstName.$error.maxlength)">
+                                    (formEditProfile.firstName.$error.minlength || formEditProfile.firstName.$error.maxlength)">
                                     Имя должно содержать от 2 до 20 букв!
                                 </span>
                                 <span ng-show="formEditProfile.firstName.$error.pattern">
@@ -105,20 +120,20 @@
                         <div class="col-xs-12">
                             <label class="control-label">Фамилия</label>
                             <input name="lastName"
-                                    class="form-control input-sm"
-                                    type="text"
-                                    placeholder="Фамилия"
-                                    ng-model="profile.lastName"
-                                    ng-minlength="2"
-                                    ng-maxlength="20"
-                                    ng-pattern="/^[а-яА-Я]+$/"
-                                    required />                          
+                                   class="form-control input-sm"
+                                   type="text"
+                                   placeholder="Фамилия"
+                                   ng-model="profile.lastName"
+                                   ng-minlength="2"
+                                   ng-maxlength="20"
+                                   ng-pattern="/^[а-яА-Я]+$/"
+                                   required />
                             <div class="form-error">
                                 <span ng-show="formEditProfile.lastName.$dirty && formEditProfile.lastName.$error.required">
                                     Укажите фамилию!
                                 </span>
                                 <span ng-show="!formEditProfile.lastName.$error.pattern &&
-                                      (formEditProfile.lastName.$error.minlength || formEditProfile.lastName.$error.maxlength)">
+                                    (formEditProfile.lastName.$error.minlength || formEditProfile.lastName.$error.maxlength)">
                                     Фамилия должна содержать от 2 до 20 букв!
                                 </span>
                                 <span ng-show="formEditProfile.lastName.$error.pattern">
@@ -134,50 +149,58 @@
                             <button type="button"
                                     data-placeholder="Укажите свой пол"
                                     class="btn btn-default full-width btn-sm order-sort-input"
-                                    ng-model="selectedOrderOption"
+                                    ng-model="profile.sex"
                                     data-html="1"
                                     data-bs-options="option.value as option.label for option in sexOptions"
                                     data-bs-select>
                                 Action <span class="caret"></span>
-                            </button>                            
+                            </button>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label">Год рождения</label>                         
-                            <select class="selectpicker form-control input-sm" ng-model="yearOfBirth">
-                                <option value="" selected disabled>Укажите год рождения</option>
-                                <option ng-repeat="year in yearsOfBirth">
+                            <label class="control-label">Год рождения</label>
+ 
+                            <select class="selectpicker form-control input-sm" ng-model="profile.yearOfBirth">
+                                <option value="0">Не указан</option>
+                                <option ng-selected="{{year == profile.yearOfBirth}}"
+                                        ng-repeat="year in yearsOfBirth"
+                                        value="{{year}}">
                                     {{year}} год
                                 </option>
-                            </select>     
-                            <div class="form-error"></div>                  
+                            </select>
+
+                            <div class="form-error"></div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="control-label">Вожу машину с</label>
-                            <select class="selectpicker form-control input-sm" ng-model="yearOfStage">
-                                <option value="" selected disabled>Укажите свой стаж</option>
-                                <option ng-repeat="year in yearsOfStage">
+
+                            <select class="selectpicker form-control input-sm" ng-model="profile.yearOfStage">
+                                <option value="0">Нет водительских прав</option>
+                                <option ng-selected="{{year == profile.yearOfStage}}"
+                                        ng-repeat="year in yearsOfStage"
+                                        value="{{year}}">
                                     {{year}} года
                                 </option>
                             </select>
-                            <div class="form-error"></div>   
+
+                            <div class="form-error"></div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label">Мобильный телефон</label>                        
+                            <label class="control-label">Мобильный телефон</label>
                             <input placeholder="Мобильный телефон"
-                                    type="text"
-                                    name="phone"
-                                    class="form-control input-sm"
-                                    ng-model="profile.phone"
-                                    data-ui-br-phone-number>                            
+                                   type="text"
+                                   name="phone"
+                                   class="form-control input-sm"
+                                   ng-model="profile.phone"
+                                   data-ui-br-phone-number>
                             <div class="form-error">
                                 <span ng-show="!formEditProfile.phone.$valid">
                                     Недопустимый мобильный номер!
@@ -192,7 +215,7 @@
                                 О себе
                             </label>
                             <textarea ng-maxlength="200"
-                                      ng-model="profile.info"
+                                      ng-model="profile.about"
                                       name="info"
                                       class="form-control profile-info pull-left input-sm"
                                       rows="3"></textarea>
@@ -208,13 +231,17 @@
 
             </div>
 
+        </form>
+
+        <form name="formEditCar" novalidate autocomplete="off">
+
             <div class="form-block thrid-form-block">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-8">
                         <div class="trip-sub-title">
                             <a href="javascript:void(0)"
                                class="typical-link-reset"
-                               data-content="Данные автоматически подгружаются из вашего личного кабинета"
+                               data-content="При создании новой поездки отсюда будут подгружены данные о машине"
                                data-placement="right"
                                data-trigger="hover"
                                data-bs-popover>
@@ -222,31 +249,45 @@
                             </a>
                         </div>
                     </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary btn-sm full-width"
+                                   data-ladda="laddaEditCarFlag"
+                                   ng-click="formCarSubmit(formEditCar)">
+                                    Сохранить
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="row trip-car">
+            <div class="form-car-alert fluid-form-alert form-find-alert"></div>
+
+            <div class="row">
                 <div class="col-xs-6">
 
                     <label class="control-label">Фото машины</label>
 
                     <div class="image-cropper">
-                        <img ng-show="trip.dataUrl != null" ng-src="{{trip.dataUrl}}" class="resize" />
-                        <img ng-show="trip.dataUrl == null" ng-src="{{noImage}}" class="resize" />
+                        <img ng-show="carDataUrl != null" ng-src="{{carDataUrl}}" class="resize" />
+                        <img ng-show="carDataUrl == null" ng-src="{{noCarImage}}" class="resize" />
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
                             <span class="btn btn-default btn-file btn-sm full-width upload-btn">
-                                <span ng-if="trip.dataUrl == null">Загрузить фото</span>
-                                <span ng-if="trip.dataUrl != null">Изменить фото</span>
-                                <input type="file" accept="image/*" ng-file-select="onFileSelect($files)" title="">
+                                <span ng-if="carDataUrl == null">Загрузить фото</span>
+                                <span ng-if="carDataUrl != null">Изменить фото</span>
+                                <input type="file" accept="image/*" ng-file-select="onCarFileSelect($files)" title="">
                             </span>
                         </div>
                     </div>
-                    <div class="row" ng-show="trip.dataUrl != null">
+                    <div class="row" ng-show="carDataUrl != null">
                         <div class="col-xs-12">
-                            <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeFile()">
+                            <button class="btn btn-default btn-sm full-width upload-btn" ng-click="removeCarFile()">
                                 Удалить фото
                             </button>
                         </div>
@@ -255,7 +296,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-error text-right">
-                                <span ng-bind="fileErrorMsg"></span>
+                                <span ng-bind="fileCarErrorMsg"></span>
                             </div>
                         </div>
                     </div>
@@ -265,12 +306,12 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label">Модель машины</label>                           
+                            <label class="control-label">Модель машины</label>
                             <input placeholder="Модель машины"
-                                    type="text"
-                                    name="car"
-                                    class="form-control input-sm"
-                                    ng-model="profile.car">                           
+                                   type="text"
+                                   name="car"
+                                   class="form-control input-sm"
+                                   ng-model="car.car">
                         </div>
                     </div>
                     <div class="row">
@@ -278,7 +319,7 @@
                             <label class="control-label comfort-label">Уровень комфорта</label>
                             <button type="button"
                                     class="btn btn-sm btn-default text-left full-width car-class-btn"
-                                    ng-model="profile.carClass"
+                                    ng-model="car.carClass"
                                     data-html="1"
                                     data-bs-options="class.value as class.label for class in classes"
                                     data-placeholder="Выберите уровень комфорта"
@@ -291,25 +332,7 @@
                 </div>
             </div>
 
-            <div class="form-bottom-block">
-                <div class="row">
-                    <div class="col-xs-4 col-xs-offset-8">
-                        <div class="row">
-                            <div class="col-xs-10 col-xs-offset-2">
-                                <a href="javascript:void(0)"
-                                   class="btn btn-primary btn-sm full-width"
-                                   data-ladda="laddaEditProfileFlag"
-                                   ng-click="formSubmit(formEditProfile)">
-                                    Сохранить
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </form>
 
-        </div>
     </div>
-
-</form>
-
+</div>

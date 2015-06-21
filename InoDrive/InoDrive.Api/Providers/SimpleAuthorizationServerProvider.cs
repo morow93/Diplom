@@ -177,7 +177,7 @@ namespace InoDrive.Api.Providers
         /// </summary>
         /// <param name="context">Current authentication context</param>
         /// <returns></returns>
-        public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+        public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
         {
             var originalClient = context.Ticket.Properties.Dictionary["as:client_id"];
             var currentClient = context.ClientId;
@@ -185,7 +185,7 @@ namespace InoDrive.Api.Providers
             if (originalClient != currentClient)
             {
                 context.SetError("invalid_clientId", "Refresh token is issued to a different clientId.");
-                return Task.FromResult<object>(null);
+                //return Task.FromResult<object>(null);
             }
 
             // Change auth ticket for refresh token requests
@@ -198,14 +198,14 @@ namespace InoDrive.Api.Providers
             newIdentity.AddClaim(new Claim("newClaim", "newValue"));
 
             //need do this cause user may change first or last name
-            //var userId = context.Ticket.Properties.Dictionary["userId"];
-            //ApplicationUser user = await applicationUserManager.FindByIdAsync(userId);
-            //context.Ticket.Properties.Dictionary["initials"] = user.FirstName + " " + user.LastName;
+            var userId = context.Ticket.Properties.Dictionary["userId"];
+            ApplicationUser user = await applicationUserManager.FindByIdAsync(userId);
+            context.Ticket.Properties.Dictionary["initials"] = user.FirstName + " " + user.LastName;
 
             var newTicket = new AuthenticationTicket(newIdentity, context.Ticket.Properties);
             context.Validated(newTicket);
 
-            return Task.FromResult<object>(null);
+            //return Task.FromResult<object>(null);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)

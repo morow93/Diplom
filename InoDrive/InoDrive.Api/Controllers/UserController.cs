@@ -36,6 +36,14 @@ namespace InoDrive.Api.Controllers
         }
 
         [HttpPost]
+        [Route("getUserSummary")]
+        public IHttpActionResult GetUserSummary(ShortUserModel model)
+        {
+            var result = _repo.GetUserSummary(model);
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Authorize]
         [Route("setUserProfile")]
         public async Task<IHttpActionResult> SetUserProfile()
@@ -44,7 +52,7 @@ namespace InoDrive.Api.Controllers
             {
                 this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
             }
-            var provider = GetMultipartProvider();
+            var provider = GetMultipartProvider("avatarsFolder");
             var resultFile = await Request.Content.ReadAsMultipartAsync(provider);
 
             var profile = (ProfileModel)GetFormData<ProfileModel>(resultFile);
@@ -77,11 +85,53 @@ namespace InoDrive.Api.Controllers
             return Ok(profile);
         }
 
+        [HttpPost]
+        [Authorize]
+        [Route("setUserCar")]
+        public async Task<IHttpActionResult> SetUserCar()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
+            }
+            var provider = GetMultipartProvider("carsFolder");
+            var resultFile = await Request.Content.ReadAsMultipartAsync(provider);
+
+            var car = (CarModel)GetFormData<CarModel>(resultFile);
+
+            var isFileAttached = resultFile.FileData.Count != 0;
+            if (isFileAttached)
+            {
+                car.CarImage = (new FileInfo(resultFile.FileData.First().LocalFileName)).Name;
+            }
+
+            if (car.CarImage != car.OldCarImage)
+            {
+                string fullPathToFile =
+                    HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["carsFolder"] + car.OldCarImage);
+                if (File.Exists(fullPathToFile))
+                {
+                    File.Delete(fullPathToFile);
+                }
+            }
+
+            try
+            {
+                _repo.SetUserCar(car);
+            }
+            catch
+            {
+                File.Delete(car.CarImage);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+            return Ok(car);
+        }
+
         #region Private functions
 
-        private MultipartFormDataStreamProvider GetMultipartProvider()
+        private MultipartFormDataStreamProvider GetMultipartProvider(string folder)
         {
-            var uploadFolder = ConfigurationManager.AppSettings["avatarsFolder"];
+            var uploadFolder = ConfigurationManager.AppSettings[folder];
             var root = HttpContext.Current.Server.MapPath(uploadFolder);
             Directory.CreateDirectory(root);
 

@@ -258,7 +258,7 @@ app.factory("authService", [
         };
 
         var setAuthorizationData = function (key, value) {
-            debugger;
+            
             var authorizationData = localStorageService.get('authorizationData');
             authorizationData[key] = value;
 

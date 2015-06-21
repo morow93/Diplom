@@ -1,9 +1,8 @@
-﻿angular.module('InoDrive').controller('userViewController', function ($scope, $state, $timeout, tripsService, customStorageService) {
+﻿angular.module('InoDrive').controller('userViewController', function ($scope, $state, $timeout, tripsService, usersService, customStorageService) {
 
     $scope.page = 1;
     $scope.perPage = 10;
     $scope.showEnded = true;
-    $scope.userRating = 4;
     $scope.tripsType = 1;//all
     $scope.totalCount = 0;
     $scope.firstLoad = false;
@@ -195,4 +194,62 @@
     $scope.editTrip = function (tripId) {
         $state.go("user.edit_trip", { tripId: tripId }, { reload: true });
     };
+
+    $scope.getUserSummary = function () {
+
+        usersService.getUserSummary({ userId: $scope.authentication.userId }).then(function (data) {
+
+            if (data.rating == "NaN") {
+                data.rating = 0.0;
+            }
+
+            if (data.stage == null) {
+                data.stage = "Не указан";
+            } else if (data.stage == 0) {
+                data.stage = "Меньше года";
+            } else if (data.stage == 1) {
+                data.stage = "1 год";
+            } else if (data.stage >= 5 && data.stage <= 20) {
+                data.stage = data.stage + " лет";
+            } else {
+                var indexStage = data.stage.toString()[(data.stage.toString().length - 1)];
+                if (indexStage == "2" || indexStage == "3" || indexStage == "4") {
+                    data.stage = data.stage + " года";
+                } else if (indexStage == 1) {
+                    data.stage = data.stage + " год";
+                } else {
+                    data.stage = data.stage + " лет";
+                }
+            }
+
+            if (data.age == null) {
+                data.age = "Не указан";
+            } else if (data.age >= 5 && data.age <= 20) {
+                data.age = data.age + " лет";
+            } else {     
+                var indexStage = data.age.toString()[(data.age.toString().length - 1)];
+                if (indexStage == "2" || indexStage == "3" || indexStage == "4") {
+                    data.age = data.age + " года";
+                } else if (indexStage == "1") {
+                    data.age = data.age + " год";
+                } else {
+                    data.age = data.age + " лет";
+                }
+            }
+
+            $scope.userInfo = data;
+
+        }).catch(function () {
+
+            //neederror
+
+        }).finally(function () {
+
+            $scope.wasUserLoaded = true;
+
+        });
+
+    };
+
+    $scope.getUserSummary();
 });

@@ -118,6 +118,7 @@
     <Content Include="Content\images\futurama_fry.jpg" />
     <Content Include="Content\images\no-avatar.jpg" />
     <Content Include="Content\images\no-car.png" />
+    <Content Include="Scripts\angular-bootstrap-select.js" />
     <Content Include="Scripts\crop\ng-img-crop.css" />
     <Content Include="Scripts\crop\ng-img-crop.js" />
     <Content Include="Scripts\file\angular-file-upload-shim.js" />

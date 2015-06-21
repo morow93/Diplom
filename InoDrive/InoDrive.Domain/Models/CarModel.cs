@@ -8,8 +8,10 @@ namespace InoDrive.Domain.Models
 {
     public class CarModel
     {
+        public String UserId { get; set; }
         public String Car { get; set;}
         public String CarImage { get; set;}
+        public String OldCarImage { get; set; }
         public String CarImageExtension { get; set; }
         public String CarClass { get; set; }
     }

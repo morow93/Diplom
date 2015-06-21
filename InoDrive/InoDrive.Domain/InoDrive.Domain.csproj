@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201506091740328_LikeToCommentSecond.Designer.cs">
       <DependentUpon>201506091740328_LikeToCommentSecond.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506201641310_Sex.cs" />
+    <Compile Include="Migrations\201506201641310_Sex.Designer.cs">
+      <DependentUpon>201506201641310_Sex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Models\InputModels\InputChangePasswordModel.cs" />
     <Compile Include="Models\OutputModels\OutputMyTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputList.cs" />
+    <Compile Include="Models\OutputModels\OutputUserSummaryModel.cs" />
     <Compile Include="Models\PlaceModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\UserModels.cs" />
@@ -139,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506091740328_LikeToCommentSecond.resx">
       <DependentUpon>201506091740328_LikeToCommentSecond.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506201641310_Sex.resx">
+      <DependentUpon>201506201641310_Sex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

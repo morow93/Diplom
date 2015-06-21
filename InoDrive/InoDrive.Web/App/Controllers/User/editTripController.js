@@ -124,7 +124,7 @@ app.controller('editTripController', function ($scope, $timeout, $upload, $state
                 field.$setDirty();
             });
         };
-
+   
         if (form.$valid) {
 
             var oldTrip = angular.toJson($scope.oldTrip);

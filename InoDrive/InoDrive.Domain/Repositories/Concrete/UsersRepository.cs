@@ -1,6 +1,7 @@
 ﻿using InoDrive.Domain.Contexts;
 using InoDrive.Domain.Helpers;
 using InoDrive.Domain.Models;
+using InoDrive.Domain.Models.OutputModels;
 using InoDrive.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,9 @@ namespace InoDrive.Domain.Repositories.Concrete
         {
             _ctx = dataContext;
         }
-        private InoDriveContext _ctx;
 
-        /// <summary>
-        /// Get user data
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        private InoDriveContext _ctx;
+        
         public ProfileModel GetUserProfile(ShortUserModel model)
         {
             var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
@@ -39,7 +36,11 @@ namespace InoDrive.Domain.Repositories.Concrete
                     AvatarImage = user.AvatarImage,
                     AvatarImageExtension = user.AvatarImageExtension,
                     YearOfStage = user.YearOfStage,
-                    Sex = user.Sex
+                    Sex = user.Sex,
+                    Car = user.Car,
+                    CarClass = user.CarClass,
+                    CarImage = user.CarImage,
+                    CarImageExtension = user.CarImageExtension
                 };
                 
                 return result;
@@ -50,11 +51,51 @@ namespace InoDrive.Domain.Repositories.Concrete
             }   
         }
 
-        /// <summary>
-        /// Set user data
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        public OutputUserSummaryModel GetUserSummary(ShortUserModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var driverTrips =
+                    user.
+                    Trips.
+                    Where(t => !t.IsDeleted);
+
+                var passengerTrips =
+                    user.
+                    Bids.
+                    Where(b => b.IsAccepted == true).
+                    Select(b => b.Trip).
+                    Where(t => !t.IsDeleted);
+
+                var rating = 
+                    (double)(user.Trips.SelectMany(lk => lk.Commnents).Select(n => n.Vote).Sum()) / 
+                    (double)(user.Trips.SelectMany(l => l.Commnents).Count() * 5) * 100;
+
+                var result = new OutputUserSummaryModel
+                {
+                    Age = user.YearOfBirth == null ? null : DateTimeOffset.Now.Year - user.YearOfBirth,
+                    Stage = user.YearOfStage == null ? null : DateTimeOffset.Now.Year - user.YearOfStage,
+                    Initials = user.FirstName + " " + user.LastName,
+                    Email = user.Email,
+                    Phone = user.Phone,
+                    Sex = user.Sex,
+                    DriverTripsCount = driverTrips.Count(),
+                    PassengerTripsCount = passengerTrips.Count(),
+                    AllTripsCount = driverTrips.Count() + passengerTrips.Count(),
+                    Rating = rating,
+                    About = user.About,
+                    UserId = user.Id
+                };
+
+                return result;
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }          
+        }
+
         public void SetUserProfile(ProfileModel model)
         {
             var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
@@ -62,6 +103,7 @@ namespace InoDrive.Domain.Repositories.Concrete
             {
                 try
                 {
+                    user.About = model.About;
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.About = model.About;
@@ -72,12 +114,13 @@ namespace InoDrive.Domain.Repositories.Concrete
                     user.YearOfStage = model.YearOfStage;
                     user.Sex = model.Sex;
 
-                     _ctx.SaveChanges();
+                    _ctx.SaveChanges();
 
-                }catch
+                }
+                catch
                 {
-                    throw new Exception(AppConstants.PROFILE_EDIT_ERROR);                    
-                }             
+                    throw new Exception(AppConstants.PROFILE_EDIT_ERROR);
+                }
             }
             else
             {
@@ -85,11 +128,32 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
-        /// <summary>
-        /// Get user info like part of
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        public void SetUserCar(CarModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                try
+                {
+                    user.Car = model.Car;
+                    user.CarImage = model.CarImage;
+                    user.CarImageExtension = model.CarImageExtension;
+                    user.CarClass = model.CarClass;
+
+                    _ctx.SaveChanges();
+
+                }
+                catch
+                {
+                    throw new Exception(AppConstants.PROFILE_EDIT_ERROR);
+                }
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
+        
         //public ExtendProfileModel GetUserInfo(WatchingProfileModel model)
         //{
         //    var user = _ctx.Users.FirstOrDefault(U => U.Id == model.ObservedUserId);
@@ -162,5 +226,6 @@ namespace InoDrive.Domain.Repositories.Concrete
         //        throw new Exception("Такого пользователя не существует!");
         //    }
         //}
+
     }
 }

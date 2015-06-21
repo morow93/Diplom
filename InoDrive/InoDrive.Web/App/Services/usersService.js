@@ -12,6 +12,13 @@ app.factory('usersService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         return promise;
     };
 
+    var getUserSummary = function (params) {
+        var promise = $http.post(serviceBase + 'api/user/getUserSummary', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
     var setUserProfile = function (params) {
         var promise = $http.post(serviceBase + 'api/user/setUserProfile', params).then(function (response) {
             return response.data;
@@ -19,8 +26,17 @@ app.factory('usersService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         return promise;
     };
 
+    var setUserCar = function (params) {
+        var promise = $http.post(serviceBase + 'api/user/setUserCar', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
+    userServiceFactory.getUserSummary = getUserSummary;
     userServiceFactory.getUserProfile = getUserProfile;
     userServiceFactory.setUserProfile = setUserProfile;
+    userServiceFactory.setUserCar = setUserCar;
 
     return userServiceFactory;
 

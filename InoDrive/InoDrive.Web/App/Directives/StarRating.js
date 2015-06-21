@@ -32,7 +32,7 @@ app.directive("starRating", function () {
                 }
             };
             scope.$watch("ratingValue", function (oldVal, newVal) {
-                if (newVal) { updateStars(); }
+                if (newVal || newVal == 0) { updateStars(); }
             });
         }
     };

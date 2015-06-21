@@ -28,7 +28,7 @@ namespace InoDrive.Domain.Entities
         public String CarImageExtension { get; set; }
         public String CarClass { get; set;}
 
-        public Boolean Sex { get; set; }
+        public Boolean? Sex { get; set; }
 
         //public ApplicationUser() { }
 
