@@ -12,7 +12,7 @@ namespace InoDrive.Domain.Repositories.Abstract
     public interface ITripsRepository
     {
         #region Select
-
+        OutputList<OutputFindTripModel> FindTrips(InputFindTripsModel model);
         OutputList<OutputMyTripModel> GetAllTrips(InputPageSortModel<Int32> model);
         OutputList<OutputMyTripModel> GetDriverTrips(InputPageSortModel<Int32> model);
         OutputList<OutputMyTripModel> GetPassengerTrips(InputPageSortModel<Int32> model);

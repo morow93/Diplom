@@ -266,7 +266,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                         return $ocLazyLoad.load(
                             {
                                 name: "InoDrive",
-                                files: ["app/controllers/settings/settingsController.js"]
+                                files: [
+                                    "app/controllers/settings/settingsController.js",
+                                    "app/controllers/settings/changeEmailController.js",
+                                    "app/controllers/settings/changePasswordController.js"
+                                ]
                             }
                         );
                     }
@@ -289,11 +293,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 })
                 .state("user.settings.change_email", {
                     url: "change_email/",
-                    templateUrl: "/app/views/settings/user.settings.change_email.html"
+                    templateUrl: "/app/views/settings/user.settings.change_email.html",
+                    controller: "changeEmailController"
                 })
                 .state("user.settings.change_password", {
                     url: "change_password/",
-                    templateUrl: "/app/views/settings/user.settings.change_password.html"
+                    templateUrl: "/app/views/settings/user.settings.change_password.html",
+                    controller: "changePasswordController"
                 });
 
     $urlRouterProvider.otherwise("/home/");

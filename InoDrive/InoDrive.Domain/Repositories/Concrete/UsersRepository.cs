@@ -85,7 +85,8 @@ namespace InoDrive.Domain.Repositories.Concrete
                     AllTripsCount = driverTrips.Count() + passengerTrips.Count(),
                     Rating = rating,
                     About = user.About,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    AvatarImage = user.AvatarImage,
                 };
 
                 return result;

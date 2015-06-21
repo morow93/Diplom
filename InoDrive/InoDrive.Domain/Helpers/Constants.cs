@@ -40,7 +40,8 @@ namespace InoDrive.Domain.Helpers
         public static String TRIP_EDIT_ERROR                = "Ошибка при редактировании поездки!";
         public static String TRIP_REMOVE_CAUSE_DATE_ERROR   = "Нельзя удалить уже начавшуюся поездку!";
         public static String PROFILE_EDIT_ERROR             = "Ошибка редактирования профиля!";
+        public static String SAME_EMAILS                    = "Старый и новый email'ы не должны совпадать!";
+        public static String FIND_TRIPS_ERROR               = "Произошла ошибка при поиске поездок!";
 
-        public static String LETTER_CONFIRM_EMAIL_TITLE0 = "Ино Драйв. Подтверждение электронного адреса";
     }
 }

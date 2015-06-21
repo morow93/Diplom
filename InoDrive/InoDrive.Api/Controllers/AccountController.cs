@@ -287,6 +287,11 @@ namespace InoDrive.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (model.OldEmail == model.NewEmail)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure, message = AppConstants.SAME_EMAILS }));
+            }
+
             var user = _userManager.FindById(model.UserId);
             if (user == null)
             {

@@ -22,7 +22,24 @@ namespace InoDrive.Api.App_Start
                 .ForMember(pv => pv.IsEnded, opt => opt.MapFrom(src => src.EndDate < DateTimeOffset.Now))
                 .ForMember(pv => pv.IsStarted, opt => opt.MapFrom(src => src.LeavingDate < DateTimeOffset.Now))
                 .ForMember(pv => pv.FreePlaces, opt => opt.MapFrom(src => src.PeopleCount - src.Bids.Count(b => b.IsAccepted == true)));
-            
+
+            AutoMapper.Mapper.CreateMap<Trip, OutputFindTripModel>()
+                .ForMember(pv => pv.OriginPlaceName, opt => opt.MapFrom(src => src.OriginPlace.Name))
+                .ForMember(pv => pv.DestinationPlaceName, opt => opt.MapFrom(src => src.DestinationPlace.Name))
+                //.ForMember(pv => pv.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(pv => pv.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+                .ForMember(pv => pv.LastName, opt => opt.MapFrom(src => src.User.LastName))
+                .ForMember(pv => pv.TotalPlaces, opt => opt.MapFrom(src => src.PeopleCount))
+                .ForMember(pv => pv.IsEnded, opt => opt.MapFrom(src => src.EndDate < DateTimeOffset.Now))
+                .ForMember(pv => pv.IsStarted, opt => opt.MapFrom(src => src.LeavingDate < DateTimeOffset.Now))
+                .ForMember(pv => pv.FreePlaces, opt => opt.MapFrom(src => src.PeopleCount - src.Bids.Count(b => b.IsAccepted == true)))
+                .ForMember(pv => pv.Rating, opt => opt.MapFrom(src =>
+                              ((double)(src.User.Trips.SelectMany(lk => lk.Commnents).Select(n => n.Vote).Sum()) /
+                            (double)(src.User.Trips.SelectMany(l => l.Commnents).Count() * 5)) * 100
+                    
+                ));                             
+
+
             AutoMapper.Mapper.CreateMap<Trip, InputEditTripModel>()
                 .ForMember(pv => pv.WayPoints, opt => opt.MapFrom(src => new List<PlaceModel>()))
                 .ForMember(pv => pv.RawOriginPlace, opt => opt.MapFrom(src => new PlaceModel

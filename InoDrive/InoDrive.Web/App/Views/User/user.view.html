@@ -23,7 +23,8 @@
 
         <div class="row user-main-info">
             <div class="col-xs-3">
-                <img class="full-width" src="content/images/avatar.jpg" />
+                <img ng-show="avatarDataUrl != null" ng-src="{{avatarDataUrl}}" class="full-width" /> <!--class="resize"-->
+                <img ng-show="avatarDataUrl == null" ng-src="{{noAvatarImage}}" class="full-width" /> <!--class="resize"-->
             </div>
             <div class="col-xs-9">
 

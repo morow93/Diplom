@@ -23,4 +23,5 @@ E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csproj.GenerateReso
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.dll
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.pdb
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.Migrations.Sex.resources
+E:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\System.Linq.Dynamic.dll
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csprojResolveAssemblyReference.cache

@@ -9,9 +9,11 @@ using InoDrive.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using System.Data.Entity;
 
 namespace InoDrive.Domain.Repositories.Concrete
 {
@@ -73,11 +75,6 @@ namespace InoDrive.Domain.Repositories.Concrete
 
         #region Select
 
-        /// <summary>
-        /// Get trip details
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
         //public DetailsTripModel GetDetailsTrip(ManageTripModel model)
         //{
         //    var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId && !t.IsDeleted);
@@ -157,260 +154,97 @@ namespace InoDrive.Domain.Repositories.Concrete
         //    }
         //}
 
-        /// <summary>
-        /// Get full trip info for edit
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        //public EditTripModel GetFullTripInfo(ManageTripModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            var tripProfile = trip.TripProfile;
+        public OutputList<OutputFindTripModel> FindTrips(InputFindTripsModel model)
+        {
+            var result = new OutputList<OutputFindTripModel>();
 
-        //            var result = new EditTripModel
-        //            {
-        //                TripId = model.TripId,
-        //                UserId = model.UserId,
-        //                Date = trip.LeavingDate,
-        //                Pay = (int?)trip.PayForOne,
-        //                Places = trip.PeopleCount,
+            if (model.DestinationPlaceId != null && model.OriginPlaceId != null && model.Places != 0 && model.LeavingDate != null)
+            {
+                var page = Math.Max(model.Page, 1);
 
-        //                OriginCity = new CityModel
-        //                {
-        //                    CityId = trip.OriginCityId,
-        //                    CityName = trip.OriginCity.RuCityName,
-        //                    RegionName = trip.OriginCity.Region.RuRegionName
-        //                },
+                var trips = _ctx.Trips.Where(t =>
+                    !t.IsDeleted &&
+                    DbFunctions.TruncateTime(t.LeavingDate) >= DbFunctions.TruncateTime(DateTimeOffset.Now) &&
+                    DbFunctions.TruncateTime(t.LeavingDate) == DbFunctions.TruncateTime(model.LeavingDate) &&
+                    t.OriginPlaceId == model.OriginPlaceId &&
+                    t.DestinationPlaceId == model.DestinationPlaceId  &&
+                    ((t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true)) >= model.Places) &&
 
-        //                DestinationCity = new CityModel
-        //                {
-        //                    CityId = trip.DestinationCityId,
-        //                    CityName = trip.DestinationCity.RuCityName,
-        //                    RegionName = trip.DestinationCity.Region.RuRegionName
-        //                },
+                    ((model.PriceBottom == null && model.PriceTop == null) || (t.Pay >= model.PriceBottom && t.Pay <= model.PriceTop)) &&
 
-        //                SelectedWayPoints = trip.WayPoints.Select(n => new CityModel
-        //                {
-        //                    CityId = n.CityId,
-        //                    CityName = n.City.RuCityName,
-        //                    RegionName = n.City.Region.RuRegionName
-        //                }).ToList<CityModel>()
-        //            };
-        //            if (tripProfile != null)
-        //            {
-        //                result.CarDescription = tripProfile.CarDescription;
-        //                result.CarImage = tripProfile.CarImage;
-        //                result.Baggage = tripProfile.Baggage;
-        //                result.Comfort = tripProfile.Comfort;
-        //                result.Stage = tripProfile.Stage;
-        //                result.AllowDeviates = tripProfile.IsAllowdedDeviation;
-        //                result.AllowPets = tripProfile.ISAllowdedPets;
-        //                result.AllowMusic = tripProfile.IsAllowdedMusic;
-        //                result.AllowEat = tripProfile.IsAllowdedEat;
-        //                result.AllowDrink = tripProfile.IsAllowdedDrink;
-        //                result.AllowSmoke = tripProfile.IsAllowdedSmoke;
-        //                result.Info = tripProfile.MoreInfo;
-        //            }
-        //            return result;
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("У пользователя нет такой поездки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+                    //((model.IsAllowdedDeviation == null) || (t.IsAllowdedDeviation == model.IsAllowdedDeviation)) &&
+                    ((model.IsAllowdedChildren == null) || (t.IsAllowdedChildren == model.IsAllowdedChildren)) &&
+                    ((model.IsAllowdedDrink == null) || (t.IsAllowdedDrink == model.IsAllowdedDrink)) &&
+                    ((model.IsAllowdedMusic == null) || (t.IsAllowdedMusic == model.IsAllowdedMusic)) &&
+                    ((model.IsAllowdedSmoke == null) || (t.IsAllowdedSmoke == model.IsAllowdedSmoke)) &&
+                    ((model.IsAllowdedPets == null) || (t.IsAllowdedPets == model.IsAllowdedPets)) &&
+                    ((model.IsAllowdedEat == null) || (t.IsAllowdedEat == model.IsAllowdedEat))
 
-        /// <summary>
-        /// Find trips by some params
-        /// </summary>
-        /// <param name="model">origin city, destination city, date, free places</param>
-        /// <returns></returns>
-        //public ResultFindTripsModel FindTrips(FindTripsPagedOrderModel model)
-        //{
-        //    var result = new ResultFindTripsModel();
+                ).ToList();
+                
+                if (model.IsAllowdedDeviation == true)
+                {
+                    for (var i = 0; i < trips.Count; i++)
+                    {
+                        var tripWayPoints = trips[i].WayPoints.OrderBy(x => x.WayPointIndex).ToList();
 
-        //    if (model.DestinationCity != null && model.OriginCity != null && model.Places != 0)
-        //    {
-        //        var page = Math.Max(model.PageModel.Page, 1);
+                        var isContained = false;
+                        for (var j = 0; j < model.WayPoints.Count; j++)
+                        {                            
+                            if (tripWayPoints[j].PlaceId == model.WayPoints[j])
+                            {
+                                isContained = true;
+                                break;
+                            }
+                        }
+                        if (!isContained) trips.RemoveAt(i--);
+                    }
+                }
+                else if (model.IsAllowdedDeviation == false)
+                {
+                    for (var i = 0; i < trips.Count; i++)
+                    {
+                        if (trips[i].WayPoints.Count == model.WayPoints.Count)
+                        {
+                            var tripWayPoints = trips[i].WayPoints.OrderBy(x => x.WayPointIndex).ToList();
+                            
+                            for (var j = 0; j < model.WayPoints.Count; j++)
+                            {
+                                if (tripWayPoints[j].PlaceId != model.WayPoints[j])
+                                {
+                                    trips.RemoveAt(i--);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            trips.RemoveAt(--i);
+                        }
+                    }
+                }
+                              
+                var totalCount = trips.Count();
 
-        //        var trips = _ctx.Trips.Where(t =>
-        //            !t.IsDeleted &&
-        //            DbFunctions.TruncateTime(t.LeavingDate) >= DbFunctions.TruncateTime(DateTime.Now) &&
-        //            DbFunctions.TruncateTime(t.LeavingDate) == DbFunctions.TruncateTime(model.Date) &&
-        //            t.OriginCityId == model.OriginCity.CityId &&
-        //            t.DestinationCityId == model.DestinationCity.CityId &&
-        //            ((t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true)) >= model.Places)
-        //        ).ToList<Trip>();
-
-        //        var totalCount = trips.Count();
-
-        //        if (totalCount != 0)
-        //        {
-        //            result.TotalCount = totalCount;
-
-        //            var resultTrips = trips.Select(t => new FindTripModel
-        //            {
-        //                TripId = t.TripId,
-        //                Pay = t.PayForOne,
-        //                LeavingDate = t.LeavingDate,
-        //                CreationDate = t.CreationDate,
-        //                UserOwner = new UserModel
-        //                {
-        //                    UserId = t.UserId,
-        //                    FirstName = t.User.FirstName,
-        //                    LastName = t.User.LastName
-        //                },
-        //                OriginCity = new CityModel
-        //                {
-        //                    CityId = t.OriginCityId,
-        //                    CityName = t.OriginCity.RuCityName,
-        //                    RegionName = t.OriginCity.Region.RuRegionName
-        //                },
-        //                DestinationCity = new CityModel
-        //                {
-        //                    CityId = t.DestinationCityId,
-        //                    CityName = t.DestinationCity.RuCityName,
-        //                    RegionName = t.DestinationCity.Region.RuRegionName
-        //                },
-        //                TotalPlaces = t.PeopleCount,
-        //                FreePlaces = t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true),
-        //                UserRating =
-        //                    ((double)(t.User.Trips.SelectMany(lk => lk.Likes).Select(n => n.Vote).Sum()) /
-        //                    (double)(t.User.Trips.SelectMany(l => l.Likes).Count() * 5)) * 100
-        //            })
-        //            .OrderBy(model.SortOption.Field + (model.SortOption.Order ? " ascending" : " descending"))
-        //            .Skip(model.PageModel.PerPage * (page - 1)).Take(model.PageModel.PerPage)
-        //            .ToList<FindTripModel>();
-
-        //            result.FindTrips = resultTrips;
-        //        }
-        //    }
-        //    return result;
-        //}
-
-        /// <summary>
-        /// Extend trips find
-        /// </summary>
-        /// <param name="model">
-        /// origin city, destination city, date, free places, etc.
-        /// </param>
-        /// <returns></returns>
-        //public ResultFindTripsModel ExtendFindTrips(ExtendTripsPagedOrderModel model)
-        //{
-        //    var result = new ResultFindTripsModel();
-
-        //    if (model.DestinationCity != null && model.OriginCity != null && model.Places != 0)
-        //    {
-        //        var page = Math.Max(model.PageModel.Page, 1);
-
-        //        var trips = _ctx.Trips.Where(t =>
-        //            !t.IsDeleted &&
-        //            DbFunctions.TruncateTime(t.LeavingDate) >= DbFunctions.TruncateTime(DateTime.Now) &&
-        //            DbFunctions.TruncateTime(t.LeavingDate) == DbFunctions.TruncateTime(model.Date) &&
-        //            t.OriginCityId == model.OriginCity.CityId &&
-        //            t.DestinationCityId == model.DestinationCity.CityId &&
-        //            ((t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true)) >= model.Places) &&
-
-        //            ((model.PayBottom == null && model.PayTop == null) || (t.PayForOne >= model.PayBottom && t.PayForOne <= model.PayTop)) &&
-
-        //            ((model.WasTriped == null) || ((t.User.Trips.Any(tt => !tt.IsDeleted && DbFunctions.TruncateTime(tt.LeavingDate) < DbFunctions.TruncateTime(DateTime.Now)) ||
-        //            t.User.Bids.Any(b => b.IsAccepted == true && DbFunctions.TruncateTime(b.Trip.LeavingDate) < DbFunctions.TruncateTime(DateTime.Now))) == model.WasTriped)) &&
-
-        //            ((model.AllowDeviates == null) || (t.TripProfile != null && t.TripProfile.IsAllowdedDeviation == model.AllowDeviates)) &&
-        //            ((model.AllowDrink == null) || (t.TripProfile != null && t.TripProfile.IsAllowdedDrink == model.AllowDrink)) &&
-        //            ((model.AllowEat == null) || (t.TripProfile != null && t.TripProfile.IsAllowdedEat == model.AllowEat)) &&
-        //            ((model.AllowMusic == null) || (t.TripProfile != null && t.TripProfile.IsAllowdedMusic == model.AllowMusic)) &&
-        //            ((model.AllowPets == null) || (t.TripProfile != null && t.TripProfile.ISAllowdedPets == model.AllowPets)) &&
-        //            ((model.AllowSmoke == null) || (t.TripProfile != null && t.TripProfile.IsAllowdedSmoke == model.AllowSmoke)) &&
-
-        //            ((model.Comfort == null) || (t.TripProfile != null && model.Comfort == t.TripProfile.Comfort)) &&
-        //            ((model.Baggage == null) || (t.TripProfile != null && model.Baggage == t.TripProfile.Baggage))
-        //        ).ToList<Trip>();
-
-        //        if (model.WayPoints != null && model.WayPoints.Count > 0)
-        //        {
-        //            for (var i = 0; i < trips.Count; i++)
-        //            {
-        //                if (trips[i].WayPoints != null)
-        //                {
-        //                    if (trips[i].WayPoints.Count != model.WayPoints.Count)
-        //                    {
-        //                        trips.RemoveAt(i--);
-        //                    }
-        //                    else
-        //                    {
-        //                        var curWp = trips[i].WayPoints.ToList();
-        //                        for (var j = 0; j < model.WayPoints.Count; j++)
-        //                        {
-        //                            if (curWp[j].CityId != model.WayPoints[j].CityId)
-        //                            {
-        //                                trips.RemoveAt(i--);
-        //                                break;
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    trips.RemoveAt(i--);
-        //                }
-        //            }
-        //        }
-
-        //        var totalCount = trips.Count();
-
-        //        if (totalCount != 0)
-        //        {
-        //            result.TotalCount = totalCount;
-
-        //            var resultTrips = trips.Select(t => new FindTripModel
-        //            {
-        //                TripId = t.TripId,
-        //                Pay = t.PayForOne,
-        //                LeavingDate = t.LeavingDate,
-        //                CreationDate = t.CreationDate,
-        //                UserOwner = new UserModel
-        //                {
-        //                    UserId = t.UserId,
-        //                    FirstName = t.User.FirstName,
-        //                    LastName = t.User.LastName
-        //                },
-        //                OriginCity = new CityModel
-        //                {
-        //                    CityId = t.OriginCityId,
-        //                    CityName = t.OriginCity.RuCityName,
-        //                    RegionName = t.OriginCity.Region.RuRegionName
-        //                },
-        //                DestinationCity = new CityModel
-        //                {
-        //                    CityId = t.DestinationCityId,
-        //                    CityName = t.DestinationCity.RuCityName,
-        //                    RegionName = t.DestinationCity.Region.RuRegionName
-        //                },
-        //                TotalPlaces = t.PeopleCount,
-        //                FreePlaces = t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true),
-        //                UserRating =
-        //                    ((double)(t.User.Trips.SelectMany(lk => lk.Likes).Select(n => n.Vote).Sum()) /
-        //                    (double)(t.User.Trips.SelectMany(l => l.Likes).Count() * 5)) * 100
-        //            })
-        //            .OrderBy(model.SortOption.Field + (model.SortOption.Order ? " ascending" : " descending"))
-        //            .Skip(model.PageModel.PerPage * (page - 1)).Take(model.PageModel.PerPage)
-        //            .ToList<FindTripModel>();
-
-        //            result.FindTrips = resultTrips;
-        //        }
-        //    }
-        //    return result;
-        //}
+                if (totalCount != 0)
+                {
+                    result.TotalCount = totalCount;
+                    result.Results = Mapper.Map<List<Trip>, List<OutputFindTripModel>>
+                    (
+                        trips
+                        .OrderBy(model.SortField + (model.SortOrder ? " ascending" : " descending"))
+                        .Skip(model.PerPage * (page - 1))
+                        .Take(model.PerPage)
+                        .ToList()
+                    );
+                }
+                return result;
+            }
+            else
+            {
+                throw new Exception(AppConstants.FIND_TRIPS_ERROR);
+            }
+        }
 
         public OutputList<OutputMyTripModel> GetAllTrips(InputPageSortModel<Int32> model)
         {

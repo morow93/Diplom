@@ -57,3 +57,4 @@ E:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Web.Http.WebHost.resources.dll
 E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.csprojResolveAssemblyReference.cache
 E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.dll
 E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.pdb
+E:\Diplom\InoDrive\InoDrive.Api\bin\System.Linq.Dynamic.dll

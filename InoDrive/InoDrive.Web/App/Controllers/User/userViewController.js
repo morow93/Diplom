@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('userViewController', function ($scope, $state, $timeout, tripsService, usersService, customStorageService) {
+﻿angular.module('InoDrive').controller('userViewController', function ($scope, $state, $timeout, $q, tripsService, usersService, ngAuthSettings, customStorageService) {
 
     $scope.page = 1;
     $scope.perPage = 10;
@@ -7,6 +7,9 @@
     $scope.totalCount = 0;
     $scope.firstLoad = false;
     $scope.countExcluded = 0;
+
+    $scope.avatarsFolder = "images/avatars/";
+    $scope.noAvatarImage = ngAuthSettings.clientAppBaseUri + "content/images/no-avatar.jpg";
 
     $scope.selectAllTrips = function () {
 
@@ -117,10 +120,7 @@
 
             }).catch(function (e) {
 
-                customStorageService.set("notifyToShow", {
-                    message: 'Внимание! Произошла ошибка при загрузке поездок пользователя!',
-                    type: 'danger',
-                });
+                //neederror
 
             }).finally(function () {
 
@@ -239,6 +239,17 @@
 
             $scope.userInfo = data;
 
+            if ($scope.userInfo.avatarImage) {
+
+                var fullPathToFileOne = ngAuthSettings.apiServiceBaseUri + $scope.avatarsFolder + $scope.userInfo.avatarImage;
+
+                isImage(fullPathToFileOne).then(function (test) {
+                    if (test) {
+                        $scope.avatarDataUrl = fullPathToFileOne;
+                    }
+                });
+            }
+
         }).catch(function () {
 
             //neederror
@@ -251,5 +262,21 @@
 
     };
 
+    function isImage(src) {
+
+        var deferred = $q.defer();
+
+        var image = new Image();
+        image.onerror = function () {
+            deferred.resolve(false);
+        };
+        image.onload = function () {
+            deferred.resolve(true);
+        };
+        image.src = src;
+
+        return deferred.promise;
+    };
+    
     $scope.getUserSummary();
 });

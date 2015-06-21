@@ -20,5 +20,6 @@ namespace InoDrive.Domain.Models.OutputModels
         public String Initials { get; set; }
         public String UserId { get; set; }
         public String About { get; set; }
+        public String AvatarImage { get; set; }
     }
 }

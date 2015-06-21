@@ -231,7 +231,22 @@ namespace InoDrive.Api.Controllers
             {
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
             }
-        }        
+        }
+
+        [HttpPost]
+        [Route("FindTrips")]
+        public IHttpActionResult FindTrips(InputFindTripsModel model)
+        {
+            try
+            {
+                var result = _repo.FindTrips(model);
+                return Ok(result);
+            }
+            catch
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
 
         #region Private functions
 

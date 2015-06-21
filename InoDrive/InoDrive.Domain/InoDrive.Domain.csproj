@@ -51,6 +51,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.4\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -102,6 +105,7 @@
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
     <Compile Include="Models\InputModels\InputCreateTripModel.cs" />
     <Compile Include="Models\InputModels\InputEmailTemplateModel.cs" />
+    <Compile Include="Models\InputModels\InputFindTripsModel.cs" />
     <Compile Include="Models\InputModels\InputManageTripModel.cs" />
     <Compile Include="Models\InputModels\InputPageSortModel.cs" />
     <Compile Include="Models\InputModels\InputRemoveRefreshTokenModel.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="Models\InputModels\InputSignUpModel.cs" />
     <Compile Include="Models\InputModels\InputChangeEmailModel.cs" />
     <Compile Include="Models\InputModels\InputChangePasswordModel.cs" />
+    <Compile Include="Models\OutputModels\OutputFindTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputMyTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputList.cs" />
     <Compile Include="Models\OutputModels\OutputUserSummaryModel.cs" />

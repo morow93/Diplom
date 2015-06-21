@@ -59,6 +59,8 @@
   <ItemGroup>
     <Content Include="App\Controllers\Home\confirmEmailController.js" />
     <Content Include="App\Controllers\Home\greetingController.js" />
+    <Content Include="App\Controllers\Settings\changeEmailController.js" />
+    <Content Include="App\Controllers\Settings\changePasswordController.js" />
     <Content Include="App\Controllers\Settings\privateCabinetController.js" />
     <Content Include="App\Controllers\Settings\settingsController.js" />
     <Content Include="App\Controllers\User\bidsController.js" />
