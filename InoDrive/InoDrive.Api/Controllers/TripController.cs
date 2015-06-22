@@ -22,10 +22,12 @@ namespace InoDrive.Api.Controllers
     public class TripsController : ApiController
     {
         private ITripsRepository _repo;
+        private IUsersRepository _user;
 
-        public TripsController(ITripsRepository repo)
+        public TripsController(ITripsRepository repo, IUsersRepository user)
         {
             _repo = repo;
+            _user = user;
         }
 
         [HttpPost]
@@ -157,6 +159,21 @@ namespace InoDrive.Api.Controllers
         }
 
         [HttpPost]
+        [Route("GetTrip")]
+        public IHttpActionResult GetTrip(InputManageTripModel model)
+        {
+            try
+            {
+                var trip = _repo.GetTrip(model);              
+                return Ok(trip);
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
         [Route("GetAllTrips")]
         public IHttpActionResult GetAllTrips(InputPageSortModel<Int32> model)
         {
@@ -242,7 +259,7 @@ namespace InoDrive.Api.Controllers
                 var result = _repo.FindTrips(model);
                 return Ok(result);
             }
-            catch
+            catch(Exception e)
             {
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
             }

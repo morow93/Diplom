@@ -117,6 +117,7 @@
     <Compile Include="Models\OutputModels\OutputFindTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputMyTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputList.cs" />
+    <Compile Include="Models\OutputModels\OutputTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputUserSummaryModel.cs" />
     <Compile Include="Models\PlaceModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />

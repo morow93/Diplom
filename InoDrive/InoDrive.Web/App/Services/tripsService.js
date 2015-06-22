@@ -19,6 +19,13 @@ app.factory('tripsService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         return promise;
     };
 
+    var getTrip = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/getTrip', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
     var findTrips = function (params) {
         var promise = $http.post(serviceBase + 'api/trips/findTrips', params).then(function (response) {
             return response.data;
@@ -64,6 +71,7 @@ app.factory('tripsService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
     tripsServiceFactory.getTripForEdit = getTripForEdit;
     tripsServiceFactory.getCar = getCar;
 
+    tripsServiceFactory.getTrip = getTrip;
     tripsServiceFactory.findTrips = findTrips;
     tripsServiceFactory.getAllTrips = getAllTrips;
     tripsServiceFactory.getDriverTrips = getDriverTrips;

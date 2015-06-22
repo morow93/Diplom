@@ -127,13 +127,17 @@ angular.module('InoDrive').controller('createTripController', function ($scope, 
             $scope.trip.originPlace = {
             
                 placeId:    $scope.trip.rawOriginPlace.details.place_id,
-                name:       $scope.trip.rawOriginPlace.details.formatted_address
+                name:       $scope.trip.rawOriginPlace.details.formatted_address,
+                lat:        $scope.trip.rawOriginPlace.details.geometry.location.lat(),
+                lng:        $scope.trip.rawOriginPlace.details.geometry.location.lng()
             };
 
             $scope.trip.destinationPlace = {
 
                 placeId:    $scope.trip.rawDestinationPlace.details.place_id,
-                name:       $scope.trip.rawDestinationPlace.details.formatted_address
+                name:       $scope.trip.rawDestinationPlace.details.formatted_address,
+                lat:        $scope.trip.rawDestinationPlace.details.geometry.location.lat(),
+                lng:        $scope.trip.rawDestinationPlace.details.geometry.location.lng()
             };
             
             if ($scope.trip.wayPoints) {
@@ -143,7 +147,9 @@ angular.module('InoDrive').controller('createTripController', function ($scope, 
                     if ($scope.trip.wayPoints[i].details) {
                         $scope.trip.selectedPlaces.push({
                             placeId: $scope.trip.wayPoints[i].details.place_id,
-                            name: $scope.trip.wayPoints[i].details.formatted_address
+                            name: $scope.trip.wayPoints[i].details.formatted_address,
+                            lat: $scope.trip.wayPoints[i].details.geometry.location.lat(),
+                            lng: $scope.trip.wayPoints[i].details.geometry.location.lng()
                         });
                     }
                 }

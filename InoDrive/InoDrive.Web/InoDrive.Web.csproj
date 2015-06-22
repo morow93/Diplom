@@ -63,6 +63,7 @@
     <Content Include="App\Controllers\Settings\changePasswordController.js" />
     <Content Include="App\Controllers\Settings\privateCabinetController.js" />
     <Content Include="App\Controllers\Settings\settingsController.js" />
+    <Content Include="App\Controllers\User\tripController.js" />
     <Content Include="App\Controllers\User\bidsController.js" />
     <Content Include="App\Controllers\User\createTripController.js" />
     <Content Include="App\Controllers\User\editTripController.js" />
@@ -105,6 +106,7 @@
     <Content Include="App\Views\User\user.html" />
     <Content Include="App\Views\User\user.my_trips.html" />
     <Content Include="App\Views\Settings\user.settings.html" />
+    <Content Include="App\Views\User\user.trip.html" />
     <Content Include="Content\angular-motion.css" />
     <Content Include="Content\angular-motion.min.css" />
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
@@ -123,6 +125,7 @@
     <Content Include="Scripts\angular-bootstrap-select.js" />
     <Content Include="Scripts\crop\ng-img-crop.css" />
     <Content Include="Scripts\crop\ng-img-crop.js" />
+    <Content Include="Scripts\event.js" />
     <Content Include="Scripts\file\angular-file-upload-shim.js" />
     <Content Include="Scripts\file\angular-file-upload.js" />
     <Content Include="Scripts\ladda\angular-ladda.js" />
@@ -141,6 +144,7 @@
     <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\ocLazyLoad.js" />
     <Content Include="Scripts\ocLazyLoad.require.js" />
+    <Content Include="Scripts\ui-map.js" />
     <Content Include="Sources\cities.json" />
     <Content Include="Content\fonts\4_font.ttf" />
     <Content Include="Content\fonts\1_font.ttf" />

@@ -192,7 +192,11 @@
     };
 
     $scope.editTrip = function (tripId) {
-        $state.go("user.edit_trip", { tripId: tripId }, { reload: true });
+        $state.go("user.edit_trip", { tripId: tripId }, { reload: false });
+    };
+
+    $scope.getTrip = function (tripId) {
+        $state.go("user.trip", { tripId: tripId }, { reload: false });
     };
 
     $scope.getUserSummary = function () {

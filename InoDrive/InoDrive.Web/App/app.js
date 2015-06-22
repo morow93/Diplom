@@ -134,8 +134,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             });
 
-
-
     $stateProvider
         .state("user", {
             url: "/",
@@ -169,6 +167,21 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                             }
                         );
                     }
+                }
+            })
+            .state("user.trip", {
+                url: "trip/:tripId",
+                templateUrl: "app/views/user/user.trip.html",
+                controller: "tripController",
+                resolve: {
+                    loadCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+
+                        return $ocLazyLoad.load({
+                            name: 'InoDrive',
+                            files: ['app/controllers/user/tripController.js']
+                        });
+
+                    }]
                 }
             })
             .state("user.my_trips", {

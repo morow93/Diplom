@@ -23,6 +23,7 @@ namespace InoDrive.Domain.Repositories.Concrete
         {
             _ctx = dataContext;
         }
+
         private InoDriveContext _ctx;
         
         public CarModel GetCar(ShortUserModel model)
@@ -75,84 +76,81 @@ namespace InoDrive.Domain.Repositories.Concrete
 
         #region Select
 
-        //public DetailsTripModel GetDetailsTrip(ManageTripModel model)
-        //{
-        //    var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId && !t.IsDeleted);
-        //    if (trip != null)
-        //    {
-        //        var isBidded = false;
-        //        if (!String.IsNullOrEmpty(model.UserId))
-        //        {
-        //            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //            if (user == null)
-        //            {
-        //                throw new RedirectException("Нет такого пользователя!");
-        //            }
-        //            var isExistBid = user.Bids.FirstOrDefault(b => b.TripId == model.TripId);
-        //            if (isExistBid != null)
-        //            {
-        //                isBidded = true;
-        //            }
-        //        }
+        public OutputTripModel GetTrip(InputManageTripModel model)
+        {
+            var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId && !t.IsDeleted);
+            if (trip == null)
+            {
+                throw new Exception(AppConstants.TRIP_NOT_FOUND);
+            }
+       
+            var isBidded = false;
+            if (!String.IsNullOrEmpty(model.UserId))
+            {
+                var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+                if (user == null)
+                {
+                    throw new RedirectException(AppConstants.USER_NOT_FOUND);
+                }
 
-        //        var tripProfile = trip.TripProfile;
+                var isExistBid = user.Bids.FirstOrDefault(b => b.TripId == model.TripId);
+                if (isExistBid != null)
+                {
+                    isBidded = true;
+                }
+            }
 
-        //        var result = new DetailsTripModel
-        //        {
-        //            TripId = model.TripId,
-        //            UserId = trip.UserId,
-        //            OriginCity = new GeoCityModel
-        //            {
-        //                CityId = trip.OriginCityId,
-        //                CityName = trip.OriginCity.RuCityName,
-        //                RegionName = trip.OriginCity.Region.RuRegionName,
-        //                Latitude = trip.OriginCity.Latitude,
-        //                Longitude = trip.OriginCity.Longitude
-        //            },
-        //            DestinationCity = new GeoCityModel
-        //            {
-        //                CityId = trip.DestinationCityId,
-        //                CityName = trip.DestinationCity.RuCityName,
-        //                RegionName = trip.DestinationCity.Region.RuRegionName,
-        //                Latitude = trip.DestinationCity.Latitude,
-        //                Longitude = trip.DestinationCity.Longitude
-        //            },
-        //            LeavingDate = trip.LeavingDate,
-        //            CreationDate = trip.CreationDate,
-        //            CarDescription = tripProfile == null ? String.Empty : tripProfile.CarDescription,
-        //            CarImage = tripProfile == null ? String.Empty : tripProfile.CarImage,
-        //            TotalPlaces = trip.PeopleCount,
-        //            FreePlaces = trip.PeopleCount - trip.Bids.Count(b => b.IsAccepted == true),
-        //            Pay = trip.PayForOne,
-        //            IsBidded = isBidded,
-        //            WayPoints = trip.WayPoints.OrderBy(w => w.IndexNumber).Select(wp => new GeoCityModel
-        //            {
-        //                CityId = wp.CityId,
-        //                CityName = wp.City.RuCityName,
-        //                RegionName = wp.City.Region.RuRegionName,
-        //                Latitude = wp.City.Latitude,
-        //                Longitude = wp.City.Longitude
-        //            }).ToList<GeoCityModel>(),
-        //            UserIndicators = trip.Bids.Where(b => b.IsAccepted == true).Select(ui => new UserIndicator
-        //            {
-        //                UserId = ui.UserId,
-        //                AvatarImage = ui.User.UserProfile == null ? String.Empty : ui.User.UserProfile.AvatarImage,
-        //                FirstName = ui.User.FirstName,
-        //                LastName = ui.User.LastName,
-        //                WasTriped =
-        //                    (ui.User.Trips.Any(t => !t.IsDeleted && t.LeavingDate.Date < DateTime.Now.Date) ||
-        //                    ui.User.Bids.Any(b => b.IsAccepted == true && b.Trip.LeavingDate.Date < DateTime.Now.Date))
+            var result = new OutputTripModel
+            {
+                TripId = model.TripId,
+                UserId = trip.UserId,
+                Initials = trip.User.FirstName + " " + trip.User.LastName,
+                OriginPlace = new PlaceModel
+                {
+                    PlaceId = trip.OriginPlaceId,
+                    Name = trip.OriginPlace.Name,
+                    Lat = trip.OriginPlace.Latitude,
+                    Lng = trip.OriginPlace.Longitude
+                },
+                DestinationPlace = new PlaceModel
+                {
+                    PlaceId = trip.DestinationPlaceId,
+                    Name = trip.DestinationPlace.Name,
+                    Lat = trip.DestinationPlace.Latitude,
+                    Lng = trip.DestinationPlace.Longitude
+                },
+                LeavingDate = trip.LeavingDate,
+                CreationDate = trip.CreationDate,
+                Car = trip.Car,
+                CarImage = trip.CarImage,
+                TotalPlaces = trip.PeopleCount,
+                FreePlaces = trip.PeopleCount - trip.Bids.Count(b => b.IsAccepted == true),
+                Pay = trip.Pay,
+                IsBidded = isBidded,
+                IsEnded = trip.EndDate < DateTimeOffset.Now,
+                WayPoints = trip.WayPoints.OrderBy(w => w.WayPointIndex).Select(wp => new PlaceModel { 
+                    PlaceId = wp.PlaceId, 
+                    Name = wp.Place.Name,
+                    Lat = wp.Place.Latitude,
+                    Lng = wp.Place.Longitude
+                }).ToList<PlaceModel>(),
+                UserIndicators = trip.Bids.Where(b => b.IsAccepted == true).Select(ui => new UserIndicator
+                {
+                    UserId = ui.UserId,
+                    AvatarImage = ui.User.AvatarImage,
+                    FirstName = ui.User.FirstName,
+                    LastName = ui.User.LastName,
+                    WasTriped =
+                        (ui.User.Trips.Any(t => !t.IsDeleted && t.EndDate < DateTimeOffset.Now) ||
+                        ui.User.Bids.Any(b => b.IsAccepted == true && b.Trip.EndDate < DateTimeOffset.Now))
 
-        //            }).ToList<UserIndicator>()
-        //        };
+                }).ToList<UserIndicator>()
 
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Нет такой поездки!");
-        //    }
-        //}
+            };
+
+            return result;
+       
+        }
 
         public OutputList<OutputFindTripModel> FindTrips(InputFindTripsModel model)
         {
@@ -169,74 +167,78 @@ namespace InoDrive.Domain.Repositories.Concrete
                     t.OriginPlaceId == model.OriginPlaceId &&
                     t.DestinationPlaceId == model.DestinationPlaceId  &&
                     ((t.PeopleCount - t.Bids.Count(b => b.IsAccepted == true)) >= model.Places) &&
-
-                    ((model.PriceBottom == null && model.PriceTop == null) || (t.Pay >= model.PriceBottom && t.Pay <= model.PriceTop)) &&
-
-                    //((model.IsAllowdedDeviation == null) || (t.IsAllowdedDeviation == model.IsAllowdedDeviation)) &&
                     ((model.IsAllowdedChildren == null) || (t.IsAllowdedChildren == model.IsAllowdedChildren)) &&
                     ((model.IsAllowdedDrink == null) || (t.IsAllowdedDrink == model.IsAllowdedDrink)) &&
                     ((model.IsAllowdedMusic == null) || (t.IsAllowdedMusic == model.IsAllowdedMusic)) &&
                     ((model.IsAllowdedSmoke == null) || (t.IsAllowdedSmoke == model.IsAllowdedSmoke)) &&
                     ((model.IsAllowdedPets == null) || (t.IsAllowdedPets == model.IsAllowdedPets)) &&
                     ((model.IsAllowdedEat == null) || (t.IsAllowdedEat == model.IsAllowdedEat))
+                );
 
-                ).ToList();
-                
+                if (model.Price == "neg")
+                {
+                    trips = trips.Where(t => t.Pay == null);
+                }
+                else if (model.Price == "cur")
+                {
+                    trips = trips.Where(t => t.Pay >= model.PriceBottom && t.Pay <= model.PriceTop);
+                }
+
+                var tripsList = trips.ToList();
+
                 if (model.IsAllowdedDeviation == true)
                 {
-                    for (var i = 0; i < trips.Count; i++)
+                    for (var i = 0; i < tripsList.Count; i++)
                     {
-                        var tripWayPoints = trips[i].WayPoints.OrderBy(x => x.WayPointIndex).ToList();
+                        var tripWayPoints = tripsList[i].WayPoints.Select(wp => wp.Place.PlaceId).ToList();
 
-                        var isContained = false;
                         for (var j = 0; j < model.WayPoints.Count; j++)
-                        {                            
-                            if (tripWayPoints[j].PlaceId == model.WayPoints[j])
+                        {
+                            if (!tripWayPoints.Contains(model.WayPoints[j]))
                             {
-                                isContained = true;
+                                tripsList.RemoveAt(i--);
                                 break;
                             }
                         }
-                        if (!isContained) trips.RemoveAt(i--);
                     }
                 }
-                else if (model.IsAllowdedDeviation == false)
+                else
                 {
-                    for (var i = 0; i < trips.Count; i++)
+                    for (var i = 0; i < tripsList.Count; i++)
                     {
-                        if (trips[i].WayPoints.Count == model.WayPoints.Count)
+                        if (tripsList[i].WayPoints.Count == model.WayPoints.Count)
                         {
-                            var tripWayPoints = trips[i].WayPoints.OrderBy(x => x.WayPointIndex).ToList();
+                            var tripWayPoints = tripsList[i].WayPoints.OrderBy(x => x.WayPointIndex).ToList();
                             
                             for (var j = 0; j < model.WayPoints.Count; j++)
                             {
                                 if (tripWayPoints[j].PlaceId != model.WayPoints[j])
                                 {
-                                    trips.RemoveAt(i--);
+                                    tripsList.RemoveAt(i--);
                                     break;
                                 }
                             }
                         }
                         else
                         {
-                            trips.RemoveAt(--i);
+                            tripsList.RemoveAt(i--);
                         }
                     }
                 }
-                              
-                var totalCount = trips.Count();
+
+                var totalCount = tripsList.Count();
 
                 if (totalCount != 0)
                 {
                     result.TotalCount = totalCount;
-                    result.Results = Mapper.Map<List<Trip>, List<OutputFindTripModel>>
-                    (
-                        trips
-                        .OrderBy(model.SortField + (model.SortOrder ? " ascending" : " descending"))
-                        .Skip(model.PerPage * (page - 1))
-                        .Take(model.PerPage)
-                        .ToList()
-                    );
+                    result.Results = Mapper.Map<List<Trip>, List<OutputFindTripModel>>(tripsList);
+
+                    result.Results = 
+                        result.
+                        Results.
+                        OrderBy(model.SortField + " " + model.SortOrder).
+                        Skip(model.PerPage * (page - 1)).
+                        Take(model.PerPage).ToList();
                 }
                 return result;
             }
@@ -382,7 +384,9 @@ namespace InoDrive.Domain.Repositories.Concrete
                 originPlace = new Place
                 {
                     PlaceId = model.OriginPlace.PlaceId,
-                    Name = model.OriginPlace.Name
+                    Name = model.OriginPlace.Name,
+                    Latitude = model.OriginPlace.Lat,
+                    Longitude = model.OriginPlace.Lng                    
                 };
                 _ctx.Places.Add(originPlace);
                 _ctx.SaveChanges();
@@ -394,7 +398,9 @@ namespace InoDrive.Domain.Repositories.Concrete
                 destinationPlace = new Place
                 {
                     PlaceId = model.DestinationPlace.PlaceId,
-                    Name = model.DestinationPlace.Name
+                    Name = model.DestinationPlace.Name,
+                    Latitude = model.DestinationPlace.Lat,
+                    Longitude = model.DestinationPlace.Lng   
                 };
                 _ctx.Places.Add(destinationPlace);
                 _ctx.SaveChanges();
@@ -412,7 +418,9 @@ namespace InoDrive.Domain.Repositories.Concrete
                         place = new Place
                         {
                             PlaceId = model.SelectedPlaces[i].PlaceId,
-                            Name = model.SelectedPlaces[i].Name
+                            Name = model.SelectedPlaces[i].Name,
+                            Latitude = model.SelectedPlaces[i].Lat,
+                            Longitude = model.SelectedPlaces[i].Lng  
                         };
                         _ctx.Places.Add(place);
                         _ctx.SaveChanges();
@@ -563,22 +571,8 @@ namespace InoDrive.Domain.Repositories.Concrete
                 trip.OriginPlaceId = model.OriginPlace.PlaceId;
                 trip.DestinationPlaceId = model.DestinationPlace.PlaceId;
 
-                trip.CreationDate = DateTimeOffset.Now;
-
-                trip.LeavingDate =
-                    model.
-                    LeavingDate.
-                    AddHours(DateTimeOffset.Now.Hour).
-                    AddMinutes(DateTimeOffset.Now.Minute).
-                    AddSeconds(DateTimeOffset.Now.Second);
-
-                trip.EndDate =
-                    model.
-                    LeavingDate.
-                    AddDays(3).
-                    AddHours(DateTimeOffset.Now.Hour).
-                    AddMinutes(DateTimeOffset.Now.Minute).
-                    AddSeconds(DateTimeOffset.Now.Second);
+                trip.LeavingDate = model.LeavingDate;
+                trip.EndDate = model.LeavingDate.AddDays(3);
 
                 trip.PeopleCount = model.PeopleCount;
                 trip.Pay = model.Pay;

@@ -147,8 +147,10 @@ app.controller('editTripController', function ($scope, $timeout, $upload, $state
                 if ($scope.trip.rawOriginPlace.details) {
 
                     $scope.trip.originPlace = {
-                        placeId: $scope.trip.rawOriginPlace.details.place_id,
-                        name: $scope.trip.rawOriginPlace.details.formatted_address
+                        placeId:    $scope.trip.rawOriginPlace.details.place_id,
+                        name:       $scope.trip.rawOriginPlace.details.formatted_address,
+                        lat:        $scope.trip.rawOriginPlace.details.geometry.location.lat(),
+                        lng:        $scope.trip.rawOriginPlace.details.geometry.location.lng()
                     };
 
                 } else {
@@ -163,15 +165,17 @@ app.controller('editTripController', function ($scope, $timeout, $upload, $state
                 if ($scope.trip.rawDestinationPlace.details) {
 
                     $scope.trip.destinationPlace = {
-                        placeId: $scope.trip.rawDestinationPlace.details.place_id,
-                        name: $scope.trip.rawDestinationPlace.details.formatted_address
+                        placeId:    $scope.trip.rawDestinationPlace.details.place_id,
+                        name:       $scope.trip.rawDestinationPlace.details.formatted_address,
+                        lat:        $scope.trip.rawDestinationPlace.details.geometry.location.lat(),
+                        lng:        $scope.trip.rawDestinationPlace.details.geometry.location.lng()
                     };
 
                 } else {
 
                     $scope.trip.destinationPlace = {
-                        placeId: $scope.trip.rawDestinationPlace.placeId,
-                        name: $scope.trip.rawDestinationPlace.name
+                        placeId:    $scope.trip.rawDestinationPlace.placeId,
+                        name:       $scope.trip.rawDestinationPlace.name
                     };
 
                 }
@@ -182,8 +186,10 @@ app.controller('editTripController', function ($scope, $timeout, $upload, $state
 
                         if ($scope.trip.wayPoints[i].details) {
                             $scope.trip.selectedPlaces.push({
-                                placeId: $scope.trip.wayPoints[i].details.place_id,
-                                name: $scope.trip.wayPoints[i].details.formatted_address
+                                placeId:    $scope.trip.wayPoints[i].details.place_id,
+                                name:       $scope.trip.wayPoints[i].details.formatted_address,
+                                lat:        $scope.trip.wayPoints[i].details.geometry.location.lat(),
+                                lng:        $scope.trip.wayPoints[i].details.geometry.location.lng()
                             });
                         } else if ($scope.trip.wayPoints[i].name && $scope.trip.wayPoints[i].placeId) {
                             $scope.trip.selectedPlaces.push({
@@ -320,17 +326,37 @@ app.controller('editTripController', function ($scope, $timeout, $upload, $state
     };
 
     function clone(obj) {
-        if (obj == null || typeof (obj) != 'object')
-            return obj;
+        var copy;
 
-        var temp = obj.constructor();
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
 
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                temp[key] = clone(obj[key]);
-            }
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
         }
-        return temp;
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = clone(obj[i]);
+            }
+            return copy;
+        }
+
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+            }
+            return copy;
+        }
+
+        throw new Error("Unable to copy obj! Its type isn't supported.");
     }
 
     $scope.getTripForEdit();

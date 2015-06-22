@@ -31,6 +31,7 @@
                             <div class="col-xs-10 col-xs-offset-2">
                                 <a href="javascript:void(0)"
                                    class="btn btn-primary btn-sm form-submit-button find-btn"
+                                   data-ladda="laddaFind"
                                    ng-click="formSubmit(formFind)">
                                     Искать!
                                 </a>
@@ -88,9 +89,9 @@
                                                type="text"
                                                placeholder="Пункт отправления"
                                                ng-autocomplete
-                                               ng-model="home.originCity.model"
+                                               ng-model="find.originCity.model"
                                                data-options="autocompleteOptions"
-                                               data-details="home.originCity.details"
+                                               data-details="find.originCity.details"
                                                required />
                                     </div>
                                     <div class="form-error">
@@ -111,9 +112,9 @@
                                                type="text"
                                                placeholder="Пункт назначения"
                                                ng-autocomplete
-                                               ng-model="home.destinationCity.model"
+                                               ng-model="find.destinationCity.model"
                                                data-options="autocompleteOptions"
-                                               data-details="home.destinationCity.details"
+                                               data-details="find.destinationCity.details"
                                                required />
                                     </div>
                                     <div class="form-error">
@@ -140,7 +141,7 @@
                                                type="text"
                                                class="form-control input-sm"
                                                data-min-date="today"
-                                               ng-model="home.date"
+                                               ng-model="find.leavingDate"
                                                name="date"
                                                data-bs-datepicker
                                                required>
@@ -165,7 +166,7 @@
                                                type="number"
                                                class="form-control input-sm"
                                                name="places"
-                                               ng-model="home.places"
+                                               ng-model="find.places"
                                                min="1"
                                                max="10"
                                                required>
@@ -199,21 +200,21 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio0" value="not" name="radioInline" ng-model="trip.price" class="pointer" ng-init="trip.price = 'not'">
+                            <input type="radio" id="inlineRadio0" value="not" name="radioInline" ng-model="find.price" class="pointer" ng-init="find.price = 'not'">
                             <label for="inlineRadio0"> Не важно </label>
                         </div>
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="trip.price" class="pointer">
+                            <input type="radio" id="inlineRadio1" value="neg" name="radioInline" ng-model="find.price" class="pointer">
                             <label for="inlineRadio1"> Договорная цена </label>
                         </div>
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="trip.price" class="pointer" ng-click="selectCurPrice()">
+                            <input type="radio" id="inlineRadio2" value="cur" name="radioInline" ng-model="find.price" class="pointer" ng-click="selectCurPrice()">
                             <label for="inlineRadio2"> Указать цену </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="row am-fade" ng-if="trip.price == 'cur'">
+                <div class="row am-fade" ng-if="find.price == 'cur'">
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9 find-range">
                         <div data-range-slider
                              data-min="0"
@@ -242,7 +243,7 @@
 
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions0" class="pointer">
+                                            <input type="checkbox" id="tripOptions0" class="pointer" ng-model="find.IsAllowdedDeviation">
                                             <label for="tripOptions0">
                                                 <b>Возможны отклонения от маршрута</b>
                                             </label>
@@ -250,7 +251,7 @@
                                     </div>
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions1" class="pointer">
+                                            <input type="checkbox" id="tripOptions1" class="pointer" ng-model="find.IsAllowdedChildren">
                                             <label for="tripOptions1">
                                                 <b>Можно ехать с детьми</b>
                                             </label>
@@ -258,7 +259,7 @@
                                     </div>
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions2" class="pointer">
+                                            <input type="checkbox" id="tripOptions2" class="pointer" ng-model="find.IsAllowdedPets">
                                             <label for="tripOptions2">
                                                 <b>Можно ехать с животными</b>
                                             </label>
@@ -266,7 +267,7 @@
                                     </div>
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions3" class="pointer">
+                                            <input type="checkbox" id="tripOptions3" class="pointer" ng-model="find.IsAllowdedMusic">
                                             <label for="tripOptions3">
                                                 <b>Можно выбирать музыку</b>
                                             </label>
@@ -274,7 +275,7 @@
                                     </div>
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions4" class="pointer">
+                                            <input type="checkbox" id="tripOptions4" class="pointer" ng-model="find.IsAllowdedEat">
                                             <label for="tripOptions4">
                                                 <b>В машине можно есть</b>
                                             </label>
@@ -282,7 +283,7 @@
                                     </div>
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions5" class="pointer">
+                                            <input type="checkbox" id="tripOptions5" class="pointer" ng-model="find.IsAllowdedDrink">
                                             <label for="tripOptions5">
                                                 <b>В машине можно пить</b>
                                             </label>
@@ -290,8 +291,8 @@
                                     </div>
                                     <div class="trip-checkbox-wrapper">
                                         <div class="checkbox checkbox-primary trip-checkbox">
-                                            <input type="checkbox" id="tripOptions6" class="pointer">
-                                            <label for="tripOptions6">
+                                            <input type="checkbox" id="tripOptions6" class="pointer" ng-model="find.IsAllowdedSmoke">
+                                            <label for=" tripoptions6">
                                                 <b>В машине можно курить</b>
                                             </label>
                                         </div>
@@ -344,11 +345,25 @@
 
                 <div class="form-bottom-block">
                     <div class="row">
-                        <div class="col-xs-4 col-xs-offset-8">
+                        <div class="col-xs-8">
+                            <div class="trip-sub-title">
+                                <a href="javascript:void(0)"
+                                   class="typical-link-reset"
+                                   data-content="Щелкните, чтобы изменить параметры поиска!"
+                                   data-placement="right"
+                                   data-trigger="hover"
+                                   ng-click="triggerFind()"
+                                   data-bs-popover>
+                                    {{findTitle}}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
                             <div class="row">
                                 <div class="col-xs-10 col-xs-offset-2">
                                     <a href="javascript:void(0)"
                                        class="btn btn-primary btn-sm form-submit-button find-btn"
+                                       data-ladda="laddaFind"
                                        ng-click="formSubmit(formFind, true)">
                                         Искать!
                                     </a>
@@ -360,7 +375,145 @@
 
             </div>
 
-            <div class="reverse-short-trip">
+            <div class="list-trips">
+
+                <div data-infinite-scroll='getPageOfTrips()' data-infinite-scroll-disabled='emptyResults' data-infinite-scroll-distance='1'>
+
+                    <div ng-repeat='trip in trips track by $index'>
+
+                        <div class="reverse-short-trip" ng-if="!trip.isDeleted">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="user-trip-header">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <a href="javascript:void(0)" class="typical-link">
+                                                    <span class="user-trip-driver">
+                                                        <span ng-bind="trip.firstName"></span>
+                                                        <span ng-bind="trip.lastName"></span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6 text-right" ng-if="trip.allowManage">
+                                                <a href="javascript:void(0)" ng-click="editTrip(trip.tripId)" class="typical-link-reset">
+                                                    <i class="fa fa-pencil fa-border"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" ng-click="removeTrip(trip.tripId)" class="typical-link-reset">
+                                                    <i class="fa fa-times fa-border"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trip-padding">
+
+                                <div class="row">
+                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="trip-points">
+                                                    {{trip.originPlaceName}} &#8594;
+                                                    {{trip.destinationPlaceName}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 contrast-color">
+                                                {{trip.leavingDate | date:'dd MMMM yyyy года'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                        <div class="trip-price" ng-if="trip.pay > 0">
+                                            <span class="trip-price-title">
+                                                <span ng-bind="trip.pay"></span> руб.
+                                            </span><br />
+                                            <span class="contrast-color">с человека</span>
+                                        </div>
+                                        <div class="trip-price" ng-if="trip.pay == 0">
+                                            <span class="trip-price-title">Бесплатная</span><br />
+                                            <span class="contrast-color">поездка</span>
+                                        </div>
+                                        <div class="trip-price" ng-if="trip.pay == null">
+                                            <span class="trip-price-title">Договорная</span><br />
+                                            <span class="contrast-color">цена</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row" ng-if="!trip.isEnded">
+                                <div class="col-xs-12">
+                                    <div class="trip-places">
+                                        <div class="row">
+                                            <div class="col-xs-7 contrast-color">
+                                                <span>
+                                                    Осталось свободных мест:
+                                                    <span ng-bind="trip.freePlaces"></span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-if="trip.isEnded">
+                                <div class="col-xs-12">
+                                    <div class="trip-places light-background">
+                                        <div class="row">
+                                            <div class="col-xs-7 contrast-color">
+                                                <span>Поездка завершена</span>
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row" ng-if="loading">
+                        <div class="col-xs-12">
+                            <div class="loading-wrapper reverse-loading-wrapper">
+                                <div class="loading-icon">
+                                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+                                </div>
+                                <div class="loading-text">
+                                    <span class="contrast-color">Пожалуйста, подождите...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="totalEmptyResults">
+                        <div class="col-xs-12">
+                            <div class="loading-wrapper reverse-loading-wrapper">
+                                <div class="loading-icon">
+                                    <i class="fa fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="loading-text">
+                                    <span class="contrast-color">Нет поездок!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--<div class="reverse-short-trip">
 
                 <div class="row">
                     <div class="col-xs-12">
@@ -426,143 +579,8 @@
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
-            <div class="reverse-short-trip">
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="user-trip-header">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <a href="javascript:void(0)" class="typical-link">
-                                        <span class="user-trip-driver">Чепурной Александр</span>
-                                    </a>
-                                </div>
-                                <div class="col-xs-6 text-right">
-                                    <a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>
-                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="trip-padding">
-
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="trip-points">
-                                        Таганрог, Ростовская область &#8594;
-                                        Ростов-на-Дону, Ростовская область &#8594;
-                                        Москва, Московская область &#8594;
-                                        Санкт-Петербург
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 contrast-color">
-                                    07/07/2015
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                            <div class="trip-price">
-                                <span class="trip-price-title">10000 руб.</span><br />
-                                <span class="contrast-color">с человека</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="trip-places">
-                            <div class="row">
-                                <div class="col-xs-7 contrast-color">
-                                    <span>Осталось свободных мест: 10</span>
-                                </div>
-                                <div class="col-xs-5 text-right">
-                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="reverse-short-trip">
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="user-trip-header">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <a href="javascript:void(0)" class="typical-link">
-                                        <span class="user-trip-driver">Чепурной Александр</span>
-                                    </a>
-                                </div>
-                                <div class="col-xs-6 text-right">
-                                    <a href="javascript:void(0)"><i class="fa fa-pencil fa-border"></i></a>
-                                    <a href="javascript:void(0)"><i class="fa fa-times fa-border"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="trip-padding">
-
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="trip-points">
-                                        Таганрог, Ростовская область &#8594;
-                                        Ростов-на-Дону, Ростовская область &#8594;
-                                        Москва, Московская область &#8594;
-                                        Санкт-Петербург
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 contrast-color">
-                                    07/07/2015
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                            <div class="trip-price">
-                                <span class="trip-price-title">10000 руб.</span><br />
-                                <span class="contrast-color">с человека</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="trip-places">
-                            <div class="row">
-                                <div class="col-xs-7 contrast-color">
-                                    <span>Осталось свободных мест: 10</span>
-                                </div>
-                                <div class="col-xs-5 text-right">
-                                    <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
         </form>
 

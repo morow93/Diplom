@@ -1,28 +1,4 @@
-﻿angular.module('InoDrive').controller('findController', function ($scope, $state, $alert, $document) {
-    
-//    public String OriginPlaceId { get; set; }
-//    public String DestinationPlaceId { get; set; }
-//    public DateTimeOffset LeavingDate { get; set; }
-//    public Int32 Places { get; set; }
-//    public Int32? PriceTop { get; set; }
-//    public Int32? PriceBottom { get; set; }
-
-//    public List<String> WayPoints { get; set; }
-
-//    public Boolean? IsAllowdedDeviation { get; set; }
-//    public Boolean? IsAllowdedChildren { get; set; }
-//    public Boolean? IsAllowdedPets { get; set; }
-//    public Boolean? IsAllowdedMusic { get; set; }
-//    public Boolean? IsAllowdedDrink { get; set; }
-//    public Boolean? IsAllowdedEat { get; set; }
-//    public Boolean? IsAllowdedSmoke { get; set; }
-
-//    public Int32 Page { get; set; }
-//        public Int32 PerPage { get; set; }
-//public Boolean SortOrder { get; set; }
-//public String  SortField { get; set; }
-
-    debugger;
+﻿angular.module('InoDrive').controller('findController', function ($scope, $state, $alert, $document, $timeout, tripsService) {
 
     var titles = [
         "Обычный поиск (?)",
@@ -41,8 +17,12 @@
         $scope.rangePrice.maxModel = 100;
     };
 
+    $scope.currentFind = null;
     $scope.find = {};
+    $scope.page = 1;
+    $scope.perPage = 10;
     $scope.find.wayPoints = [{}];
+    $scope.emptyResults = true;
 
     $scope.autocompleteOptions = {
         types: "(cities)",
@@ -74,7 +54,7 @@
     };
 
     $scope.selectedSortOption = "Rating";
-    $scope.selectedOrderOption = "Desc";
+    $scope.selectedOrderOption = "descending";
 
     $scope.sortOptions = [
         {
@@ -93,24 +73,27 @@
 
     $scope.orderOptions = [
         {
-            "value": "Desc",
+            "value": "descending",
             "label": "<i class=\"fa fa-arrow-circle-down\"></i> В порядке убывания"
         },
         {
-            "value": "Asc",
+            "value": "ascending",
             "label": "<i class=\"fa fa-arrow-circle-up\"></i> В порядке возрастания"
         }
     ];
 
     $scope.formSubmit = function (form, needUp) {
-        debugger;
+        
         if (form.$valid) {
+           
+            $scope.page = 1;
+            $scope.perPage = 10;
 
-            $scope.find.pageModel.perPage = 10;
-            $scope.find.pageModel.page = 1;
+            $scope.trips = [];
+            $scope.totalEmptyResults = false;
+            $scope.savedWayPoints = $scope.find.wayPoints;
 
             $scope.currentFind = clone($scope.find);
-
             $scope.getPageOfTrips();
 
         } else {
@@ -142,80 +125,94 @@
     };
 
     $scope.getPageOfTrips = function () {
-
+  
         if ($scope.loading) {
             return;
         } else {
             $scope.loading = true;
         }
 
-        if ($scope.currentFind != null && !angular.equals({}, $scope.currentFind)) {
+        if ($scope.currentFind && !angular.equals({}, $scope.currentFind)) {
 
-            if ($scope.currentFind.pageModel == undefined) {
-                $scope.currentFind.pageModel = {};
-                $scope.currentFind.pageModel.perPage = 10;
-                $scope.currentFind.pageModel.page = 1;
+            if ($scope.page == 1)
+                $scope.laddaFind = true;
+
+            var type = (typeof $scope.currentFind.leavingDate);
+            if (type != "string") {
+                $scope.currentFind.leavingDate = moment($scope.currentFind.leavingDate).format();
             }
-
-            $scope.currentFind.sortOption = {
-                field: $scope.selectedOpt.field,
-                order: $scope.selectedOpt.order
-            };
-
-            var params = {
-                userId: $scope.authentication.userId,
-                page: $scope.page,
-                perPage: $scope.perPage
-            };
-
-            debugger;
-            return;
-
-            tripsService.findTrips($scope.currentFind).then(function (response) {
-
-                if (response.results && response.results.length > 0 && response.totalCount > 0) {
-
-                    $scope.totalCount = response.totalCount;
-                    $scope.showTotalCount = true;
-
-                    for (var i = 0; i < response.results.length; i++) {
-                        if (response.results[i].userRating === "NaN") {
-                            response.results[i].userRating = 0;
-                        }
-                    }
-
-                    if ($scope.trips) {
-                        for (var i = 0; i < response.results.length; i++) {
-                            $scope.trips.push(response.results[i]);
-                        }
-                    } else {
-                        $scope.trips = response.results;
-                    }
-
-                    var totalPages = Math.ceil(($scope.totalCount + $scope.countExcluded) / $scope.perPage);
-                    if (++$scope.page > totalPages) {
-                        $scope.emptyResults = true;
-                    } else {
-                        $scope.emptyResults = false;
-                    }
-
-                } else {
-
-                    $scope.emptyResults = true;
-                    if ($scope.page == 1) {
-                        $scope.totalEmptyResults = true;
-                    }
+       
+            var tmpWayPoints = [];
+            for (var i = 0; i < $scope.savedWayPoints.length; i++) {
+                if ($scope.savedWayPoints[i].details && $scope.savedWayPoints[i].details.place_id) {
+                    tmpWayPoints.push($scope.savedWayPoints[i].details.place_id);
                 }
+            }
+            $scope.currentFind.wayPoints = tmpWayPoints;
 
-            }).catch(function () {
+            $scope.currentFind.originPlaceId = $scope.currentFind.originCity.details.place_id;
+            $scope.currentFind.destinationPlaceId = $scope.currentFind.destinationCity.details.place_id;
 
-                //neederror
+            $scope.currentFind.page = $scope.page;
+            $scope.currentFind.perPage = $scope.perPage;
+            
+            $scope.currentFind.priceTop = $scope.rangePrice.maxModel;
+            $scope.currentFind.priceBottom = $scope.rangePrice.minModel;
+            $scope.currentFind.price = $scope.find.price;
 
-            }).finally(function () {
+            $scope.currentFind.sortField = $scope.selectedSortOption;
+            $scope.currentFind.sortOrder = $scope.selectedOrderOption;
 
-                $scope.loading = false;
+            $timeout(function () {
 
-            });
+                tripsService.findTrips($scope.currentFind).then(function (response) {
+
+                    if (response.results && response.results.length > 0 && response.totalCount > 0) {
+
+                        $scope.totalCount = response.totalCount;
+                        $scope.showTotalCount = true;
+
+                        for (var i = 0; i < response.results.length; i++) {
+                            if (response.results[i].userRating === "NaN") {
+                                response.results[i].userRating = 0;
+                            }
+                        }
+
+                        if ($scope.trips && $scope.page != 1) {
+                            for (var i = 0; i < response.results.length; i++) {
+                                $scope.trips.push(response.results[i]);
+                            }
+                        } else {
+                            $scope.trips = response.results;
+                        }
+
+                        var totalPages = Math.ceil(($scope.totalCount + $scope.countExcluded) / $scope.perPage);
+                        if (++$scope.page > totalPages) {
+                            $scope.emptyResults = true;
+                        } else {
+                            $scope.emptyResults = false;
+                        }
+
+                    } else {
+
+                        $scope.emptyResults = true;
+                        if ($scope.page == 1) {
+                            $scope.totalEmptyResults = true;
+                        }
+                    }
+
+                }).catch(function () {
+
+                    //neederror
+
+                }).finally(function () {
+
+                    $scope.loading = false;
+                    $scope.laddaFind = false;
+
+                });
+
+            }, 1500);
 
         }
     };
@@ -227,13 +224,59 @@
 
         switch(index) {
             case 0:
-                $scope.findTitle = titles[1];
+
+                $scope.findTitle = titles[1];//"Расширенный поиск (?)"
                 break;
+
             case 1:
             default:
-                $scope.findTitle = titles[0];
+
+                $scope.find.IsAllowdedChildren = null;
+                $scope.find.IsAllowdedDeviation = null;
+                $scope.find.IsAllowdedDrink = null;
+                $scope.find.IsAllowdedEat = null;
+                $scope.find.IsAllowdedMusic = null;
+                $scope.find.IsAllowdedPets = null;
+                $scope.find.IsAllowdedSmoke = null;
+                $scope.find.wayPoints = [{}];
+
+                $scope.findTitle = titles[0];//"Обычный поиск (?)"
                 break;
         }
 
     };
+
+    function clone(obj) {
+        var copy;
+
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = clone(obj[i]);
+            }
+            return copy;
+        }
+
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+            }
+            return copy;
+        }
+
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    }
 });

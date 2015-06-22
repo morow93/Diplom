@@ -14,6 +14,7 @@ namespace InoDrive.Domain.Models.InputModels
         public Int32 Places { get; set; }
         public Int32? PriceTop { get; set; }
         public Int32? PriceBottom { get; set; }
+        public String Price { get; set; }
 
         public List<String> WayPoints { get; set; }
 
@@ -27,8 +28,8 @@ namespace InoDrive.Domain.Models.InputModels
 
         public Int32 Page { get; set; }
         public Int32 PerPage { get; set; }
-        public Boolean SortOrder { get; set; }
-        public String  SortField { get; set; }
+        public String SortOrder { get; set; }
+        public String SortField { get; set; }
     }
 
 }

@@ -1,0 +1,205 @@
+﻿<div class="row" ng-if="!wasLoaded">
+    <div class="col-xs-12">
+        <div class="loading-wrapper loading-block">
+            <div class="loading-icon">
+                <i class="fa fa-refresh fa-spin fa-2x"></i>
+            </div>
+            <div class="loading-text">
+                <span class="contrast-color">Пожалуйста, подождите...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="wasLoaded">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="page-view-title">
+                <b>
+                    <a>{{trip.initials}}</a>
+                </b>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-manage-trip" style="padding-bottom: 25px;">
+
+        <div class="form-block">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="trip-sub-title">
+                        <a href="javascript:void(0)"
+                           class="typical-link-reset"
+                           data-content="Раздел обязателен для заполнения!"
+                           data-placement="right"
+                           data-trigger="hover"
+                           data-bs-popover>
+                            Поездка
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2">
+                            <button class="btn btn-primary btn-sm full-width"
+                                    ng-if="trip.userId != authentication.userId && !trip.isEnded">
+                                Занять место
+                            </button>
+                            <button class="btn btn-primary btn-sm full-width" disabled
+                                    ng-if="trip.userId == authentication.userId && !trip.isEnded">
+                                Ваша поездка
+                            </button>
+                            <button class="btn btn-primary btn-sm full-width" disabled
+                                    ng-if="trip.isEnded">
+                                Поездка завершена
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-xs-12">
+                <table class="table user-table first-user-table">
+                    <colgroup>
+                        <col class="col-xs-3">
+                        <col class="col-xs-9">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td><b>Откуда:</b></td>
+                            <td>{{trip.originPlace.name}} </td>
+                        </tr>
+                        <tr>
+                            <td><b>Куда:</b></td>
+                            <td>{{trip.destinationPlace.name}} </td>
+                        </tr>
+                        <tr>
+                            <td><b>Промежуточные пункты:</b></td>
+                            <td ng-if="!trip.wayPoints || trip.wayPoints.length == 0">Нет</td>
+                            <td ng-if="trip.wayPoints">
+                                <div ng-repeat="wayPoint in trip.wayPoints track by $index">
+                                    {{wayPoint.name}}
+                                    <span ng-if="$index != trip.wayPoints.length - 1">&#8594;</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Cвободных мест:</b></td>
+                            <td ng-bind="trip.freePlaces"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Дата отправления:</b></td>
+                            <td>{{trip.leavingDate | date:'dd MMMM yyyy года'}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Машина:</b></td>
+                            <td>{{trip.car}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Цена:</b></td>
+                            <td ng-if="trip.pay > 0">
+                                <span class="trip-price-title">
+                                    <span ng-bind="trip.pay"></span> руб.
+                                </span><br />
+                                <span class="contrast-color">с человека</span>
+                            </td>
+                            <td ng-if="trip.pay == 0">
+                                <span class="trip-price-title">
+                                    Бесплатная
+                                </span><br />
+                                <span class="contrast-color">поездка</span>
+                            </td>
+                            <td ng-if="trip.pay == null">
+                                <span class="trip-price-title">
+                                    Договорная
+                                </span><br />
+                                <span class="contrast-color">цена</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8">
+                <img ng-show="dataCarUrl != null"
+                     ng-src="{{dataCarUrl}}" class="full-width" />
+                <img ng-show="dataCarUrl == null"
+                     ng-src="{{noCarImage}}" class="full-width" />
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-10 col-xs-offset-2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-repeat="userIndicator in trip.userIndicators" style="float: left; margin-right: 10px;">
+            <button ng-show="userIndicator.avatarImage"
+                    style="border-radius: 45px; border:none; width: 75px; height: 75px; margin: 0px; padding: 0px;"
+                    data-placement="bottom"
+                    data-title="{{userIndicator.firstName + ' ' + userIndicator.lastName}}"
+                    data-content="{{userIndicator.wasTriped ? 'Уже ездил с InoDrive' : 'Еще не ездил с InoDrive'}}"
+                    data-trigger="hover"
+                    bs-popover>
+                <img style="width: 75px; height: 75px;"
+                     ng-src="{{fullAvatarsFolder + userIndicator.avatarImage}}" />
+            </button>
+            <button ng-show="!userIndicator.avatarImage"
+                    style="border-radius: 45px; border:none; width: 75px; height: 75px; margin: 0; padding: 0px;"
+                    data-placement="bottom"
+                    data-title="{{userIndicator.firstName + ' ' + userIndicator.lastName}}"
+                    data-content="{{userIndicator.wasTriped ? 'Уже ездил с InoDrive' : 'Еще не ездил с InoDrive'}}"
+                    data-trigger="hover"
+                    bs-popover>
+                <img style="width: 75px; height: 75px;"
+                     ng-src="{{noAvatarImage}}" />
+            </button>
+        </div>
+        <label style="margin: 5px 0px;"><span ng-show="trip.userIndicators == 0">Нет попутчиков</span></label>
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <style>
+                    .angular-google-map-container {
+                        height: 400px;
+                    }
+                </style>
+                <b>Карта поездки</b><br />
+                <div id="map_canvas">
+                    <ui-gmap-google-map center="map.center"
+                                        zoom="map.zoom"
+                                        draggable="true"
+                                        options="options"
+                                        bounds="map.bounds">
+
+                        <ui-gmap-markers models="curPath" coords="'self'" icon="'icon'">
+                        </ui-gmap-markers>
+
+                        <ui-gmap-polyline path="p.path"
+                                        stroke="p.stroke"
+                                        data-visible='p.visible'
+                                        geodesic='p.geodesic'
+                                        fit="false"
+                                        editable="p.editable"
+                                        data-draggable="p.draggable"
+                                        icons='p.icons'>
+                        </ui-gmap-polyline>
+
+                    </ui-gmap-google-map>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

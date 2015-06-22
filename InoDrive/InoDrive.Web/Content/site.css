@@ -58,6 +58,10 @@ body {
     padding-bottom: 10px;
     margin-top: 25px;
 }
+.reverse-loading-wrapper{
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
 .loading-icon {
     width: 35px;
     float: left;
@@ -117,6 +121,9 @@ img.resize {
 }
 .confirm-email-subtitle{
     margin-top: 10px;
+}
+.medium-padding{
+    padding: 10px;
 }
 .common-padding{
     padding: 50px;
