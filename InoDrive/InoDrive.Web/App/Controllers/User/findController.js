@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('findController', function ($scope, $state, $alert, $document, $timeout, tripsService) {
+﻿angular.module('InoDrive').controller('findController', function ($scope, $state, $alert, $document, $timeout, tripsService, customStorageService) {
 
     var titles = [
         "Обычный поиск (?)",
@@ -143,9 +143,11 @@
             }
        
             var tmpWayPoints = [];
-            for (var i = 0; i < $scope.savedWayPoints.length; i++) {
-                if ($scope.savedWayPoints[i].details && $scope.savedWayPoints[i].details.place_id) {
-                    tmpWayPoints.push($scope.savedWayPoints[i].details.place_id);
+            if ($scope.savedWayPoints) {
+                for (var i = 0; i < $scope.savedWayPoints.length; i++) {
+                    if ($scope.savedWayPoints[i].details && $scope.savedWayPoints[i].details.place_id) {
+                        tmpWayPoints.push($scope.savedWayPoints[i].details.place_id);
+                    }
                 }
             }
             $scope.currentFind.wayPoints = tmpWayPoints;
@@ -246,6 +248,11 @@
 
     };
 
+    $scope.getTrip = function (tripId) {
+        customStorageService.set("findParams", $scope.find);
+        $state.go("user.trip", { tripId: tripId }, { reload: false });
+    };
+
     function clone(obj) {
         var copy;
 
@@ -278,5 +285,12 @@
         }
 
         throw new Error("Unable to copy obj! Its type isn't supported.");
+    }
+
+    var tmp = customStorageService.get('findParams');
+    if (tmp) {
+        $scope.find = tmp;
+        $scope.formSubmit({ $valid: true });
+        customStorageService.remove('findParams');
     }
 });

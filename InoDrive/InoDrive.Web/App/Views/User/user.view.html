@@ -113,7 +113,8 @@
                             </tr>
                             <tr>
                                 <td>Телефон:</td>
-                                <td>+7{{userInfo.phone}}</td>
+                                <td ng-if="userInfo.phone">+7{{userInfo.phone}}</td>
+                                <td ng-if="!userInfo.phone">Не указан</td>
                             </tr>
                         </tbody>
                     </table>

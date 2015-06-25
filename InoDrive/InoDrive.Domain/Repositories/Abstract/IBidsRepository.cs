@@ -27,7 +27,7 @@ namespace InoDrive.Domain.Repositories.Abstract
 
         #region Add or update some bids entities
 
-        //void AddBid(InputManageTripModel model);
+        void AddBid(InputManageTripModel model);
         //void AcceptBid(InputManageTripModel model);
         //void RejectBid(InputManageTripModel model);
         //void WatchBid(InputManageTripModel model);

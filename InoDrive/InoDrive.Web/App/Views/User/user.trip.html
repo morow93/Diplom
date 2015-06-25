@@ -41,8 +41,11 @@
 
                             <button ng-click="addBid()"
                                     class="btn btn-primary btn-sm full-width"
-                                    ng-if="trip.userId != authentication.userId && !trip.isEnded">
+                                    ng-if="trip.userId != authentication.userId && !trip.isEnded && !trip.isBidded">
                                 Занять место
+                            </button>
+                            <button class="btn btn-primary btn-sm full-width" ng-if="trip.isBidded" disabled>
+                                Заявка отправлена
                             </button>
                             <button class="btn btn-primary btn-sm full-width" disabled
                                     ng-if="trip.userId == authentication.userId && !trip.isEnded">
@@ -97,7 +100,8 @@
                         </tr>
                         <tr>
                             <td><b>Машина:</b></td>
-                            <td>{{trip.car}}</td>
+                            <td ng-if="trip.car">{{trip.car}}</td>
+                            <td ng-if="!trip.car">Не указана</td>
                         </tr>
                         <tr>
                             <td><b>Цена:</b></td>
@@ -141,9 +145,9 @@
         <div class="row">
             <div class="col-xs-10 col-lg-8">
                 <img ng-show="dataCarUrl != null"
-                     ng-src="{{dataCarUrl}}" class="full-width" />
+                     ng-src="{{dataCarUrl}}" class="full-width" ng-attr-title="{{trip.car}}" />
                 <img ng-show="dataCarUrl == null"
-                     ng-src="{{noCarImage}}" class="full-width" />
+                     ng-src="{{noCarImage}}" class="full-width" ng-attr-title="{{trip.car}}" />
             </div>
         </div>
 

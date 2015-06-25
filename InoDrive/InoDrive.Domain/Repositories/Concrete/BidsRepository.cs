@@ -1,4 +1,7 @@
 ﻿using InoDrive.Domain.Contexts;
+using InoDrive.Domain.Entities;
+using InoDrive.Domain.Helpers;
+using InoDrive.Domain.Models.InputModels;
 using InoDrive.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
@@ -16,12 +19,6 @@ namespace InoDrive.Domain.Repositories.Concrete
         }
 
         private InoDriveContext _ctx;
-
-        //private DataContext _ctx;
-        //public BidRepository(DataContext dataContext)
-        //{
-        //    _ctx = dataContext;
-        //}
 
         //#region Section of requests for updating counters, bids
 
@@ -366,55 +363,56 @@ namespace InoDrive.Domain.Repositories.Concrete
 
         //#region Add or update some bids entities
 
-        //public void AddBid(ManageTripModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            if (trip.IsDeleted)
-        //            {
-        //                throw new AlertException("Нельзя подать заявку на эту поездку, т.к. она была удалена!");
-        //            }
-        //            if (trip.LeavingDate.Date < DateTime.Now.Date)
-        //            {
-        //                throw new AlertException("Нельзя подать заявку на эту поездку, т.к. поездка уже завершена!");
-        //            }
-        //            if (trip.UserId != model.UserId)
-        //            {
-        //                var bid = trip.Bids.FirstOrDefault(b => b.UserId == model.UserId);
-        //                if (bid == null)
-        //                {
-        //                    bid = new Bid
-        //                    {
-        //                        CreationDate = DateTime.Now,
-        //                        UserId = model.UserId
-        //                    };
-        //                    trip.Bids.Add(bid);
-        //                    _ctx.SaveChanges();
-        //                }
-        //                else
-        //                {
-        //                    throw new AlertException("Вы уже подали заявку на эту поездку!");
-        //                }
-        //            }
-        //            else
-        //            {
-        //                throw new AlertException("Вы не можете подать заявку на свою же поездку!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("Такой поездки не существует!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public void AddBid(InputManageTripModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip != null)
+                {
+                    if (trip.IsDeleted)
+                    {
+                        throw new Exception("Нельзя подать заявку на эту поездку, т.к. она была удалена!");
+                    }
+                    if (trip.LeavingDate.Date < DateTime.Now.Date)
+                    {
+                        throw new Exception("Нельзя подать заявку на эту поездку, т.к. поездка уже завершена!");
+                    }
+                    if (trip.UserId != model.UserId)
+                    {
+                        var bid = trip.Bids.FirstOrDefault(b => b.UserId == model.UserId);
+                        if (bid == null)
+                        {
+                            bid = new Bid
+                            {
+                                CreationDate = DateTimeOffset.Now,
+                                UserId = model.UserId
+                            };
+                            trip.Bids.Add(bid);
+                            _ctx.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception("Вы уже подали заявку на эту поездку!");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Вы не можете подать заявку на свою же поездку!");
+                    }
+                }
+                else
+                {
+                    throw new Exception(AppConstants.TRIP_NOT_FOUND);
+                }
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
         //public void AcceptBid(ManageBidModel model)
         //{
         //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);

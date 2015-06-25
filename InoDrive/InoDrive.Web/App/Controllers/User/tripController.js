@@ -11,7 +11,7 @@ angular.module('InoDrive').controller('tripController', function (
     $timeout,
     authService,
     tripsService,
-    //bidsService,
+    bidsService,
     ngAuthSettings) {
 
     $scope.comment = { title: "", vote: 0 };
@@ -133,21 +133,34 @@ angular.module('InoDrive').controller('tripController', function (
     $scope.addBid = function () {
 
         if ($scope.authentication.isAuth && !$scope.trip.isBidded) {
-            $scope.addBidFlag = true;
+
             var params = {
                 userId: $scope.authentication.userId,
                 tripId: $stateParams.tripId
             };
 
-            //bidsService.addBid(params).then(function (data) {
-            //    $scope.trip.isBidded = true;
-            //    $scope.addBidFlag = false;
-            //}).catch(function (error) {
-            //    throw error.data;
-            //}).finally(function () {
-            //    $scope.addBidFlag = false;
-            //});
+            bidsService.addBid(params).then(function (data) {
+                $scope.trip.isBidded = true;
+            }).catch(function (error) {
+                throw error.data;
+            });
+        } else {
+
+            $scope.message = "Чтобы занять место необходимо выполнить вход в систему!"
+
+            var signOutModal = $modal({
+                scope: $scope,
+                template: 'App/Templates/bid.html',
+                show: true,
+                animation: "am-fade-and-scale",
+                placement: "center"
+            });
+
+            $scope.cancelModal = function () {
+                signOutModal.$promise.then(signOutModal.hide);
+            };
         }
+
     };
 
     function isImage(src) {

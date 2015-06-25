@@ -37,7 +37,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     return $ocLazyLoad.load(
                         {
                             name: "InoDrive",
-                            files: ["app/controllers/home/homeController.js"]
+                            files: [
+                                "app/controllers/home/homeController.js",
+                                "app/controllers/home/confirmEmailController.js"
+                            ]
                         }
                     );
                 }
@@ -106,17 +109,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             .state("home.confirm_email", {
                 templateUrl: "/app/views/home/home.confirm_email.html",
                 controller: "confirmEmailController",
-                url: "confirm_email?userId&code",
-                resolve: {
-                    loadCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-
-                        return $ocLazyLoad.load({
-                            name: 'InoDrive',
-                            files: ['app/controllers/home/confirmEmailController.js']
-                        });
-
-                    }]
-                }
+                url: "confirm_email?userId&code"
             })    
             .state("home.send_code", {
                 url: "send_code/",

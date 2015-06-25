@@ -1,6 +1,6 @@
 ﻿'use strict';
 angular.module('InoDrive').controller('confirmEmailController', function ($scope, $stateParams, $state, $timeout, authService) {
-
+    debugger;
     if ($stateParams.userId && $stateParams.code) {
 
         var params = {

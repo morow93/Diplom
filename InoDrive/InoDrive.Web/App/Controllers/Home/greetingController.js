@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('greetingController', function ($scope, $interval, $alert, $state, mapService) {
+﻿angular.module('InoDrive').controller('greetingController', function ($scope, $interval, $alert, $state, mapService, customStorageService) {
 
     var myAlert;
 
@@ -14,7 +14,8 @@
 
         if (form.$valid) {
 
-            $state.go("find", null, { reload: true });
+            customStorageService.set("findParams", $scope.home);
+            $state.go("user.find", null, { reload: true });
 
         }
         else {

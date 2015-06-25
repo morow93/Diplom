@@ -1,7 +1,7 @@
 ﻿@model InoDrive.Domain.Models.InputModels.InputEmailTemplateModel
 
 @{
-    var link = @"http://localhost:56023/#/confirm_email?" + "userId=" + Model.UserId + "&code=" + Model.Code;
+    var link = @"http://localhost:56023/#/home/confirm_email?" + "userId=" + Model.UserId + "&code=" + Model.Code;
     var leftDateTime = DateTime.Now.AddHours(1);
 }
 <!DOCTYPE html>

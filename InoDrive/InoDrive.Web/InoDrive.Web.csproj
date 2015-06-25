@@ -84,11 +84,13 @@
     <Content Include="App\Directives\starRating.js" />
     <Content Include="App\Services\authInterceptorService.js" />
     <Content Include="App\Services\authService.js" />
+    <Content Include="App\Services\bidsService.js" />
     <Content Include="App\Services\mapService.js" />
     <Content Include="App\Services\customStorageService.js" />
     <Content Include="App\Services\tripsService.js" />
     <Content Include="App\Services\usersService.js" />
     <Content Include="App\Templates\alert.html" />
+    <Content Include="App\Templates\bid.html" />
     <Content Include="App\Templates\crop_avatar.html" />
     <Content Include="App\Templates\modal.html" />
     <Content Include="App\Templates\notify.html" />
