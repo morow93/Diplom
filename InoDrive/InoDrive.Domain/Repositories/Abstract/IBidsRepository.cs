@@ -1,4 +1,5 @@
-﻿using InoDrive.Domain.Models.InputModels;
+﻿using InoDrive.Domain.Models;
+using InoDrive.Domain.Models.InputModels;
 using InoDrive.Domain.Models.OutputModels;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace InoDrive.Domain.Repositories.Abstract
     {
         #region Section of requests for updating counters, bids
 
-        //Int32 GetCountOfOwnBids(ShortUserModel model);
-        //Int32 GetCountOfAssignedBids(ShortUserModel model);
+        Int32 GetCountOfOwnBids(ShortUserModel model);
+        Int32 GetCountOfAssignedBids(ShortUserModel model);
         //List<UnwatchedBidModel> GetUpdatedOwnBids(ShortUserModel model);
         //List<BidForMyTripModel> GetUpdatedAssignedBids(LoadBidsModel model);
 

@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('sendedBidsController', function ($scope, $state, $interval, bidsService) {
+﻿angular.module('InoDrive').controller('sendedBidsController', function ($scope, $state, $interval, $timeout, bidsService, localStorageService) {
 
     $scope.loading = false;
     $scope.showEnded = true;
@@ -27,62 +27,57 @@
         $scope.loading = true;//true when loading items
         $scope.emptyResult = false;//if no more items to load
 
-        bidsService.getMyBids(
-        {
-            page: $scope.page,
-            perPage: $scope.perPage,
-            userId: $scope.authentication.userId,
-            showEnded: $scope.showEnded
 
-        }).then(function (response) {
+        $timeout(function () {
 
-            if (response.results && response.results.length > 0 && response.totalCount > 0) {
+            bidsService.getMyBids(
+            {
+                page: $scope.page,
+                perPage: $scope.perPage,
+                userId: $scope.authentication.userId,
+                showEnded: $scope.showEnded
 
-                $scope.totalCount = response.totalCount;
-                $scope.showTotalCount = true;
-                $scope.firstLoad = true;
+            }).then(function (response) {
 
-                if ($scope.myBids) {
-                    for (var i = 0; i < response.results.length; i++) {
-                        $scope.myBids.push(response.results[i]);
+                if (response.results && response.results.length > 0 && response.totalCount > 0) {
+
+                    $scope.totalCount = response.totalCount;
+                    $scope.showTotalCount = true;
+                    $scope.firstLoad = true;
+
+                    if ($scope.myBids) {
+                        for (var i = 0; i < response.results.length; i++) {
+                            $scope.myBids.push(response.results[i]);
+                        }
+                    } else {
+                        $scope.myBids = response.results;
                     }
-                } else {
-                    $scope.myBids = response.results;
-                }
 
-                var totalPages = Math.ceil(($scope.totalCount + $scope.countExcluded) / $scope.perPage);
-                if (++$scope.page > totalPages) {
+                    var totalPages = Math.ceil(($scope.totalCount + $scope.countExcluded) / $scope.perPage);
+                    if (++$scope.page > totalPages) {
+                        $scope.emptyResults = true;
+                    } else {
+                        $scope.emptyResults = false;
+                    }
+
+                } else {
                     $scope.emptyResults = true;
-                } else {
-                    $scope.emptyResults = false;
-                }
-
-            } else {
-                $scope.emptyResults = true;
-                if ($scope.page == 1) {
-                    $scope.totalEmptyResults = true;
-                }
-                $scope.totalCount = 0;
-            }
-            
-            if (response.results && response.results.length > 0) {
-                var nowDate = new Date();
-                for (var j = 0; j < response.results.length; j++) {
-                    if (new Date(response.results[j].endDate) < nowDate) {
-                        response.results[j].ended = true;
+                    if ($scope.page == 1) {
+                        $scope.totalEmptyResults = true;
                     }
                 }
-            }
 
-        }).catch(function (error) {
+            }).catch(function (error) {
 
-            //neederror
+                //neederror
 
-        }).finally(function () {
-            $scope.loading = false;
-            $scope.firstLoad = true;
-            $scope.triggerFind = false;
-        });
+            }).finally(function () {
+                $scope.loading = false;
+                $scope.firstLoad = true;
+            });
+
+        }, 1500);
+
     };
 
     $scope.watchBid = function (bidId, index) {
@@ -101,7 +96,7 @@
             bidsService.watchBid(params).then(function (data) {
 
                 $scope.countOfOwnBids.count -= 1;
-                shareService.setData("countOfOwnBids", $scope.countOfOwnBids);
+                localStorageService.set("countOfOwnBids", $scope.countOfOwnBids);
 
             }).catch(function (error) {
                 $scope.myBids[index].isWatched = false;
@@ -117,43 +112,43 @@
         }
         return true;
     }
-
-    var getUpdatedOwnBids = function () {
-
-        var params = {
-            userId: $scope.authentication.userId
-        };
-        bidsService.getUpdatedOwnBids(params).then(function (data) {
-
-            $scope.countOfOwnBids.count = data.length;
-            shareService.setData("countOfOwnBids", $scope.countOfOwnBids);
-
-            for (var i = 0; i < $scope.myBids.length; i++) {
-                for (var j = 0; j < data.length; j++) {
-
-                    if ($scope.myBids[i].bidId === data[j].bidId &&
-                        !$scope.myBids[i].isAccepted &&
-                        !$scope.myBids[i].wasUpdated) {
-
-                        $scope.myBids[i].isAccepted = data[j].isAccepted;
-                        $scope.myBids[i].wasUpdated = true;
-
-                        if ($scope.myBids[i].isAccepted && $scope.myBids[i].freePlaces > 0) {
-                            $scope.myBids[i].freePlaces--;
-                        }
-                    }
-
-                }
-            }
-
-        }).catch(function (error) {
-            throw error.data;
-        });
-    };
-
+    
     $scope.getTrip = function (tripId) {
         $state.go("user.trip", { tripId: tripId }, { reload: false });
     };
+
+    //var getUpdatedOwnBids = function () {
+
+    //    var params = {
+    //        userId: $scope.authentication.userId
+    //    };
+    //    bidsService.getUpdatedOwnBids(params).then(function (data) {
+
+    //        $scope.countOfOwnBids.count = data.length;
+    //        localStorageService.set("countOfOwnBids", $scope.countOfOwnBids);
+
+    //        for (var i = 0; i < $scope.myBids.length; i++) {
+    //            for (var j = 0; j < data.length; j++) {
+
+    //                if ($scope.myBids[i].bidId === data[j].bidId &&
+    //                    !$scope.myBids[i].isAccepted &&
+    //                    !$scope.myBids[i].wasUpdated) {
+
+    //                    $scope.myBids[i].isAccepted = data[j].isAccepted;
+    //                    $scope.myBids[i].wasUpdated = true;
+
+    //                    if ($scope.myBids[i].isAccepted && $scope.myBids[i].freePlaces > 0) {
+    //                        $scope.myBids[i].freePlaces--;
+    //                    }
+    //                }
+
+    //            }
+    //        }
+
+    //    }).catch(function (error) {
+    //        throw error.data;
+    //    });
+    //};
 
     //var promise = $interval(getUpdatedOwnBids, 10000);
 

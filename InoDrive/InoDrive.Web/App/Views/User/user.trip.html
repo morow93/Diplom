@@ -88,11 +88,12 @@
                                     <span ng-if="$index != trip.wayPoints.length - 1">&#8594;</span>
                                 </div>
                             </td>
-
                         </tr>
                         <tr>
                             <td><b>Cвободных мест:</b></td>
-                            <td ng-bind="trip.freePlaces"></td>
+                            <td ng-if="trip.freePlaces != trip.totalPlaces && trip.freePlaces != 0">{{trip.freePlaces}} из {{trip.totalPlaces}}</td>
+                            <td ng-if="trip.freePlaces == trip.totalPlaces">{{trip.freePlaces}} (все)</td>
+                            <td ng-if="trip.freePlaces == 0">Нет</td>
                         </tr>
                         <tr>
                             <td><b>Дата отправления:</b></td>

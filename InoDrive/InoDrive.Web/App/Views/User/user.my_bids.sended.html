@@ -10,16 +10,16 @@
         </div>
     </div>
 </div>
-<div ng-if="firstLoad">    
 
-    <div style="padding-top:20px;">
+<div ng-if="firstLoad">    
+    <div style="padding-top:20px;" ng-if="!totalEmptyResults">
         <hr class="no-margin" />
         <div class="row">
             <div class="col-xs-7">
                 <div class="checkbox checkbox-primary">
                     <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer" ng-change="update(showEnded)">
                     <label for="showEnded">
-                        <b>Показывать завершенные</b>
+                        <b>Не только активные</b>
                     </label>
                 </div>
             </div>
@@ -74,7 +74,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12 contrast-color">
-                                        {{bid.leavingDate | date:"dd/MM/yyyy"}}
+                                        Дата поездки: {{bid.leavingDate | date:"dd/MM/yyyy"}} <br />
+                                        Дата размещения заявки: {{bid.creationDate | date:"dd/MM/yyyy"}}
                                     </div>
                                 </div>
                             </div>

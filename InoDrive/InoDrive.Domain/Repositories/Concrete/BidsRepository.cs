@@ -22,43 +22,33 @@ namespace InoDrive.Domain.Repositories.Concrete
 
         private InoDriveContext _ctx;
 
-        //#region Section of requests for updating counters, bids
+        #region Section of requests for updating counters, bids
 
-        ///// <summary>
-        ///// Get count of unwatched bids owned current user
-        ///// </summary>
-        ///// <param name="model">user id</param>
-        ///// <returns></returns>
-        //public Int32 GetCountOfOwnBids(ShortUserModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        return user.Bids.Count(b => b.IsAccepted != null && !b.IsWatchedByOwnerUser);
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public Int32 GetCountOfOwnBids(ShortUserModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                return user.Bids.Count(b => b.IsAccepted != null && !b.IsWatchedBySender);
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
-        ///// <summary>
-        ///// Get count of unwatched assigned bids of all trips owned current user
-        ///// </summary>
-        ///// <param name="model">user id</param>
-        ///// <returns></returns>
-        //public Int32 GetCountOfAssignedBids(ShortUserModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        return user.Trips.SelectMany(t => t.Bids).Count(b => b.IsAccepted == null);
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public Int32 GetCountOfAssignedBids(ShortUserModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                return user.Trips.SelectMany(t => t.Bids).Count(b => b.IsAccepted == null);
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
         ///// <summary>
         ///// Get unwatched rejected or accepted bids owned current user
@@ -190,7 +180,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                 var page = Math.Max(model.Page, 1);
                 IQueryable<Bid> bids;
 
-                if (model.FromId != null)
+                if (model.FromId != null && model.FromId != 0)
                 {
                     bids =
                         user.
@@ -277,7 +267,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                 }
                 else
                 {
-                    waitedBids = user.Bids.Where(b => b.Trip.EndDate >= DateTimeOffset.Now).ToList<Bid>();
+                    waitedBids = user.Bids.Where(b => b.Trip.EndDate >= DateTimeOffset.Now && !b.Trip.IsDeleted && b.IsAccepted == null).ToList<Bid>();
                 }
                 var totalCount = waitedBids.Count();
 
