@@ -959,3 +959,49 @@ img-crop > canvas {
     min-width: 750px !important; margin-top: 100px !important;
 }
 /*Crop end*/
+
+/*Another*/
+.indicators-users{
+    margin: 18px 0px;
+
+}
+#map_canvas{
+    height: 400px;
+}
+.trip-data-table{
+    margin-bottom: 10px;
+}
+.user-trip-xxx{
+    padding-bottom: 25px;
+}
+.sidebar-signup{
+    margin-top: 5px; 
+    margin-bottom: 15px;
+}
+
+.sidebar-signin{
+    margin-top: 15px; 
+    margin-bottom: 5px;
+}
+
+.user-indicator {
+    border-radius: 45px;
+    border: none;
+    width: 55px;
+    height: 55px;
+    margin: 0px;
+    padding: 0px;
+}
+.user-circle {
+    width: 55px; 
+    height: 55px;
+}
+.show-route-info{
+    margin-top: 20px;
+}
+.bordered-directions{
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 20px;
+}

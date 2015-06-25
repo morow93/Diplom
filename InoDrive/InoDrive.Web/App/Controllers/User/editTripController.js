@@ -289,8 +289,8 @@ app.controller('editTripController', function ($scope, $timeout, $upload, $state
         if (file != null) {
             if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
 
-                if (file.size > 4 * 1024 * 1024) {
-                    $scope.fileErrorMsg = "Файл должен быть не больше 4MB!";
+                if (file.size > 2 * 1024 * 1024) {
+                    $scope.fileErrorMsg = "Файл должен быть не больше 2MB!";
                 } else {
                     $scope.file = file;
                     $scope.wasFileChanged = true;

@@ -1,10 +1,5 @@
 ﻿"use strict";
-angular.module("InoDrive").controller("changePasswordController", function (
-    $scope,
-    $stateParams,
-    $state,
-    $alert,
-    authService) {
+angular.module("InoDrive").controller("changePasswordController", function ($scope, $stateParams, $state, $alert, customStorageService, authService) {
 
     //$scope.resetPassword = {};
 
@@ -19,14 +14,11 @@ angular.module("InoDrive").controller("changePasswordController", function (
 
             authService.changePassword($scope.resetPassword).then(function (results) {
 
-                $scope.showAlert({
-                    title: "Поздравляем! Пароль был успешно изменен!",
-                    content: "",
-                    type: "info",
-                    show: false,
-                    container: ".form-alert"
-                    , template: "/app/templates/alert.html"
+                customStorageService.set("notifyToShow", {
+                    message: 'Поздравляем! Пароль был успешно изменен!',
+                    type: 'success',
                 });
+                $state.go("user.view", null, { reload: true });
 
             }).catch(function (results) {
 

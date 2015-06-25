@@ -15,10 +15,12 @@ angular.module('InoDrive').controller('tripController', function (
     ngAuthSettings) {
 
     $scope.carsFolder = "images/cars/";
-    $scope.noCarImage = ngAuthSettings.clientAppBaseUri + "images/no-car.png";
+    $scope.avatarsFolder = "images/avatars/";
+    $scope.noCarImage = ngAuthSettings.clientAppBaseUri + "content/images/no-car.png";
+    $scope.noAvatarImage = ngAuthSettings.clientAppBaseUri + "content/images/no-avatar.jpg";
     $scope.fullCarsFolder = ngAuthSettings.apiServiceBaseUri + $scope.carsFolder;
+    $scope.fullAvatarsFolder = ngAuthSettings.apiServiceBaseUri + $scope.avatarsFolder;
 
-    $scope.needHideBidButton = true;
     $scope.addBidFlag = false;
 
     $scope.getPercentageRating = function () {
@@ -57,12 +59,6 @@ angular.module('InoDrive').controller('tripController', function (
 
             tripsService.getTrip(params).then(function (trip) {
 
-                if ($scope.authentication) {
-                    if ($scope.authentication.userId != trip.userId) {
-                        $scope.needHideBidButton = false;
-                    }
-                }
-
                 if (trip.carImage) {
 
                     var fullPathToFile = ngAuthSettings.apiServiceBaseUri + $scope.carsFolder + trip.carImage;
@@ -84,37 +80,44 @@ angular.module('InoDrive').controller('tripController', function (
                 }
 
                 $scope.trip = trip;
-                debugger;
-                $scope.curPath = [];
-                $scope.curPath.push(new WayPoint(trip.originPlace.lat, trip.originPlace.lng, 0));
-                if (trip.wayPoints) {
-                    for (var i = 0; i < trip.wayPoints.length; i++) {
-                        var wp = trip.wayPoints[i];
-                        $scope.curPath.push(new WayPoint(wp.lat, wp.lng, i + 1));
-                    }
-                }
-                $scope.curPath.push(new WayPoint(trip.destinationPlace.lat, trip.destinationPlace.lng, i + 1));
 
-                $scope.p =
-                {
-                    id: 2,
-                    path: $scope.curPath,
-                    stroke: {
-                        color: '#6060FB',
-                        weight: 3
-                    },
-                    editable: false,
-                    draggable: false,
-                    geodesic: true,
-                    visible: true
-                };
-                $scope.map = {
-                    center: {
-                        lat: trip.originPlace.lat, lng: trip.originPlace.lng
-                    },
+                var waypts = [];
+                for (var i = 0; i < trip.wayPoints.length; i++) {
+                    waypts.push({
+                        location: new google.maps.LatLng(trip.wayPoints[i].lat, trip.wayPoints[i].lng),
+                        stopover: true
+                    });
+                }
+
+                var directionsDisplay = new google.maps.DirectionsRenderer({ draggable: true });
+                var directionsService = new google.maps.DirectionsService();
+                var map;
+
+                var myOptions = {
                     zoom: 10,
-                    bounds: {}
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: new google.maps.LatLng(trip.originPlace.lat, trip.originPlace.lng)
                 };
+
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+                var request = {
+                    origin: new google.maps.LatLng(trip.originPlace.lat, trip.originPlace.lng),
+                    destination: new google.maps.LatLng(trip.destinationPlace.lat, trip.destinationPlace.lng),
+                    travelMode: google.maps.TravelMode["DRIVING"]
+                };
+                if (waypts.length > 0) request.waypoints = waypts;
+
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+
+                        directionsDisplay.setMap(map);
+                        directionsDisplay.setPanel(document.getElementById("directions"));
+                        directionsDisplay.setDirections(response);
+
+                    }
+                });
+      
 
             }).catch(function (error) {
                 //neederror
@@ -160,12 +163,6 @@ angular.module('InoDrive').controller('tripController', function (
         image.src = src;
 
         return deferred.promise;
-    };
-
-    function WayPoint(latitude, longitude, id) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.id = id;
     };
 
     $scope.getTrip();

@@ -100,53 +100,19 @@ namespace InoDrive.Domain.Repositories.Concrete
                 }
             }
 
-            var result = new OutputTripModel
+            var result = Mapper.Map<Trip, OutputTripModel>(trip);
+            
+            result.IsBidded = isBidded;
+            result.UserIndicators.Add(new UserIndicator
             {
-                TripId = model.TripId,
+                AvatarImage = trip.User.AvatarImage,
+                FirstName = trip.User.FirstName,
+                LastName = trip.User.LastName,
                 UserId = trip.UserId,
-                Initials = trip.User.FirstName + " " + trip.User.LastName,
-                OriginPlace = new PlaceModel
-                {
-                    PlaceId = trip.OriginPlaceId,
-                    Name = trip.OriginPlace.Name,
-                    Lat = trip.OriginPlace.Latitude,
-                    Lng = trip.OriginPlace.Longitude
-                },
-                DestinationPlace = new PlaceModel
-                {
-                    PlaceId = trip.DestinationPlaceId,
-                    Name = trip.DestinationPlace.Name,
-                    Lat = trip.DestinationPlace.Latitude,
-                    Lng = trip.DestinationPlace.Longitude
-                },
-                LeavingDate = trip.LeavingDate,
-                CreationDate = trip.CreationDate,
-                Car = trip.Car,
-                CarImage = trip.CarImage,
-                TotalPlaces = trip.PeopleCount,
-                FreePlaces = trip.PeopleCount - trip.Bids.Count(b => b.IsAccepted == true),
-                Pay = trip.Pay,
-                IsBidded = isBidded,
-                IsEnded = trip.EndDate < DateTimeOffset.Now,
-                WayPoints = trip.WayPoints.OrderBy(w => w.WayPointIndex).Select(wp => new PlaceModel { 
-                    PlaceId = wp.PlaceId, 
-                    Name = wp.Place.Name,
-                    Lat = wp.Place.Latitude,
-                    Lng = wp.Place.Longitude
-                }).ToList<PlaceModel>(),
-                UserIndicators = trip.Bids.Where(b => b.IsAccepted == true).Select(ui => new UserIndicator
-                {
-                    UserId = ui.UserId,
-                    AvatarImage = ui.User.AvatarImage,
-                    FirstName = ui.User.FirstName,
-                    LastName = ui.User.LastName,
-                    WasTriped =
-                        (ui.User.Trips.Any(t => !t.IsDeleted && t.EndDate < DateTimeOffset.Now) ||
-                        ui.User.Bids.Any(b => b.IsAccepted == true && b.Trip.EndDate < DateTimeOffset.Now))
-
-                }).ToList<UserIndicator>()
-
-            };
+                WasTriped =
+                    (trip.User.Trips.Any(t => !t.IsDeleted && t.EndDate < DateTimeOffset.Now) ||
+                    trip.User.Bids.Any(b => b.IsAccepted == true && b.Trip.EndDate < DateTimeOffset.Now))
+            });
 
             return result;
        

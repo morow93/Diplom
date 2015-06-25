@@ -1,10 +1,5 @@
 ﻿"use strict";
-angular.module("InoDrive").controller("changeEmailController", function (
-    $scope,
-    $stateParams,
-    $state,
-    $alert,
-    authService) {
+angular.module("InoDrive").controller("changeEmailController", function ($scope, $stateParams, $state, $alert, customStorageService, authService) {
 
     //$scope.resetEmail = {};
 
@@ -19,14 +14,11 @@ angular.module("InoDrive").controller("changeEmailController", function (
 
             authService.changeEmail($scope.resetEmail).then(function (results) {
 
-                $scope.showAlert({
-                    title: "Поздравляем! Email был успешно изменен!",
-                    content: "",
-                    type: "info",
-                    show: false,
-                    container: ".form-alert"
-                    , template: "/app/templates/alert.html"
+                customStorageService.set("notifyToShow", {
+                    message: 'Поздравляем! Email был успешно изменен!',
+                    type: 'success',
                 });
+                $state.go("user.view");
 
             }).catch(function (results) {
 
