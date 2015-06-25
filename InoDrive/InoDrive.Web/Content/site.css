@@ -1039,3 +1039,7 @@ img-crop > canvas {
     margin: 0px; 
     margin-top: 20px;
 }
+.bid-indicator {
+    background-color: #FFFFB2 !important;
+    cursor: pointer !important;
+}

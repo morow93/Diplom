@@ -86,10 +86,10 @@
     };
 
     $scope.watchBid = function (bidId, index) {
-
-        debugger;
-
-        if (!$scope.myBids[index].isWatched) {
+        
+        console.log('was on ' + bidId + ' bid');
+        
+        if (!$scope.myBids[index].isWatched && ($scope.myBids[index].isAccepted != null)) {
 
             $scope.myBids[index].isWatched = true;
 
@@ -97,6 +97,7 @@
                 userOwnerId: $scope.authentication.userId,
                 bidId: bidId
             };
+
             bidsService.watchBid(params).then(function (data) {
 
                 $scope.countOfOwnBids.count -= 1;

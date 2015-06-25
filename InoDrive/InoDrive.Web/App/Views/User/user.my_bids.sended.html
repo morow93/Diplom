@@ -13,25 +13,25 @@
 <div ng-if="firstLoad">    
 
     <div style="padding-top:20px;">
-            <hr class="no-margin" />
-            <div class="row">
-                <div class="col-xs-7">
-                    <div class="checkbox checkbox-primary">
-                        <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer" ng-change="update(showEnded)">
-                        <label for="showEnded">
-                            <b>Показывать завершенные</b>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xs-5 text-right">
-                    <div class="total-trip-count">
-                        <b ng-if="showTotalCount">Заявок: {{totalCount}}</b>
-                    </div>
+        <hr class="no-margin" />
+        <div class="row">
+            <div class="col-xs-7">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer" ng-change="update(showEnded)">
+                    <label for="showEnded">
+                        <b>Показывать завершенные</b>
+                    </label>
                 </div>
             </div>
-            <hr class="no-margin user-hr-top" />
+            <div class="col-xs-5 text-right">
+                <div class="total-trip-count">
+                    <b ng-if="showTotalCount">Заявок: {{totalCount}}</b>
+                </div>
+            </div>
         </div>
-
+        <hr class="no-margin user-hr-top" />
+    </div>
+    
     <div ng-show="myBids && myBids.length > 0">
         <div data-infinite-scroll='getPageOfBids()'
              data-infinite-scroll-distance='0'
@@ -39,23 +39,7 @@
              data-infinite-scroll-immediate-check="false">
             <div ng-repeat="bid in myBids track by $index">
 
-                <!--ng-mouseenter="watchBid(bid.bidId, $index)" style="cursor: pointer;" ng-class="{'grey-background': bid.isEnded, 'brown': !bid.isWatched && bid.isAccepted != null }"-->
-                <!--<div ng-if="!bid.wasTripDeleted"
-                     class="btn-group btn-group-justified pull-right"
-                     role="group">
-                    <div class="btn-group" role="group">
-                        <a data-ui-sref="trip_details({ tripId:bid.tripId })"
-                           class="btn btn-xs btn-primary">
-                            Подробнее
-                        </a>
-                    </div>
-                </div>
-                <div ng-if="bid.wasTripDeleted"
-                     class="text-right pull-right">
-                    <b>Поездка была удалена</b>
-                </div>-->
-
-                <div class="short-trip">
+                <div class="short-trip" ng-class="{'bid-indicator': !bid.isWatched && bid.isAccepted != null }" ng-mouseenter="watchBid(bid.bidId, $index)">
 
                     <div class="row">
                         <div class="col-xs-12">
@@ -139,7 +123,7 @@
                             <div class="trip-places light-background">
                                 <div class="row">
                                     <div class="col-xs-7 contrast-color">
-                                       Поездка завершена
+                                        Поездка завершена
                                     </div>
                                     <div class="col-xs-5 text-right">
                                         <a href="javascript:void(0)" class="typical-link" ng-click="getTrip(bid.tripId)">Подробнее</a>
