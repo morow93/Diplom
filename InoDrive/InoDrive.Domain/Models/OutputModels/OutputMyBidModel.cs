@@ -20,5 +20,7 @@ namespace InoDrive.Domain.Models.OutputModels
         public Boolean? IsAccepted { get; set; }//null -> in the consideration, true -> accepted, false -> rejected
         public Boolean IsWatched { get; set; }
         public Boolean WasTripDeleted { get; set; }
+        public Boolean IsEnded { get; set; }
+        public Boolean IsDeleted { get; set; }
     }
 }

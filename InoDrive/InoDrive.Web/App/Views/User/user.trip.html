@@ -44,7 +44,7 @@
                                     ng-if="trip.userId != authentication.userId && !trip.isEnded && !trip.isBidded">
                                 Занять место
                             </button>
-                            <button class="btn btn-primary btn-sm full-width" ng-if="trip.isBidded" disabled>
+                            <button class="btn btn-primary btn-sm full-width" ng-if="trip.isBidded && !trip.isEnded" disabled>
                                 Заявка отправлена
                             </button>
                             <button class="btn btn-primary btn-sm full-width" disabled
@@ -193,7 +193,7 @@
             <div id="directions"></div>
         </div>
 
-        <div class="form-block" style="margin: 0px; margin-top: 20px;">
+        <div class="form-block form-block-comment">
             <div class="row">
                 <div class="col-xs-8">
                     <div class="trip-sub-title">

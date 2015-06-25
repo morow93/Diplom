@@ -1,17 +1,14 @@
-﻿angular.module('InoDrive').controller('sendedBidsController', function ($scope) {
-
-    $scope.endedBidsTooltip =
-   {
-       title: 'Завершенные поездки окрашены в серый цвет!',
-       checked: false
-   };
+﻿angular.module('InoDrive').controller('sendedBidsController', function ($scope, $state, $interval, bidsService) {
 
     $scope.loading = false;
-    $scope.showOption = true;
+    $scope.showEnded = true;
 
     $scope.update = function (val) {
         $scope.page = 1;
         $scope.myBids = null;
+        $scope.showEnded = val;
+        $scope.showTotalCount = false;
+        $scope.countExcluded = 0;
         $scope.getPageOfBids();
     };
 
@@ -35,51 +32,63 @@
             page: $scope.page,
             perPage: $scope.perPage,
             userId: $scope.authentication.userId,
-            showEnded: !$scope.showOption
+            showEnded: $scope.showEnded
 
-        }).then(function (data) {
+        }).then(function (response) {
 
-            $scope.loading = false;
-            if (data.totalCount != 0) {
-                $scope.wasLoading = true;
-            }
+            if (response.results && response.results.length > 0 && response.totalCount > 0) {
 
-            if (!data.myBids || data.myBids.length == 0) {
-                $scope.emptyResult = true;
-                $scope.initiatedFind = false;
+                $scope.totalCount = response.totalCount;
+                $scope.showTotalCount = true;
+                $scope.firstLoad = true;
+
+                if ($scope.myBids) {
+                    for (var i = 0; i < response.results.length; i++) {
+                        $scope.myBids.push(response.results[i]);
+                    }
+                } else {
+                    $scope.myBids = response.results;
+                }
+
+                var totalPages = Math.ceil(($scope.totalCount + $scope.countExcluded) / $scope.perPage);
+                if (++$scope.page > totalPages) {
+                    $scope.emptyResults = true;
+                } else {
+                    $scope.emptyResults = false;
+                }
+
             } else {
+                $scope.emptyResults = true;
+                if ($scope.page == 1) {
+                    $scope.totalEmptyResults = true;
+                }
+                $scope.totalCount = 0;
+            }
+            
+            if (response.results && response.results.length > 0) {
                 var nowDate = new Date();
-                for (var j = 0; j < data.myBids.length; j++) {
-                    if (new Date(data.myBids[j].leavingDate) < nowDate) {
-                        data.myBids[j].ended = true;
+                for (var j = 0; j < response.results.length; j++) {
+                    if (new Date(response.results[j].endDate) < nowDate) {
+                        response.results[j].ended = true;
                     }
                 }
             }
 
-            if ($scope.myBids) {
-                for (var i = 0; i < data.myBids.length; i++) {
-                    $scope.myBids.push(data.myBids[i]);
-                }
-            } else {
-                $scope.myBids = data.myBids;
-            }
-
-            $scope.wasRequested = true;
-
-            ++$scope.page;
-            $scope.totalPages = Math.ceil(data.totalCount / $scope.perPage);
-            if ($scope.page > $scope.totalPages) $scope.emptyResult = true;
-            $scope.totalCount = data.totalCount;
-
         }).catch(function (error) {
-            throw error.data;
+
+            //neederror
+
         }).finally(function () {
             $scope.loading = false;
+            $scope.firstLoad = true;
             $scope.triggerFind = false;
         });
     };
 
     $scope.watchBid = function (bidId, index) {
+
+        debugger;
+
         if (!$scope.myBids[index].isWatched) {
 
             $scope.myBids[index].isWatched = true;
@@ -120,6 +129,7 @@
 
             for (var i = 0; i < $scope.myBids.length; i++) {
                 for (var j = 0; j < data.length; j++) {
+
                     if ($scope.myBids[i].bidId === data[j].bidId &&
                         !$scope.myBids[i].isAccepted &&
                         !$scope.myBids[i].wasUpdated) {
@@ -131,6 +141,7 @@
                             $scope.myBids[i].freePlaces--;
                         }
                     }
+
                 }
             }
 
@@ -139,15 +150,18 @@
         });
     };
 
-    var promise = $interval(getUpdatedOwnBids, 10000);
+    $scope.getTrip = function (tripId) {
+        $state.go("user.trip", { tripId: tripId }, { reload: false });
+    };
 
-    $scope.$on('$destroy', function () {
-        if (angular.isDefined(promise)) {
-            $interval.cancel(promise);
-            promise = undefined;
-        }
-    });
+    //var promise = $interval(getUpdatedOwnBids, 10000);
 
-    //$scope.getPageOfBids();
+    //$scope.$on('$destroy', function () {
+    //    if (angular.isDefined(promise)) {
+    //        $interval.cancel(promise);
+    //        promise = undefined;
+    //    }
+    //});
 
+    $scope.getPageOfBids();
 });

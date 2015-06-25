@@ -277,7 +277,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                 }
                 else
                 {
-                    waitedBids = user.Bids.Where(b => b.Trip.EndDate < DateTimeOffset.Now).ToList<Bid>();
+                    waitedBids = user.Bids.Where(b => b.Trip.EndDate >= DateTimeOffset.Now).ToList<Bid>();
                 }
                 var totalCount = waitedBids.Count();
 
@@ -317,7 +317,9 @@ namespace InoDrive.Domain.Repositories.Concrete
 
                         IsAccepted = b.IsAccepted,
                         IsWatched = b.IsWatchedBySender,
-                        WasTripDeleted = b.Trip.IsDeleted
+                        WasTripDeleted = b.Trip.IsDeleted,
+                        IsEnded = b.Trip.EndDate < DateTimeOffset.Now,
+                        IsDeleted = b.Trip.IsDeleted
                     })
                     .OrderByDescending(d => d.CreationDate)
                     .Skip(model.PerPage * (page - 1)).Take(model.PerPage)

@@ -1,7 +1,6 @@
-﻿
-<div class="row" ng-if="tripsType == 'passenger'">
+﻿<div class="row bids-loader" ng-if="!firstLoad">
     <div class="col-xs-12">
-        <div class="loading-wrapper">
+        <div class="loading-wrapper loading-block no-margin">
             <div class="loading-icon">
                 <i class="fa fa-refresh fa-spin fa-2x"></i>
             </div>
@@ -11,241 +10,188 @@
         </div>
     </div>
 </div>
+<div ng-if="firstLoad">    
 
-<div class="row" ng-if="tripsType == 'driver'">
-    <div class="col-xs-12">
-        <div class="loading-wrapper">
-            <div class="loading-icon">
-                <i class="fa fa-info-circle fa-2x"></i>
-            </div>
-            <div class="loading-text">
-                <span class="contrast-color">Нет поездок!</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div style="padding-top:20px;">
-    <hr class="no-margin"/>
-    <div class="row">
-        <div class="col-xs-7">
-            <div class="checkbox checkbox-primary">
-                <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer">
-                <label for="showEnded">
-                    <b>Показывать завершенные</b>
-                </label>
-            </div>
-        </div>
-        <div class="col-xs-5 text-right">
-            <div class="total-trip-count">
-                <b>Заявок: 55</b>
-            </div>
-        </div>
-    </div>
-    <hr class="no-margin user-hr-top" />
-</div>
-
-<div class="list-trips">
-
-    <div class="short-trip">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="user-trip-header">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="javascript:void(0)" class="typical-link">
-                                <span class="user-trip-driver">Чепурной Александр</span>
-                            </a>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <b style="color: #47B2B2; ">Завка в рассмотрении <i class="fa fa-info-circle"></i></b>
-                        </div>
+    <div style="padding-top:20px;">
+            <hr class="no-margin" />
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="checkbox checkbox-primary">
+                        <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer" ng-change="update(showEnded)">
+                        <label for="showEnded">
+                            <b>Показывать завершенные</b>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-5 text-right">
+                    <div class="total-trip-count">
+                        <b ng-if="showTotalCount">Заявок: {{totalCount}}</b>
                     </div>
                 </div>
             </div>
+            <hr class="no-margin user-hr-top" />
         </div>
 
+    <div ng-show="myBids && myBids.length > 0">
+        <div data-infinite-scroll='getPageOfBids()'
+             data-infinite-scroll-distance='0'
+             data-infinite-scroll-disabled='emptyResults'
+             data-infinite-scroll-immediate-check="false">
+            <div ng-repeat="bid in myBids track by $index">
 
-        <div class="trip-padding">
+                <!--ng-mouseenter="watchBid(bid.bidId, $index)" style="cursor: pointer;" ng-class="{'grey-background': bid.isEnded, 'brown': !bid.isWatched && bid.isAccepted != null }"-->
+                <!--<div ng-if="!bid.wasTripDeleted"
+                     class="btn-group btn-group-justified pull-right"
+                     role="group">
+                    <div class="btn-group" role="group">
+                        <a data-ui-sref="trip_details({ tripId:bid.tripId })"
+                           class="btn btn-xs btn-primary">
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
+                <div ng-if="bid.wasTripDeleted"
+                     class="text-right pull-right">
+                    <b>Поездка была удалена</b>
+                </div>-->
 
-            <div class="row">
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                <div class="short-trip">
+
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="trip-points">
-                                Таганрог, Ростовская область &#8594;
-                                Ростов-на-Дону, Ростовская область &#8594;
-                                Москва, Московская область &#8594;
-                                Санкт-Петербург
+                            <div class="user-trip-header">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <a href="javascript:void(0)" class="typical-link">
+                                            <span class="user-trip-driver">{{bid.userOwner.firstName}} {{bid.userOwner.lastName}}</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <b style="color: #47B2B2;" ng-show="bid.isAccepted == null">Заявка в рассмотрении <i class="fa fa-info-circle"></i></b>
+                                        <b style="color: #00B800;" ng-show="bid.isAccepted == true">Заявка одобрена <i class="fa fa-check-circle"></i></b>
+                                        <b style="color: #FF6666;" ng-show="bid.isAccepted == false">Завка отклонена <i class="fa fa-times-circle"></i></b>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 contrast-color">
-                            07/07/2015
+
+                    <div class="trip-padding">
+
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="trip-points">
+                                            {{bid.originPlace.name}} &#8594;
+                                            {{bid.destinationPlace.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 contrast-color">
+                                        {{bid.leavingDate | date:"dd/MM/yyyy"}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                <div class="trip-price" ng-if="bid.pay > 0">
+                                    <span class="trip-price-title">
+                                        <span ng-bind="bid.pay"></span> руб.
+                                    </span><br />
+                                    <span class="contrast-color">с человека</span>
+                                </div>
+                                <div class="trip-price" ng-if="bid.pay == 0">
+                                    <span class="trip-price-title">Бесплатная</span><br />
+                                    <span class="contrast-color">поездка</span>
+                                </div>
+                                <div class="trip-price" ng-if="bid.pay == null">
+                                    <span class="trip-price-title">Договорная</span><br />
+                                    <span class="contrast-color">цена</span>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                    <div class="trip-price">
-                        <span class="trip-price-title">10000 руб.</span><br />
-                        <span class="contrast-color">с человека</span>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="trip-places">
-                    <div class="row">
-                        <div class="col-xs-7 contrast-color">
-                            <span>Осталось свободных мест: 10</span>
-                        </div>
-                        <div class="col-xs-5 text-right">
-                            <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="short-trip">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="user-trip-header">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="javascript:void(0)" class="typical-link">
-                                <span class="user-trip-driver">Чепурной Александр</span>
-                            </a>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <b style="color: #00B800; ">Заявка одобрена <i class="fa fa-check-circle"></i></b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="trip-padding">
-
-            <div class="row">
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                    <div class="row">
+                    <div class="row" ng-if="!bid.isDeleted && !bid.isEnded">
                         <div class="col-xs-12">
-                            <div class="trip-points">
-                                Таганрог, Ростовская область &#8594;
-                                Ростов-на-Дону, Ростовская область &#8594;
-                                Москва, Московская область &#8594;
-                                Санкт-Петербург
+                            <div class="trip-places">
+                                <div class="row">
+                                    <div class="col-xs-7 contrast-color">
+                                        <span ng-show="bid.freePlaces == 0">
+                                            Свободных мест нет!
+                                        </span>
+                                        <span ng-show="bid.freePlaces != 0">
+                                            Осталось свободных мест: {{bid.freePlaces}}
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-5 text-right">
+                                        <a href="javascript:void(0)" class="typical-link" ng-click="getTrip(bid.tripId)">Подробнее</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 contrast-color">
-                            07/07/2015
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                    <div class="trip-price">
-                        <span class="trip-price-title">Бесплатная</span><br />
-                        <span class="contrast-color">поездка</span>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="trip-places light-background">
-                    <div class="row">
-                        <div class="col-xs-7 contrast-color">
-                            <span>Поездка завершена</span>
-                        </div>
-                        <div class="col-xs-5 text-right">
-                            <a href="javascript:void(0)" class="typical-link">Подробнее</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="short-trip">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="user-trip-header">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="javascript:void(0)" class="typical-link">
-                                <span class="user-trip-driver">Чепурной Александр</span>
-                            </a>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <b style="color: #FF6666;">Завка отклонена <i class="fa fa-times-circle"></i></b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="trip-padding">
-
-            <div class="row">
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-                    <div class="row">
+                    <div class="row" ng-if="!bid.isDeleted && bid.isEnded">
                         <div class="col-xs-12">
-                            <div class="trip-points">
-                                Таганрог, Ростовская область &#8594;
-                                Ростов-на-Дону, Ростовская область &#8594;
-                                Москва, Московская область &#8594;
-                                Санкт-Петербург
+                            <div class="trip-places light-background">
+                                <div class="row">
+                                    <div class="col-xs-7 contrast-color">
+                                       Поездка завершена
+                                    </div>
+                                    <div class="col-xs-5 text-right">
+                                        <a href="javascript:void(0)" class="typical-link" ng-click="getTrip(bid.tripId)">Подробнее</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 contrast-color">
-                            07/07/2015
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
-                    <div class="trip-price">
-                        <span class="trip-price-title">Договорная</span><br />
-                        <span class="contrast-color">цена</span>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="trip-places light-background">
-                    <div class="row">
-                        <div class="col-xs-7 contrast-color">
-                            <span>Поездка завершена</span>
-                        </div>
-                        <div class="col-xs-5 text-right">
-                            <a href="javascript:void(0)" class="typical-link">Подробнее</a>
+                    <div class="row" ng-if="bid.isDeleted">
+                        <div class="col-xs-12">
+                            <div class="trip-places light-background">
+                                <div class="row">
+                                    <div class="col-xs-7 contrast-color">
+                                        Поездка удалена
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </div>
-
     </div>
+
+    <div class="row bids-loader" ng-if="firstLoad && loading">
+        <div class="col-xs-12">
+            <div class="loading-wrapper loading-block no-margin">
+                <div class="loading-icon">
+                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+                </div>
+                <div class="loading-text">
+                    <span class="contrast-color">Пожалуйста, подождите...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" ng-if="totalEmptyResults">
+        <div class="col-xs-12">
+            <div class="loading-wrapper">
+                <div class="loading-icon">
+                    <i class="fa fa-info-circle fa-2x"></i>
+                </div>
+                <div class="loading-text">
+                    <span class="contrast-color">Нет заявок!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
