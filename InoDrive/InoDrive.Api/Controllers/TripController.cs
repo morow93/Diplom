@@ -265,6 +265,22 @@ namespace InoDrive.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize]
+        [Route("AddComment")]
+        public IHttpActionResult AddComment(InpuCommentModel model)
+        {
+            try
+            {
+                _repo.AddComment(model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }    
+
         #region Private functions
 
         private MultipartFormDataStreamProvider GetMultipartProvider()

@@ -14,6 +14,7 @@ angular.module('InoDrive').controller('tripController', function (
     //bidsService,
     ngAuthSettings) {
 
+    $scope.comment = { title: "", vote: 0 };
     $scope.carsFolder = "images/cars/";
     $scope.avatarsFolder = "images/avatars/";
     $scope.noCarImage = ngAuthSettings.clientAppBaseUri + "content/images/no-car.png";

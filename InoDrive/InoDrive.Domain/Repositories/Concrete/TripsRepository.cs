@@ -621,53 +621,59 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
-        //public void VoteForTrip(VoteTripModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            if (trip.UserId != model.UserId)
-        //            {
-        //                var vote = model.Vote;
-        //                if (vote > 5)
-        //                {
-        //                    vote = 5;
-        //                }
-        //                else if (vote < 1)
-        //                {
-        //                    vote = 1;
-        //                }
+        public void AddComment(InpuCommentModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var trip = _ctx.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip != null)
+                {
+                    if (trip.UserId != model.UserId)
+                    {
+                        var vote = model.Vote;
+                        if (vote > 5)
+                        {
+                            vote = 5;
+                        }
+                        else if (vote < 1)
+                        {
+                            vote = 1;
+                        }
 
-        //                var like = user.Likes.FirstOrDefault(l => l.TripId == model.TripId);
-        //                if (like != null)
-        //                {
-        //                    like.Vote = vote;
-        //                }
-        //                else
-        //                {
-        //                    like = new Like { TripId = model.TripId, Vote = vote };
-        //                    user.Likes.Add(like);
-        //                }
-        //                _ctx.SaveChanges();
-        //            }
-        //            else
-        //            {
-        //                throw new RedirectException("Нельзя проголосовать за свою поездку!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("Такой поездки не существует!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+                        var cm = user.Comments.FirstOrDefault(l => l.TripId == model.TripId);
+                        if (cm != null)
+                        {
+                            cm.Vote = vote;
+                            cm.Title = model.Title;
+                        }
+                        else
+                        {
+                            cm = new Comment 
+                            { 
+                                TripId = model.TripId, 
+                                Vote = vote,
+                                Title = model.Title
+                            };
+                            user.Comments.Add(cm);
+                        }
+                        _ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new RedirectException(AppConstants.ERROR_ADD_COMMENT);
+                    }
+                }
+                else
+                {
+                    throw new RedirectException(AppConstants.TRIP_NOT_FOUND);
+                }
+            }
+            else
+            {
+                throw new RedirectException(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
         #endregion
 

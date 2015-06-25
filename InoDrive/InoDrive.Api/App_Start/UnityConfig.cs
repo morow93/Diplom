@@ -20,6 +20,9 @@ namespace InoDrive.Api
 
             container.RegisterType<InoDriveContext>();
 
+            container.RegisterType<IBidsRepository, BidsRepository>(
+                new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(InoDriveContext)));
+
             container.RegisterType<ITripsRepository, TripsRepository>(
                 new HierarchicalLifetimeManager(), new InjectionConstructor(typeof(InoDriveContext)));
 

@@ -30,8 +30,7 @@ namespace InoDrive.Domain.Repositories.Abstract
         void RemoveTrip(InputManageTripModel model);
         void RecoverTrip(InputManageTripModel model);
         void EditTrip(InputCreateTripModel model);
-
-        //void VoteForTrip(VoteTripModel model);
+        void AddComment(InpuCommentModel model);
 
         #endregion
     }

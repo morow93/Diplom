@@ -5,6 +5,33 @@ app.factory('tripsService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
 
     var tripsServiceFactory = {};
         
+    var apis =
+    [
+        "getTripForEdit",
+        "getCar",
+        "getTrip",
+        "findTrips",
+        "getAllTrips",
+        "getDriverTrips",
+        "getPassengerTrips",
+        "removeTrip",
+        "recoverTrip",
+        "addComment"
+    ];
+
+    //for (var i = 0; i < apis.length; i++) {
+
+    //    var currentApi = apis[i];
+
+    //    tripsServiceFactory[currentApi] = function (params) {
+    //        var promise = $http.post(serviceBase + "api/trips/" + currentApi, params).then(function (response) {
+    //            return response.data;
+    //        });
+    //        return promise;
+    //    };
+
+    //}
+
     var getTripForEdit = function (params) {
         var promise = $http.post(serviceBase + 'api/trips/getTripForEdit', params).then(function (response) {
             return response.data;
@@ -68,6 +95,13 @@ app.factory('tripsService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         return promise;
     };
 
+    var addComment = function (params) {
+        var promise = $http.post(serviceBase + 'api/trips/addComment', params).then(function (response) {
+            return response.data;
+        });
+        return promise;
+    };
+
     tripsServiceFactory.getTripForEdit = getTripForEdit;
     tripsServiceFactory.getCar = getCar;
 
@@ -79,6 +113,7 @@ app.factory('tripsService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
 
     tripsServiceFactory.removeTrip = removeTrip;
     tripsServiceFactory.recoverTrip = recoverTrip;
+    tripsServiceFactory.addComment = addComment;
 
     return tripsServiceFactory;
 

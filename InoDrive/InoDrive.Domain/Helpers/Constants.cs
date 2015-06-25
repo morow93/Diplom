@@ -42,6 +42,6 @@ namespace InoDrive.Domain.Helpers
         public static String PROFILE_EDIT_ERROR             = "Ошибка редактирования профиля!";
         public static String SAME_EMAILS                    = "Старый и новый email'ы не должны совпадать!";
         public static String FIND_TRIPS_ERROR               = "Произошла ошибка при поиске поездок!";
-
+        public static String ERROR_ADD_COMMENT              = "Нельзя проголосовать за свою поездку!";
     }
 }

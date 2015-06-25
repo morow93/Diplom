@@ -1005,3 +1005,30 @@ img-crop > canvas {
     overflow-y: scroll;
     padding: 20px;
 }
+.no-border-radius{
+    border-radius: 0px;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+}
+.pull-rating{
+    float: right;
+    margin-right: 12px;
+}
+.pull-left-error{
+    float: left;
+}
+.form-add-comment{
+    margin-top: 20px; 
+    border: 1px solid #D0D0D0; 
+    border-radius: 3px;
+}
+.def-cur{
+    cursor: default !important;
+}
+.fucking-text{
+    margin-top: 7px; margin-left: 11px;
+}
+.another-fucking-text{
+    margin-top: 3px; margin-left: 12px;
+}

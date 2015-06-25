@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CarModel.cs" />
+    <Compile Include="Models\InputModels\InpuCommentModel.cs" />
     <Compile Include="Models\InputModels\InputConfirmEmailModel.cs" />
     <Compile Include="Models\InputModels\InputCreateTripModel.cs" />
     <Compile Include="Models\InputModels\InputEmailTemplateModel.cs" />
@@ -124,9 +125,11 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstract\IAuthenticationRepository.cs" />
+    <Compile Include="Repositories\Abstract\IBidsRepository.cs" />
     <Compile Include="Repositories\Abstract\ITripsRepository.cs" />
     <Compile Include="Repositories\Abstract\IUsersRepository.cs" />
     <Compile Include="Repositories\Concrete\AuthenticationRepository.cs" />
+    <Compile Include="Repositories\Concrete\BidsRepository.cs" />
     <Compile Include="Repositories\Concrete\TripsRepository.cs" />
     <Compile Include="Repositories\Concrete\UsersRepository.cs" />
   </ItemGroup>
