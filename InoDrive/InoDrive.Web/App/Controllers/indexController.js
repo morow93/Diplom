@@ -1,4 +1,4 @@
-﻿angular.module('InoDrive').controller('indexController', function ($scope, $document, $state, $modal, $timeout, authService, localStorageService) {
+﻿angular.module('InoDrive').controller('indexController', function ($scope, $document, $state, $modal, $timeout, authService, bidsService, localStorageService) {
 
     $scope.isVisibleToTop = false;
 
@@ -41,13 +41,15 @@
 
     $scope.updateCounters = function () {
 
-        if (false && $scope.authentication.isAuth && !$scope.loading) {
+        if ($scope.authentication.isAuth && !$scope.countersLoading) {
 
-            $scope.loading = true;
+            $scope.countersLoading = true;
 
-            if ($state.current.name != 'my_trips.my_bids') {
+            if ($state.current.name != 'user.my_bids.received') {
 
                 bidsService.getCountOfAssignedBids({ userId: $scope.authentication.userId }).then(function (data) {
+
+                    console.log('getCountOfAssignedBids: ' + data.count);
 
                     $scope.countOfAssignedBids = { count: data.count };
                     localStorageService.set("countOfAssignedBids", $scope.countOfAssignedBids);
@@ -62,6 +64,7 @@
 
                 updateSecondCounter();
             }
+
         } else {
 
             $timeout(function () {
@@ -76,16 +79,18 @@
 
         $timeout(function () {
 
-            if ($state.current.name != 'my_bids') {
+            if ($state.current.name != 'user.my_bids.sended') {
 
                 bidsService.getCountOfOwnBids({ userId: $scope.authentication.userId }).then(function (data) {
 
+                    console.log('getCountOfOwnBids: ' + data.count);
+
                     $scope.countOfOwnBids = { count: data.count };
-                    localStorageService.setData("countOfOwnBids", $scope.countOfOwnBids);
+                    localStorageService.set("countOfOwnBids", $scope.countOfOwnBids);
 
                 }).finally(function () {
 
-                    $scope.loading = false;
+                    $scope.countersLoading = false;
                     $timeout(function () {
 
                         $scope.updateCounters();
@@ -96,7 +101,7 @@
 
             } else {
 
-                $scope.loading = false;
+                $scope.countersLoading = false;
                 $timeout(function () {
 
                     $scope.updateCounters();

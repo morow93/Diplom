@@ -17,7 +17,7 @@
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectAllTrips()" data-ui-sref="user.my_bids.sended">
                             <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : isActiveNav('user.my_bids.sended')}">
-                                Отправленные
+                                Отправленные <span ng-if="countOfOwnBids.count > 0">(+{{countOfOwnBids.count}})</span>
                             </div>
                         </a>
 
@@ -26,7 +26,7 @@
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectDriverTrips()" data-ui-sref="user.my_bids.received">
                             <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : isActiveNav('user.my_bids.received')}">
-                                Полученные
+                                Полученные <span ng-if="countOfAssignedBids.count > 0">(+{{countOfAssignedBids.count}})</span>
                             </div>
                         </a>
 

@@ -1,3 +1,4 @@
+E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.csprojResolveAssemblyReference.cache
 E:\Diplom\InoDrive\InoDrive.Api\bin\AutoMapper.Net4.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\InoDrive.Api.dll.config
 E:\Diplom\InoDrive\InoDrive.Api\bin\InoDrive.Api.dll
@@ -27,6 +28,7 @@ E:\Diplom\InoDrive\InoDrive.Api\bin\System.Web.Http.Owin.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\System.Web.Http.WebHost.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\System.Web.Razor.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\Unity.WebApi.dll
+E:\Diplom\InoDrive\InoDrive.Api\bin\System.Linq.Dynamic.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\InoDrive.Domain.pdb
 E:\Diplom\InoDrive\InoDrive.Api\bin\AutoMapper.pdb
 E:\Diplom\InoDrive\InoDrive.Api\bin\AutoMapper.xml
@@ -54,7 +56,5 @@ E:\Diplom\InoDrive\InoDrive.Api\bin\System.Web.Http.WebHost.xml
 E:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Net.Http.Formatting.resources.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Web.Http.resources.dll
 E:\Diplom\InoDrive\InoDrive.Api\bin\ru\System.Web.Http.WebHost.resources.dll
-E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.csprojResolveAssemblyReference.cache
 E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.dll
 E:\Diplom\InoDrive\InoDrive.Api\obj\Debug\InoDrive.Api.pdb
-E:\Diplom\InoDrive\InoDrive.Api\bin\System.Linq.Dynamic.dll

@@ -28,6 +28,7 @@
                data-ui-sref="user.my_bids.sended"
                class="page-nav-link">
                 Мои заявки
+                <span ng-if="countOfOwnBids.count > 0 || countOfAssignedBids.count > 0">(+{{countOfOwnBids.count + countOfAssignedBids.count}})</span>
             </a>           
             <a ng-class="{'page-nav-link-active': isActiveInherited('user.settings'), 'page-nav-link-hover': hover}"
                ng-mouseenter="hover = true"

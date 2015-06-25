@@ -25,7 +25,7 @@
     <div ng-show="bidsForMyTrips && bidsForMyTrips.length > 0">
         <div data-infinite-scroll='getPageOfBids()'
              data-infinite-scroll-distance='0'
-             data-infinite-scroll-disabled='emptyResult'
+             data-infinite-scroll-disabled='emptyResults'
              data-infinite-scroll-immediate-check="false">
             <div ng-repeat="bid in bidsForMyTrips"
                  class="user-bids">
@@ -122,6 +122,19 @@
 
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="firstLoad && loading">
+        <div class="col-xs-12">
+            <div class="loading-wrapper loading-block no-margin">
+                <div class="loading-icon">
+                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+                </div>
+                <div class="loading-text">
+                    <span class="contrast-color">Пожалуйста, подождите...</span>
+                </div>
             </div>
         </div>
     </div>

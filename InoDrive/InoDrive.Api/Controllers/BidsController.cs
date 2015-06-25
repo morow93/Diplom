@@ -1,4 +1,5 @@
 ﻿using InoDrive.Domain;
+using InoDrive.Domain.Models;
 using InoDrive.Domain.Models.InputModels;
 using InoDrive.Domain.Repositories.Abstract;
 using System;
@@ -22,79 +23,38 @@ namespace InoDrive.Api.Controllers
 
         #region Section of requests for updating counters, bids
 
-        //[HttpPost]
-        //[Authorize]
-        //[Route("GetCountOfOwnBids")]
-        //public HttpResponseMessage GetCountOfOwnBids(ShortUserModel model)
-        //{
-        //    var errorTitle = "Произошла ошибка при получении количества непросмотренных (одобренных или отклоненных) заявок!";
-        //    try
-        //    {
-        //        var result = _repo.GetCountOfOwnBids(model);
-        //        return Request.CreateResponse(HttpStatusCode.OK, new { Count = result });
-        //    }
-        //    catch (AlertException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedAlert = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (RedirectException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedRedirect = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, error);
-        //    }
-        //}
+        [HttpPost]
+        [Authorize]
+        [Route("GetCountOfOwnBids")]
+        public IHttpActionResult GetCountOfOwnBids(ShortUserModel model)
+        {
+            try
+            {
+                var result = _repo.GetCountOfOwnBids(model);
+                return Ok(new { Count = result });
 
-        //[HttpPost]
-        //[Authorize]
-        //[Route("GetCountOfAssignedBids")]
-        //public HttpResponseMessage GetCountOfAssignedBids(ShortUserModel model)
-        //{
-        //    var errorTitle = "Произошла ошибка при получении количества новых заявок на ваши поездки!";
-        //    try
-        //    {
-        //        var result = _repo.GetCountOfAssignedBids(model);
-        //        return Request.CreateResponse(HttpStatusCode.OK, new { Count = result });
-        //    }
-        //    catch (AlertException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedAlert = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (RedirectException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedRedirect = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, error);
-        //    }
-        //}
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("GetCountOfAssignedBids")]
+        public IHttpActionResult GetCountOfAssignedBids(ShortUserModel model)
+        {
+            try
+            {
+                var result = _repo.GetCountOfAssignedBids(model);
+                return Ok(new { Count = result });
+            }
+            catch (Exception error)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, new { status = Statuses.CommonFailure }));
+            }
+        }
 
         //[HttpPost]
         //[Authorize]

@@ -82,7 +82,7 @@
 
     $scope.watchBid = function (bidId, index) {
         
-        console.log('was on ' + bidId + ' bid');
+        //console.log('was on ' + bidId + ' bid');
         
         if (!$scope.myBids[index].isWatched && ($scope.myBids[index].isAccepted != null)) {
 
