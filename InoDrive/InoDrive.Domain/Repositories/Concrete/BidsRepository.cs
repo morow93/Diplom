@@ -1,7 +1,9 @@
 ﻿using InoDrive.Domain.Contexts;
 using InoDrive.Domain.Entities;
 using InoDrive.Domain.Helpers;
+using InoDrive.Domain.Models;
 using InoDrive.Domain.Models.InputModels;
+using InoDrive.Domain.Models.OutputModels;
 using InoDrive.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
@@ -175,195 +177,167 @@ namespace InoDrive.Domain.Repositories.Concrete
 
         //#endregion
 
-        //#region Section of main requests for select bids
+        #region Section of main requests for select bids
 
-        ///// <summary>
-        ///// Get bids for trips of current user
-        ///// </summary>
-        ///// <param name="model">user id, page, count per page, sort order</param>
-        ///// <returns></returns>
-        //public ResultBidsForMyTripsModel GetBidsForMyTrips(BidsForMyTripsPagedOrderModel model)
-        //{
-        //    var result = new ResultBidsForMyTripsModel();
-        //    var countExcluded = Math.Max(model.CountExcluded, 0);
+        public OutputList<OutputBidForMyTripModel> GetBidsForMyTrips(InputPageSortModel<Int32> model)
+        {
+            var result = new OutputList<OutputBidForMyTripModel>();
+            var countExcluded = Math.Max(model.CountExcluded, 0);
 
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var page = Math.Max(model.PageModel.Page, 1);
-        //        IQueryable<Bid> bids;
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var page = Math.Max(model.Page, 1);
+                IQueryable<Bid> bids;
 
-        //        if (model.FromId != null)
-        //        {
-        //            bids =
-        //                user.
-        //                Trips.
-        //                SelectMany(b => b.Bids).
-        //                OrderByDescending(b => b.CreationDate).
-        //                SkipWhile(b => b.BidId != model.FromId).Where(b => b.IsAccepted == null).AsQueryable();
-        //        }
-        //        else
-        //        {
-        //            bids =
-        //                user.
-        //                Trips.
-        //                SelectMany(b => b.Bids).
-        //                Where(b => b.IsAccepted == null).
-        //                OrderByDescending(b => b.CreationDate).AsQueryable();
-        //        }
+                if (model.FromId != null)
+                {
+                    bids =
+                        user.
+                        Trips.
+                        SelectMany(b => b.Bids).
+                        OrderByDescending(b => b.CreationDate).
+                        SkipWhile(b => b.BidId != model.FromId).Where(b => b.IsAccepted == null).AsQueryable();
+                }
+                else
+                {
+                    bids =
+                        user.
+                        Trips.
+                        SelectMany(b => b.Bids).
+                        Where(b => b.IsAccepted == null).
+                        OrderByDescending(b => b.CreationDate).AsQueryable();
+                }
 
-        //        var totalCount = bids.Count();
+                var totalCount = bids.Count();
 
-        //        if (totalCount != 0)
-        //        {
-        //            result.TotalCount = totalCount;
+                if (totalCount != 0)
+                {
+                    result.TotalCount = totalCount;
 
-        //            var resultBids = bids.Select(b => new BidForMyTripModel
-        //            {
-        //                FirstName = b.User.FirstName,
-        //                LastName = b.User.LastName,
-        //                BidId = b.BidId,
+                    var resultBids = bids.Select(b => new OutputBidForMyTripModel
+                    {
+                        FirstName = b.User.FirstName,
+                        LastName = b.User.LastName,
+                        BidId = b.BidId,
 
-        //                UserClaimed = new UserModel
-        //                {
-        //                    UserId = b.UserId,
-        //                    FirstName = b.User.FirstName,
-        //                    LastName = b.User.LastName
-        //                },
+                        UserClaimed = new UserModel
+                        {
+                            UserId = b.UserId,
+                            FirstName = b.User.FirstName,
+                            LastName = b.User.LastName
+                        },
 
-        //                TripId = b.TripId,
-        //                LeavingDate = b.Trip.LeavingDate,
-        //                CreationDate = b.CreationDate,
-        //                Pay = b.Trip.PayForOne,
+                        TripId = b.TripId,
+                        LeavingDate = b.Trip.LeavingDate,
+                        CreationDate = b.CreationDate,
+                        Pay = b.Trip.Pay,
 
-        //                OriginCity = new CityModel
-        //                {
-        //                    CityId = b.Trip.OriginCityId,
-        //                    CityName = b.Trip.OriginCity.RuCityName,
-        //                    RegionName = b.Trip.OriginCity.Region.RuRegionName
-        //                },
+                        OriginPlace = new PlaceModel
+                        {
+                            PlaceId = b.Trip.OriginPlaceId,
+                            Name = b.Trip.OriginPlace.Name
+                        },
 
-        //                DestinationCity = new CityModel
-        //                {
-        //                    CityId = b.Trip.DestinationCityId,
-        //                    CityName = b.Trip.DestinationCity.RuCityName,
-        //                    RegionName = b.Trip.DestinationCity.Region.RuRegionName
-        //                },
+                        DestinationPlace = new PlaceModel
+                        {
+                            PlaceId = b.Trip.DestinationPlaceId,
+                            Name = b.Trip.DestinationPlace.Name
+                        },
 
-        //                TotalPlaces = b.Trip.PeopleCount,
-        //                FreePlaces = b.Trip.PeopleCount - b.Trip.Bids.Count(bb => bb.IsAccepted == true),
+                        TotalPlaces = b.Trip.PeopleCount,
+                        FreePlaces = b.Trip.PeopleCount - b.Trip.Bids.Count(bb => bb.IsAccepted == true),
 
-        //                Age = b.User.UserProfile == null ? (Int32?)null : b.User.UserProfile.Age,
-        //                CountTrips =
-        //                    b.User.Trips.Count(
-        //                        t => !t.IsDeleted &&
-        //                        t.LeavingDate.Date < DateTime.Now.Date &&
-        //                        t.Bids.Any(bb => bb.IsAccepted == true)) +
-        //                    b.User.Bids.Count(bb => bb.IsAccepted == true && bb.Trip.LeavingDate.Date < DateTime.Now.Date),
+                    })
+                    .Skip(model.PerPage * (page - 1) - countExcluded).Take(model.PerPage)
+                    .ToList<OutputBidForMyTripModel>();
 
-        //                PublicEmail = b.User.UserProfile == null ? null : b.User.UserProfile.PublicEmail,
-        //                Phone = b.User.UserProfile == null ? null : b.User.UserProfile.Phone,
-        //                Info = b.User.UserProfile == null ? null : b.User.UserProfile.About,
-        //                AvatarImage = b.User.UserProfile == null ? null : b.User.UserProfile.AvatarImage,
-        //                Rating = ((double)b.User.Trips.SelectMany(t => t.Likes).Select(l => l.Vote).Sum() /
-        //                          (double)(b.User.Trips.SelectMany(t => t.Likes).Count() * 5)) * 100
-        //            })
-        //            .Skip(model.PageModel.PerPage * (page - 1) - countExcluded).Take(model.PageModel.PerPage)
-        //            .ToList<BidForMyTripModel>();
+                    result.Results = resultBids;
+                }
+                return result;
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
-        //            result.BidsForMyTrips = resultBids;
-        //        }
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public OutputList<OutputMyBidModel> GetMyBids(InputPageSortModel<Int32> model)
+        {
+            var result = new OutputList<OutputMyBidModel>();
 
-        ///// <summary>
-        ///// Get bids of current user
-        ///// </summary>
-        ///// <param name="model">user id, page, count per page, sort order</param>
-        ///// <returns></returns>
-        //public ResultMyBidsModel GetMyBids(MyBidsPagedOrderModel model)
-        //{
-        //    var result = new ResultMyBidsModel();
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var page = Math.Max(model.Page, 1);
+                List<Bid> waitedBids;
+                if (model.ShowEnded)
+                {
+                    waitedBids = user.Bids.ToList<Bid>();
+                }
+                else
+                {
+                    waitedBids = user.Bids.Where(b => b.Trip.EndDate < DateTimeOffset.Now).ToList<Bid>();
+                }
+                var totalCount = waitedBids.Count();
 
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var page = Math.Max(model.PageModel.Page, 1);
-        //        List<Bid> waitedBids;
-        //        if (model.ShowEnded)
-        //        {
-        //            waitedBids = user.Bids.ToList<Bid>();
-        //        }
-        //        else
-        //        {
-        //            waitedBids = user.Bids.Where(b => b.Trip.LeavingDate >= DateTime.Now.Date).ToList<Bid>();
-        //        }
-        //        var totalCount = waitedBids.Count();
+                if (totalCount != 0)
+                {
+                    result.TotalCount = totalCount;
 
-        //        if (totalCount != 0)
-        //        {
-        //            result.TotalCount = totalCount;
+                    var resultBids = waitedBids.Select(b => new OutputMyBidModel
+                    {
+                        BidId = b.BidId,
 
-        //            var resultBids = waitedBids.Select(b => new MyBidModel
-        //            {
-        //                BidId = b.BidId,
+                        UserOwner = new UserModel
+                        {
+                            UserId = b.Trip.UserId,
+                            FirstName = b.Trip.User.FirstName,
+                            LastName = b.Trip.User.LastName
+                        },
 
-        //                UserOwner = new UserModel
-        //                {
-        //                    UserId = b.Trip.UserId,
-        //                    FirstName = b.Trip.User.FirstName,
-        //                    LastName = b.Trip.User.LastName
-        //                },
+                        TripId = b.TripId,
+                        LeavingDate = b.Trip.LeavingDate,
+                        CreationDate = b.CreationDate,
 
-        //                TripId = b.TripId,
-        //                LeavingDate = b.Trip.LeavingDate,
-        //                CreationDate = b.CreationDate,
+                        OriginPlace = new PlaceModel
+                        {
+                            PlaceId = b.Trip.OriginPlaceId,
+                            Name = b.Trip.OriginPlace.Name
+                        },
 
-        //                OriginCity = new CityModel
-        //                {
-        //                    CityId = b.Trip.OriginCityId,
-        //                    CityName = b.Trip.OriginCity.RuCityName,
-        //                    RegionName = b.Trip.OriginCity.Region.RuRegionName
-        //                },
+                        DestinationPlace = new PlaceModel
+                        {
+                            PlaceId = b.Trip.DestinationPlaceId,
+                            Name = b.Trip.DestinationPlace.Name
+                        },
 
-        //                DestinationCity = new CityModel
-        //                {
-        //                    CityId = b.Trip.DestinationCityId,
-        //                    CityName = b.Trip.DestinationCity.RuCityName,
-        //                    RegionName = b.Trip.DestinationCity.Region.RuRegionName
-        //                },
+                        TotalPlaces = b.Trip.PeopleCount,
+                        FreePlaces = b.Trip.PeopleCount - b.Trip.Bids.Count(bb => bb.IsAccepted == true),
 
-        //                TotalPlaces = b.Trip.PeopleCount,
-        //                FreePlaces = b.Trip.PeopleCount - b.Trip.Bids.Count(bb => bb.IsAccepted == true),
+                        IsAccepted = b.IsAccepted,
+                        IsWatched = b.IsWatchedBySender,
+                        WasTripDeleted = b.Trip.IsDeleted
+                    })
+                    .OrderByDescending(d => d.CreationDate)
+                    .Skip(model.PerPage * (page - 1)).Take(model.PerPage)
+                    .ToList<OutputMyBidModel>();
 
-        //                IsAccepted = b.IsAccepted,
-        //                IsWatched = b.IsWatchedByOwnerUser,
-        //                WasTripDeleted = b.Trip.IsDeleted
-        //            })
-        //            .OrderByDescending(d => d.CreationDate)
-        //            .Skip(model.PageModel.PerPage * (page - 1)).Take(model.PageModel.PerPage)
-        //            .ToList<MyBidModel>();
+                    result.Results = resultBids;
+                }
+                return result;
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
-        //            result.MyBids = resultBids;
-        //        }
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        #endregion
 
-        //#endregion
+        #region Add or update some bids entities
 
-        //#region Add or update some bids entities
-
-        public void AddBid(InputManageTripModel model)
+        public void AddBid(InputManageBidModel model)
         {
             var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
             if (user != null)
@@ -413,94 +387,96 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
-        //public void AcceptBid(ManageBidModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);
-        //    if (user != null)
-        //    {
-        //        var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            var bid = trip.Bids.FirstOrDefault(b => b.UserId == model.UserClaimedId);
-        //            if (bid != null)
-        //            {
-        //                var freePlaces = bid.Trip.PeopleCount - bid.Trip.Bids.Count(bb => bb.IsAccepted == true);
-        //                if (freePlaces > 0)
-        //                {
-        //                    bid.IsAccepted = true;
-        //                    _ctx.SaveChanges();
-        //                }
-        //                else
-        //                {
-        //                    throw new AlertException("Вы не можете принять заявку, т.к. уже не осталось свободных мест!");
-        //                }
-        //            }
-        //            else
-        //            {
-        //                throw new AlertException("Вы не можете принять несуществующую заявку!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("У этого пользователя нет такой поездки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
-        //public void RejectBid(ManageBidModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);
-        //    if (user != null)
-        //    {
-        //        var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
-        //        if (trip != null)
-        //        {
-        //            var bid = trip.Bids.FirstOrDefault(b => b.UserId == model.UserClaimedId);
-        //            if (bid != null)
-        //            {
-        //                bid.IsAccepted = false;
-        //                _ctx.SaveChanges();
-        //            }
-        //            else
-        //            {
-        //                throw new AlertException("Вы не можете отклонить несуществующую заявку!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new RedirectException("У этого пользователя нет такой поездки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
-        //public void WatchBid(ManageBidModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);
-        //    if (user != null)
-        //    {
-        //        var bid = user.Bids.FirstOrDefault(b => b.BidId == model.BidId);
-        //        if (bid != null)
-        //        {
-        //            bid.IsWatchedByOwnerUser = true;
-        //            _ctx.SaveChanges();
-        //        }
-        //        else
-        //        {
-        //            throw new AlertException("У этого пользователя нет такой заявки!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Такого пользователя не существует!");
-        //    }
-        //}
+        public void AcceptBid(InputManageBidModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);
+            if (user != null)
+            {
+                var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip != null)
+                {
+                    var bid = trip.Bids.FirstOrDefault(b => b.UserId == model.UserClaimedId);
+                    if (bid != null)
+                    {
+                        var freePlaces = bid.Trip.PeopleCount - bid.Trip.Bids.Count(bb => bb.IsAccepted == true);
+                        if (freePlaces > 0)
+                        {
+                            bid.IsAccepted = true;
+                            _ctx.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception("Вы не можете принять заявку, т.к. уже не осталось свободных мест!");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Вы не можете принять несуществующую заявку!");
+                    }
+                }
+                else
+                {
+                    throw new Exception(AppConstants.TRIP_NOT_FOUND);
+                }
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
-        //#endregion
+        public void RejectBid(InputManageBidModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);
+            if (user != null)
+            {
+                var trip = user.Trips.FirstOrDefault(t => t.TripId == model.TripId);
+                if (trip != null)
+                {
+                    var bid = trip.Bids.FirstOrDefault(b => b.UserId == model.UserClaimedId);
+                    if (bid != null)
+                    {
+                        bid.IsAccepted = false;
+                        _ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Вы не можете отклонить несуществующую заявку!");
+                    }
+                }
+                else
+                {
+                    throw new Exception(AppConstants.TRIP_NOT_FOUND);
+                }
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
+        public void WatchBid(InputManageBidModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserOwnerId);
+            if (user != null)
+            {
+                var bid = user.Bids.FirstOrDefault(b => b.BidId == model.BidId);
+                if (bid != null)
+                {
+                    bid.IsWatchedBySender = true;
+                    _ctx.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("У этого пользователя нет такой заявки!");
+                }
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
+
+        #endregion
     }
 }

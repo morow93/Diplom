@@ -107,6 +107,7 @@
     <Compile Include="Models\InputModels\InputCreateTripModel.cs" />
     <Compile Include="Models\InputModels\InputEmailTemplateModel.cs" />
     <Compile Include="Models\InputModels\InputFindTripsModel.cs" />
+    <Compile Include="Models\InputModels\InputManageBidModel.cs" />
     <Compile Include="Models\InputModels\InputManageTripModel.cs" />
     <Compile Include="Models\InputModels\InputPageSortModel.cs" />
     <Compile Include="Models\InputModels\InputRemoveRefreshTokenModel.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="Models\InputModels\InputSignUpModel.cs" />
     <Compile Include="Models\InputModels\InputChangeEmailModel.cs" />
     <Compile Include="Models\InputModels\InputChangePasswordModel.cs" />
+    <Compile Include="Models\OutputModels\OutputMyBidModel.cs" />
+    <Compile Include="Models\OutputModels\OutputBidForMyTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputFindTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputMyTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputList.cs" />

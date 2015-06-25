@@ -1,4 +1,51 @@
-﻿<div class="list-trips">
+﻿
+<div class="row" ng-if="tripsType == 'passenger'">
+    <div class="col-xs-12">
+        <div class="loading-wrapper">
+            <div class="loading-icon">
+                <i class="fa fa-refresh fa-spin fa-2x"></i>
+            </div>
+            <div class="loading-text">
+                <span class="contrast-color">Пожалуйста, подождите...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="tripsType == 'driver'">
+    <div class="col-xs-12">
+        <div class="loading-wrapper">
+            <div class="loading-icon">
+                <i class="fa fa-info-circle fa-2x"></i>
+            </div>
+            <div class="loading-text">
+                <span class="contrast-color">Нет поездок!</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="padding-top:20px;">
+    <hr class="no-margin"/>
+    <div class="row">
+        <div class="col-xs-7">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer">
+                <label for="showEnded">
+                    <b>Показывать завершенные</b>
+                </label>
+            </div>
+        </div>
+        <div class="col-xs-5 text-right">
+            <div class="total-trip-count">
+                <b>Заявок: 55</b>
+            </div>
+        </div>
+    </div>
+    <hr class="no-margin user-hr-top" />
+</div>
+
+<div class="list-trips">
 
     <div class="short-trip">
 

@@ -1,4 +1,5 @@
 ﻿using InoDrive.Domain.Models.InputModels;
+using InoDrive.Domain.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +21,17 @@ namespace InoDrive.Domain.Repositories.Abstract
 
         #region Section of main requests for select bids
 
-        //ResultBidsForMyTripsModel GetBidsForMyTrips(BidsForMyTripsPagedOrderModel model);
-        //ResultMyBidsModel GetMyBids(MyBidsPagedOrderModel model);
+        OutputList<OutputBidForMyTripModel> GetBidsForMyTrips(InputPageSortModel<Int32> model);
+        OutputList<OutputMyBidModel> GetMyBids(InputPageSortModel<Int32> model);
 
         #endregion
 
         #region Add or update some bids entities
 
-        void AddBid(InputManageTripModel model);
-        //void AcceptBid(InputManageTripModel model);
-        //void RejectBid(InputManageTripModel model);
-        //void WatchBid(InputManageTripModel model);
+        void AddBid(InputManageBidModel model);
+        void AcceptBid(InputManageBidModel model);
+        void RejectBid(InputManageBidModel model);
+        void WatchBid(InputManageBidModel model);
 
         #endregion
     }

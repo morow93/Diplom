@@ -16,7 +16,7 @@
                     <div class="col-xs-6 no-padding-right">
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectAllTrips()" data-ui-sref="user.my_bids.sended">
-                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType == 'all'}">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : isActiveNav('user.my_bids.sended')}">
                                 Отправленные
                             </div>
                         </a>
@@ -25,7 +25,7 @@
                     <div class="col-xs-6 no-padding-left">
 
                         <a href="javascript:void(0)" class="typical-link" ng-click="selectDriverTrips()" data-ui-sref="user.my_bids.received">
-                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType == 'driver'}">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : isActiveNav('user.my_bids.received')}">
                                 Полученные
                             </div>
                         </a>
@@ -35,59 +35,8 @@
 
                 <div class="user-tab">
 
-                    <!--loading begin-->
-                    <div class="row" ng-if="tripsType == 'passenger'">
-                        <div class="col-xs-12">
-                            <div class="loading-wrapper">
-                                <div class="loading-icon">
-                                    <i class="fa fa-refresh fa-spin fa-2x"></i>
-                                </div>
-                                <div class="loading-text">
-                                    <span class="contrast-color">Пожалуйста, подождите...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--loading end-->
-                    <!--no result begin-->
-                    <div class="row" ng-if="tripsType == 'driver'">
-                        <div class="col-xs-12">
-                            <div class="loading-wrapper">
-                                <div class="loading-icon">
-                                    <i class="fa fa-info-circle fa-2x"></i>
-                                </div>
-                                <div class="loading-text">
-                                    <span class="contrast-color">Нет поездок!</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--no result end-->
-
-                    <div>
-                        <hr class="no-margin user-hr-bottom" />
-                        <div class="row">
-                            <div class="col-xs-7">
-                                <div class="checkbox checkbox-primary">
-                                    <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer">
-                                    <label for="showEnded">
-                                        <b>Показывать завершенные</b>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-5 text-right">
-                                <div class="total-trip-count">
-                                    <b>Заявок: 55</b>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="no-margin user-hr-top" />
-
-                        <div data-ui-view>
-
-                        </div>
-
-                    </div>
+                    <div data-ui-view>
+                    </div>   
 
                 </div>
 

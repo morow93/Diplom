@@ -177,10 +177,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     }]
                 }
             })
-            .state("user.my_trips", {
-                url: "my_trips/",
-                templateUrl: "/app/views/user/user.my_trips.html"
-            })
             .state("user.create_trip", {
                 url: "create_trip/",
                 controller: "createTripController",

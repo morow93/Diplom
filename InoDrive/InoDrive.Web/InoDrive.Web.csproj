@@ -106,7 +106,6 @@
     <Content Include="App\Views\User\user.my_bids.sended.html" />
     <Content Include="App\Views\User\user.my_bids.html" />
     <Content Include="App\Views\User\user.html" />
-    <Content Include="App\Views\User\user.my_trips.html" />
     <Content Include="App\Views\Settings\user.settings.html" />
     <Content Include="App\Views\User\user.trip.html" />
     <Content Include="Content\angular-motion.css" />
