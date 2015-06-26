@@ -15,7 +15,7 @@ namespace InoDrive.Domain.Repositories.Abstract
 
         Int32 GetCountOfOwnBids(ShortUserModel model);
         Int32 GetCountOfAssignedBids(ShortUserModel model);
-        //List<UnwatchedBidModel> GetUpdatedOwnBids(ShortUserModel model);
+        List<OutputMyBidModel> GetUpdatedOwnBids(ShortUserModel model);
         //List<BidForMyTripModel> GetUpdatedAssignedBids(LoadBidsModel model);
 
         #endregion

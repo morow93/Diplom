@@ -26,8 +26,7 @@
 
         $scope.loading = true;//true when loading items
         $scope.emptyResult = false;//if no more items to load
-
-
+        
         $timeout(function () {
 
             bidsService.getMyBids(
@@ -117,47 +116,46 @@
         $state.go("user.trip", { tripId: tripId }, { reload: false });
     };
 
-    //var getUpdatedOwnBids = function () {
+    var getUpdatedOwnBids = function () {
 
-    //    var params = {
-    //        userId: $scope.authentication.userId
-    //    };
-    //    bidsService.getUpdatedOwnBids(params).then(function (data) {
+        var params = {
+            userId: $scope.authentication.userId
+        };
+        bidsService.getUpdatedOwnBids(params).then(function (data) {
 
-    //        $scope.countOfOwnBids.count = data.length;
-    //        localStorageService.set("countOfOwnBids", $scope.countOfOwnBids);
+            $scope.countOfOwnBids.count = data.length;
+            localStorageService.set("countOfOwnBids", $scope.countOfOwnBids);
 
-    //        for (var i = 0; i < $scope.myBids.length; i++) {
-    //            for (var j = 0; j < data.length; j++) {
+            for (var i = 0; i < $scope.myBids.length; i++) {
+                for (var j = 0; j < data.length; j++) {
 
-    //                if ($scope.myBids[i].bidId === data[j].bidId &&
-    //                    !$scope.myBids[i].isAccepted &&
-    //                    !$scope.myBids[i].wasUpdated) {
+                    if ($scope.myBids[i].bidId === data[j].bidId && !$scope.myBids[i].wasUpdated) {
 
-    //                    $scope.myBids[i].isAccepted = data[j].isAccepted;
-    //                    $scope.myBids[i].wasUpdated = true;
+                        $scope.myBids[i].isAccepted = data[j].isAccepted;
+                        
+                        if ($scope.myBids[i].isAccepted && $scope.myBids[i].freePlaces > 0) {
+                            $scope.myBids[i].freePlaces--;
+                        }
 
-    //                    if ($scope.myBids[i].isAccepted && $scope.myBids[i].freePlaces > 0) {
-    //                        $scope.myBids[i].freePlaces--;
-    //                    }
-    //                }
+                        $scope.myBids[i].wasUpdated = true;
+                    }
 
-    //            }
-    //        }
+                }
+            }
 
-    //    }).catch(function (error) {
-    //        throw error.data;
-    //    });
-    //};
+        }).catch(function (error) {
+            throw error.data;
+        });
+    };
 
-    //var promise = $interval(getUpdatedOwnBids, 10000);
+    var promise = $interval(getUpdatedOwnBids, 10000);
 
-    //$scope.$on('$destroy', function () {
-    //    if (angular.isDefined(promise)) {
-    //        $interval.cancel(promise);
-    //        promise = undefined;
-    //    }
-    //});
+    $scope.$on('$destroy', function () {
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
 
     $scope.getPageOfBids();
 });

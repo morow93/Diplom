@@ -42,7 +42,7 @@ namespace InoDrive.Domain.Repositories.Concrete
             var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
             if (user != null)
             {
-                return user.Trips.SelectMany(t => t.Bids).Count(b => b.IsAccepted == null);
+                return user.Trips.Where(t => !t.IsDeleted).SelectMany(t => t.Bids).Count(b => b.IsAccepted == null);
             }
             else
             {
@@ -50,34 +50,24 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
-        ///// <summary>
-        ///// Get unwatched rejected or accepted bids owned current user
-        ///// </summary>
-        ///// <param name="model">user id</param>
-        ///// <returns></returns>
-        //public List<UnwatchedBidModel> GetUpdatedOwnBids(ShortUserModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        var bids = user.Bids.Where(b => b.IsAccepted != null && !b.IsWatchedByOwnerUser).Select(n => new UnwatchedBidModel
-        //        {
-        //            BidId = n.BidId,
-        //            IsAccepted = n.IsAccepted ?? false
-        //        }).ToList<UnwatchedBidModel>();
-        //        return bids;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Нет такого пользователя!");
-        //    }
-        //}
+        public List<OutputMyBidModel> GetUpdatedOwnBids(ShortUserModel model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                var bids = user.Bids.Where(b => b.IsAccepted != null && !b.IsWatchedBySender).Select(n => new OutputMyBidModel
+                {
+                    BidId = n.BidId,
+                    IsAccepted = n.IsAccepted ?? false
+                }).ToList<OutputMyBidModel>();
+                return bids;
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
-        ///// <summary>
-        ///// Get assigned unwatched bids of all trips owned current user
-        ///// </summary>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
         //public List<BidForMyTripModel> GetUpdatedAssignedBids(LoadBidsModel model)
         //{
         //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
@@ -185,6 +175,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                     bids =
                         user.
                         Trips.
+                        Where(t => !t.IsDeleted).
                         SelectMany(b => b.Bids).
                         OrderByDescending(b => b.CreationDate).
                         SkipWhile(b => b.BidId != model.FromId).Where(b => b.IsAccepted == null).AsQueryable();
@@ -194,6 +185,7 @@ namespace InoDrive.Domain.Repositories.Concrete
                     bids =
                         user.
                         Trips.
+                        Where(t => !t.IsDeleted).
                         SelectMany(b => b.Bids).
                         Where(b => b.IsAccepted == null).
                         OrderByDescending(b => b.CreationDate).AsQueryable();

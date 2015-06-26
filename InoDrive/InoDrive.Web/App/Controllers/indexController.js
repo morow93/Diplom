@@ -49,7 +49,7 @@
 
                 bidsService.getCountOfAssignedBids({ userId: $scope.authentication.userId }).then(function (data) {
 
-                    console.log('getCountOfAssignedBids: ' + data.count);
+                    //console.log('getCountOfAssignedBids: ' + data.count);
 
                     $scope.countOfAssignedBids = { count: data.count };
                     localStorageService.set("countOfAssignedBids", $scope.countOfAssignedBids);
@@ -83,7 +83,7 @@
 
                 bidsService.getCountOfOwnBids({ userId: $scope.authentication.userId }).then(function (data) {
 
-                    console.log('getCountOfOwnBids: ' + data.count);
+                    //console.log('getCountOfOwnBids: ' + data.count);
 
                     $scope.countOfOwnBids = { count: data.count };
                     localStorageService.set("countOfOwnBids", $scope.countOfOwnBids);

@@ -152,6 +152,10 @@
         }
     };
 
+    $scope.getTrip = function (tripId) {
+        $state.go("user.trip", { tripId: tripId }, { reload: false });
+    };
+
     //var getUpdatedAssignedBids = function () {
 
     //    if ($scope.newBids && $scope.newBids.length != 0) {

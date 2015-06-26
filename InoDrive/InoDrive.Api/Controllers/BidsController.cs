@@ -56,42 +56,21 @@ namespace InoDrive.Api.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //[Route("GetUpdatedOwnBids")]
-        //public HttpResponseMessage GetUpdatedOwnBids(ShortUserModel model)
-        //{
-        //    var errorTitle = "Произошла ошибка при получении ваших заявок с обновленным статусом!";
-        //    try
-        //    {
-        //        var result = _repo.GetUpdatedOwnBids(model);
-        //        return Request.CreateResponse(HttpStatusCode.OK, result);
-        //    }
-        //    catch (AlertException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedAlert = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (RedirectException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedRedirect = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, error);
-        //    }
-        //}
+        [HttpPost]
+        [Authorize]
+        [Route("GetUpdatedOwnBids")]
+        public HttpResponseMessage GetUpdatedOwnBids(ShortUserModel model)
+        {
+            try
+            {
+                var result = _repo.GetUpdatedOwnBids(model);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception error)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+            }
+        }
 
         //[HttpPost]
         //[Authorize]
