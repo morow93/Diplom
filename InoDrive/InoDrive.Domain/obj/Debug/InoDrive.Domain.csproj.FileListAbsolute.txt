@@ -24,4 +24,3 @@ E:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 E:\Diplom\InoDrive\InoDrive.Domain\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.dll
 E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.pdb
-E:\Diplom\InoDrive\InoDrive.Domain\obj\Debug\InoDrive.Domain.csprojResolveAssemblyReference.cache

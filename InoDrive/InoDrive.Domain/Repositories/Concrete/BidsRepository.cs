@@ -68,92 +68,71 @@ namespace InoDrive.Domain.Repositories.Concrete
             }
         }
 
-        //public List<BidForMyTripModel> GetUpdatedAssignedBids(LoadBidsModel model)
-        //{
-        //    var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
-        //    if (user != null)
-        //    {
-        //        IEnumerable<Bid> bids;
-        //        if (model.FromId != 0)
-        //        {
-        //            bids =
-        //                user.
-        //                Trips.
-        //                SelectMany(b => b.Bids).
-        //                Where(b => b.IsAccepted == null).
-        //                OrderByDescending(b => b.CreationDate).
-        //                TakeWhile(b => b.BidId != model.FromId);
-        //        }
-        //        else
-        //        {
-        //            bids =
-        //                user.
-        //                Trips.
-        //                SelectMany(b => b.Bids).
-        //                Where(b => b.IsAccepted == null).
-        //                OrderByDescending(b => b.CreationDate);
-        //        }
-        //        var result = bids.Select(b => new BidForMyTripModel
-        //        {
-        //            FirstName = b.User.FirstName,
-        //            LastName = b.User.LastName,
+        public List<OutputBidForMyTripModel> GetUpdatedAssignedBids(InputPageSortModel<Int32> model)
+        {
+            var user = _ctx.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user != null)
+            {
+                IEnumerable<Bid> bids;
+                if (model.FromId != 0)
+                {
+                    bids =
+                        user.
+                        Trips.
+                        SelectMany(b => b.Bids).
+                        OrderByDescending(b => b.CreationDate).
+                        TakeWhile(b => b.BidId != model.FromId);
+                }
+                else
+                {
+                    bids =
+                        user.
+                        Trips.
+                        SelectMany(b => b.Bids).
+                        OrderByDescending(b => b.CreationDate);
+                }
+                var result = bids.Select(b => new OutputBidForMyTripModel
+                {
+                    FirstName = b.User.FirstName,
+                    LastName = b.User.LastName,
+                    BidId = b.BidId,
 
-        //            BidId = b.BidId,
+                    UserClaimed = new UserModel
+                    {
+                        UserId = b.UserId,
+                        FirstName = b.User.FirstName,
+                        LastName = b.User.LastName
+                    },
 
-        //            UserClaimed = new UserModel
-        //            {
-        //                UserId = b.UserId,
-        //                FirstName = b.User.FirstName,
-        //                LastName = b.User.LastName
-        //            },
+                    TripId = b.TripId,
+                    LeavingDate = b.Trip.LeavingDate,
+                    CreationDate = b.CreationDate,
+                    Pay = b.Trip.Pay,
 
-        //            TripId = b.TripId,
-        //            LeavingDate = b.Trip.LeavingDate,
-        //            CreationDate = b.CreationDate,
-        //            Pay = b.Trip.PayForOne,
+                    OriginPlace = new PlaceModel
+                    {
+                        PlaceId = b.Trip.OriginPlaceId,
+                        Name = b.Trip.OriginPlace.Name
+                    },
 
-        //            OriginCity = new CityModel
-        //            {
-        //                CityId = b.Trip.OriginCityId,
-        //                CityName = b.Trip.OriginCity.RuCityName,
-        //                RegionName = b.Trip.OriginCity.Region.RuRegionName
-        //            },
+                    DestinationPlace = new PlaceModel
+                    {
+                        PlaceId = b.Trip.DestinationPlaceId,
+                        Name = b.Trip.DestinationPlace.Name
+                    },
 
-        //            DestinationCity = new CityModel
-        //            {
-        //                CityId = b.Trip.DestinationCityId,
-        //                CityName = b.Trip.DestinationCity.RuCityName,
-        //                RegionName = b.Trip.DestinationCity.Region.RuRegionName
-        //            },
+                    TotalPlaces = b.Trip.PeopleCount,
+                    FreePlaces = b.Trip.PeopleCount - b.Trip.Bids.Count(bb => bb.IsAccepted == true),
 
-        //            TotalPlaces = b.Trip.PeopleCount,
-        //            FreePlaces = b.Trip.PeopleCount - b.Trip.Bids.Count(bb => bb.IsAccepted == true),
+                }).ToList<OutputBidForMyTripModel>();
 
-        //            Age = b.User.UserProfile == null ? (Int32?)null : b.User.UserProfile.Age,
-        //            CountTrips =
-        //                b.User.Trips.Count(
-        //                    t => !t.IsDeleted &&
-        //                    t.LeavingDate.Date < DateTime.Now.Date &&
-        //                    t.Bids.Any(bb => bb.IsAccepted == true)) +
-        //                b.User.Bids.Count(bb => bb.IsAccepted == true && bb.Trip.LeavingDate.Date < DateTime.Now.Date),
-
-        //            PublicEmail = b.User.UserProfile == null ? null : b.User.UserProfile.PublicEmail,
-        //            Phone = b.User.UserProfile == null ? null : b.User.UserProfile.Phone,
-        //            Info = b.User.UserProfile == null ? null : b.User.UserProfile.About,
-        //            AvatarImage = b.User.UserProfile == null ? null : b.User.UserProfile.AvatarImage,
-        //            Rating =
-        //                ((double)b.User.Trips.SelectMany(t => t.Likes).Select(l => l.Vote).Sum()
-        //                / (double)b.User.Trips.SelectMany(t => t.Likes).Count() * 5) * 100
-
-        //        }).ToList<BidForMyTripModel>();
-
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        throw new RedirectException("Нет такого пользователя!");
-        //    }
-        //}
+                return result;
+            }
+            else
+            {
+                throw new Exception(AppConstants.USER_NOT_FOUND);
+            }
+        }
 
         #endregion
 

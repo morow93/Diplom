@@ -2,6 +2,7 @@
 
     $scope.loading = false;
     $scope.showEnded = true;
+    $scope.myBids = [];
 
     $scope.update = function (val) {
         $scope.page = 1;

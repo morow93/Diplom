@@ -72,42 +72,21 @@ namespace InoDrive.Api.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //[Route("GetUpdatedAssignedBids")]
-        //public HttpResponseMessage GetUpdatedAssignedBids(LoadBidsModel model)
-        //{
-        //    var errorTitle = "Произошла ошибка при получении новых заявок на ваши поездки!";
-        //    try
-        //    {
-        //        var result = _repo.GetUpdatedAssignedBids(model);
-        //        return Request.CreateResponse(HttpStatusCode.OK, result);
-        //    }
-        //    catch (AlertException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedAlert = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (RedirectException error)
-        //    {
-        //        var jsonError = new
-        //        {
-        //            Title = errorTitle,
-        //            Content = error.Message,
-        //            NeedRedirect = true
-        //        };
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, jsonError);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, error);
-        //    }
-        //}
+        [HttpPost]
+        [Authorize]
+        [Route("GetUpdatedAssignedBids")]
+        public HttpResponseMessage GetUpdatedAssignedBids(InputPageSortModel<Int32> model)
+        {
+            try
+            {
+                var result = _repo.GetUpdatedAssignedBids(model);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception error)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+            }
+        }
 
         #endregion
 

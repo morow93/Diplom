@@ -10,6 +10,8 @@
     $scope.fromId = null;
     $scope.countExcluded = 0;
     $scope.countNewBids = 0;
+    $scope.newBids = [];
+    $scope.bidsForMyTrips = [];
 
     $scope.getPageOfBids = function () {
 
@@ -139,13 +141,10 @@
     $scope.loadNewBids = function () {
         
         if ($scope.newBids) {
-            if ($scope.bidsForMyTrips && $scope.bidsForMyTrips.length != 0) {
-                for (var i = $scope.newBids.length - 1; i >= 0; i--) {
-                    $scope.bidsForMyTrips.unshift($scope.newBids[i]);
-                }
-            } else {
-                $scope.bidsForMyTrips = $scope.newBids;
-            }
+
+            for (var i = $scope.newBids.length - 1; i >= 0; i--) {
+                $scope.bidsForMyTrips.unshift($scope.newBids[i]);
+            }      
 
             $scope.newBids = [];
             $scope.countNewBids = 0;
@@ -156,62 +155,59 @@
         $state.go("user.trip", { tripId: tripId }, { reload: false });
     };
 
-    //var getUpdatedAssignedBids = function () {
+    var getUpdatedAssignedBids = function () {
 
-    //    if ($scope.newBids && $scope.newBids.length != 0) {
-    //        $scope.newFromId = $scope.newBids[0].bidId;
-    //    } else if ($scope.bidsForMyTrips && $scope.bidsForMyTrips.length != 0) {
+        if ($scope.newBids && $scope.newBids.length != 0) {
 
-    //        var existUnchecked = false;
-    //        for (var i = 0; i < $scope.bidsForMyTrips.length; i++) {
-    //            if (!$scope.bidsForMyTrips[i].makedDesign) {
-    //                $scope.newFromId = $scope.bidsForMyTrips[i].bidId;
-    //                existUnchecked = true;
-    //                break;
-    //            }
-    //        }
-    //        if (!existUnchecked) $scope.newFromId = 0;
+            $scope.newFromId = $scope.newBids[0].bidId;
 
-    //    } else {
-    //        $scope.newFromId = 0;
-    //    }
+        } else if ($scope.bidsForMyTrips && $scope.bidsForMyTrips.length != 0) {
 
-    //    var params = {
-    //        userId: $scope.authentication.userId,
-    //        fromId: $scope.newFromId
-    //    };
+            $scope.newFromId = $scope.bidsForMyTrips[0].bidId;
 
-    //    bidsService.getUpdatedAssignedBids(params).then(function (data) {
+        } else {
 
-    //        if (data && data.length != 0) {
+            $scope.newFromId = 0;
+        }
 
-    //            $scope.countNewBids += data.length;
-    //            $scope.countOfAssignedBids.count += data.length;
-    //            localStorageService.setData("countOfAssignedBids", $scope.countOfAssignedBids);
+        var params = {
+            userId: $scope.authentication.userId,
+            fromId: $scope.newFromId
+        };
 
-    //            if ($scope.newBids && $scope.newBids.length != 0) {
+        bidsService.getUpdatedAssignedBids(params).then(function (data) {
 
-    //                for (var i = 0; i < data.length; i++) {
-    //                    $scope.newBids.unshift(data[i]);
-    //                }
+            if (data && data.length != 0) {
 
-    //            } else {
-    //                $scope.newBids = data;
-    //            }
-    //        }
-    //    }).catch(function (error) {
-    //        throw error.data;
-    //    });
-    //};
+                $scope.countNewBids = 0;
+                for (var i = 0; i < data.length; i++) {
 
-    //var promise = $interval(getUpdatedAssignedBids, 10000);
+                    if (data[i].isAccepted == null) {
+                        $scope.countNewBids += 1;
+                        $scope.newBids.unshift(data[i]);
+                    }
 
-    //$scope.$on('$destroy', function () {
-    //    if (angular.isDefined(promise)) {
-    //        $interval.cancel(promise);
-    //        promise = undefined;
-    //    }
-    //});
+                }
+
+                $scope.countOfAssignedBids.count += $scope.countNewBids;
+                localStorageService.set("countOfAssignedBids", $scope.countOfAssignedBids);
+            }
+
+        }).catch(function (error) {
+
+            throw error.data;
+
+        });
+    };
+
+    var promise = $interval(getUpdatedAssignedBids, 10000);
+
+    $scope.$on('$destroy', function () {
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
 
     $scope.getPageOfBids();
 
