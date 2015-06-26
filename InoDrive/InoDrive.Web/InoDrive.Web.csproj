@@ -79,6 +79,7 @@
     <Content Include="App\Controllers\User\userController.js" />
     <Content Include="App\Controllers\Home\signInController.js" />
     <Content Include="App\Controllers\Home\signUpController.js" />
+    <Content Include="App\Controllers\User\userCurrentController.js" />
     <Content Include="App\Controllers\User\userViewController.js" />
     <Content Include="App\Directives\match.js" />
     <Content Include="App\Directives\starRating.js" />
@@ -102,6 +103,7 @@
     <Content Include="App\Views\Settings\user.settings.change_email.html" />
     <Content Include="App\Views\Settings\user.settings.change_password.html" />
     <Content Include="App\Views\Settings\user.settings.private_cabinet.html" />
+    <Content Include="App\Views\User\user.current.html" />
     <Content Include="App\Views\User\user.my_bids.received.html" />
     <Content Include="App\Views\User\user.my_bids.sended.html" />
     <Content Include="App\Views\User\user.my_bids.html" />

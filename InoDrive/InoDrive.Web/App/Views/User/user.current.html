@@ -1,0 +1,341 @@
+﻿<div class="row" ng-if="!wasUserLoaded">
+    <div class="col-xs-12">
+        <div class="loading-wrapper loading-block">
+            <div class="loading-icon">
+                <i class="fa fa-refresh fa-spin fa-2x"></i>
+            </div>
+            <div class="loading-text">
+                <span class="contrast-color">Пожалуйста, подождите...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-if="wasUserLoaded">
+    <div class="col-xs-12">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-view-title">
+                    <b ng-bind="userInfo.initials"></b>
+                </div>
+            </div>
+        </div>
+
+        <div class="row user-main-info">
+            <div class="col-xs-3">
+                <img ng-show="avatarDataUrl != null" ng-src="{{avatarDataUrl}}" class="full-width" /> <!--class="resize"-->
+                <img ng-show="avatarDataUrl == null" ng-src="{{noAvatarImage}}" class="full-width" /> <!--class="resize"-->
+            </div>
+            <div class="col-xs-9">
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span class="rating-span">Рейтинг: {{userInfo.rating}}%</span>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <div data-star-rating ng-model="userInfo.cutRating" data-readonly="true" class="user-view-rating"></div>
+                    </div>
+                </div>
+
+                <span></span><br>
+
+                <p class="about" ng-bind="userInfo.about">
+                </p>
+
+                <div class="no-border">
+                    <table class="table table-hover user-table first-user-table">
+                        <colgroup>
+                            <col class="col-md-7 col-xs-6">
+                            <col class="col-md-5 col-xs-6">
+                        </colgroup>
+                        <caption>Основная информация:</caption>
+                        <tbody>
+                            <tr>
+                                <td>Пол:</td>
+                                <td ng-if="userInfo.sex == true">Мужской</td>
+                                <td ng-if="userInfo.sex == false">Женский</td>
+                                <td ng-if="userInfo.sex == null">Не указан</td>
+                            </tr>
+                            <tr>
+                                <td>Возраст:</td>
+                                <td ng-bind="userInfo.age"></td>
+                            </tr>
+                            <tr>
+                                <td>Водительский стаж:</td>
+                                <td ng-bind="userInfo.stage"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="javascript:void(0)" ng-click="showInfo = !showInfo" class="typical-link">
+                    <div class="show-hide-user-info">
+                        <span ng-if="showInfo">Скрыть дополнительную информацию</span>
+                        <span ng-if="!showInfo">Показать дополнительную информацию</span>
+                    </div>
+                </a>
+
+                <div class="table-responsive no-border am-fade" ng-if="showInfo">
+                    <table class="table table-hover user-table">
+                        <colgroup>
+                            <col class="col-md-7 col-xs-6">
+                            <col class="col-md-5 col-xs-6">
+                        </colgroup>
+                        <caption>Информация о поездках:</caption>
+                        <tbody>
+                            <tr>
+                                <td>Всего поездок:</td>
+                                <td>{{userInfo.allTripsCount}}</td>
+                            </tr>
+                            <tr>
+                                <td>В качестве водителя:</td>
+                                <td>{{userInfo.driverTripsCount}}</td>
+                            </tr>
+                            <tr>
+                                <td>В качестве пассажира:</td>
+                                <td>{{userInfo.passengerTripsCount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive no-border am-fade" ng-if="showInfo">
+                    <table class="table table-hover user-table">
+                        <colgroup>
+                            <col class="col-md-7 col-xs-6">
+                            <col class="col-md-5 col-xs-6">
+                        </colgroup>
+                        <caption>Контактная инфомация:</caption>
+                        <tbody>
+                            <tr>
+                                <td>Email:</td>
+                                <td ng-bind="userInfo.email"></td>
+                            </tr>
+                            <tr>
+                                <td>Телефон:</td>
+                                <td ng-if="userInfo.phone">+7{{userInfo.phone}}</td>
+                                <td ng-if="!userInfo.phone">Не указан</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row user-trips">
+            <div class="col-xs-12">
+
+                <hr class="user-view-hr" />
+
+                <div class="row">
+                    <div class="col-xs-4 all-trips">
+
+                        <a href="javascript:void(0)" class="typical-link" ng-click="selectAllTrips()">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType === 1}">
+                                Все поездки
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="col-xs-4 driver-trips">
+
+                        <a href="javascript:void(0)" class="typical-link" ng-click="selectDriverTrips()">
+                            <div class="sub-page-nav-link sub-page-nav-link-middle" ng-class="{'sub-page-nav-link-active' : tripsType == 2}">
+                                В качестве водителя
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="col-xs-4 passenger-trips">
+
+                        <a href="javascript:void(0)" class="typical-link" ng-click="selectPassengerTrips()">
+                            <div class="sub-page-nav-link" ng-class="{'sub-page-nav-link-active' : tripsType == 3}">
+                                В качестве пассажира
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="user-tab">
+
+                    <div ng-show="firstLoad" class="user-trips-options">
+                        <hr class="no-margin user-hr-bottom" />
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" id="showEnded" ng-model="showEnded" class="pointer" ng-change="reloadUserTrips(showEnded)">
+                                    <label for="showEnded">
+                                        <b>Показывать завершенные</b>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-5 text-right">
+                                <div class="total-trip-count" ng-if="showTotalCount">
+                                    <b>Поездок: <span ng-bind="totalCount"></span></b>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="no-margin user-hr-top" />
+                    </div>
+
+                    <div class="row" ng-if="totalEmptyResults">
+                        <div class="col-xs-12">
+                            <div class="loading-wrapper">
+                                <div class="loading-icon">
+                                    <i class="fa fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="loading-text">
+                                    <span class="contrast-color">Нет поездок!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-trips">
+
+                        <div data-infinite-scroll='templateGetUserTrips()' data-infinite-scroll-disabled='emptyResults' data-infinite-scroll-distance='1'>
+
+                            <div ng-repeat='trip in trips track by $index'>
+
+                                <div class="short-trip" ng-if="!trip.isDeleted">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="user-trip-header">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <a href="javascript:void(0)" class="typical-link">
+                                                            <span class="user-trip-driver">
+                                                                <span ng-bind="trip.firstName"></span>
+                                                                <span ng-bind="trip.lastName"></span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="trip-padding">
+
+                                        <div class="row">
+                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="trip-points">
+                                                            {{trip.originPlaceName}} &#8594;
+                                                            {{trip.destinationPlaceName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 contrast-color">
+                                                        {{trip.leavingDate | date:'dd MMMM yyyy года'}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+                                                <div class="trip-price" ng-if="trip.pay > 0">
+                                                    <span class="trip-price-title">
+                                                        <span ng-bind="trip.pay"></span> руб.
+                                                    </span><br />
+                                                    <span class="contrast-color">с человека</span>
+                                                </div>
+                                                <div class="trip-price" ng-if="trip.pay == 0">
+                                                    <span class="trip-price-title">Бесплатная</span><br />
+                                                    <span class="contrast-color">поездка</span>
+                                                </div>
+                                                <div class="trip-price" ng-if="trip.pay == null">
+                                                    <span class="trip-price-title">Договорная</span><br />
+                                                    <span class="contrast-color">цена</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row" ng-if="!trip.isEnded">
+                                        <div class="col-xs-12">
+                                            <div class="trip-places">
+                                                <div class="row">
+                                                    <div class="col-xs-7 contrast-color">
+                                                        <span>
+                                                            Осталось свободных мест:
+                                                            <span ng-bind="trip.freePlaces"></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-5 text-right">
+                                                        <a href="javascript:void(0)" class="typical-link" ng-click="getTrip(trip.tripId)">Подробнее</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-if="trip.isEnded">
+                                        <div class="col-xs-12">
+                                            <div class="trip-places light-background">
+                                                <div class="row">
+                                                    <div class="col-xs-7 contrast-color">
+                                                        <span>Поездка завершена</span>
+                                                    </div>
+                                                    <div class="col-xs-5 text-right">
+                                                        <a href="javascript:void(0)" class="typical-link" ng-click="getTrip(trip.tripId)">Подробнее</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="short-trip" ng-show="trip.isDeleted">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="user-trip-header">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <span class="contrast-color">
+                                                            Поездка была удалена!
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-6 text-right" ng-if="trip.allowManage">
+                                                        <button class="btn btn-xs btn-success pull-right" ng-click="recoverTrip(trip.tripId)">
+                                                            Восстановить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row" ng-if="loading">
+                                <div class="col-xs-12">
+                                    <div class="loading-wrapper">
+                                        <div class="loading-icon">
+                                            <i class="fa fa-refresh fa-spin fa-2x"></i>
+                                        </div>
+                                        <div class="loading-text">
+                                            <span class="contrast-color">Пожалуйста, подождите...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

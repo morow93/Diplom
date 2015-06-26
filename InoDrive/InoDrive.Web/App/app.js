@@ -140,7 +140,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                             name: "InoDrive",
                             files: [
                                 "app/controllers/user/userController.js",
-                                "app/controllers/user/editTripController.js"
+                                "app/controllers/user/editTripController.js",
+                                "app/controllers/user/userCurrentController.js"
                             ]
                         }
                     );
@@ -161,6 +162,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                         );
                     }
                 }
+            })
+            .state("user.current", {
+                url: "current/:userId",
+                controller: "userCurrentController",
+                templateUrl: "/app/views/user/user.current.html",
             })
             .state("user.trip", {
                 url: "trip/:tripId",

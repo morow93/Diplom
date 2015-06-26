@@ -206,6 +206,8 @@
             if (data.rating == "NaN") {
                 data.rating = 0.0;
             }
+            data.rating = data.rating.toFixed(2);
+            data.cutRating = Math.floor(data.rating / 20);
 
             if (data.stage == null) {
                 data.stage = "Не указан";
