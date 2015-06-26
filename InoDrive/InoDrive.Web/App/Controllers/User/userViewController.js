@@ -196,7 +196,7 @@
     };
 
     $scope.getTrip = function (tripId) {
-        $state.go("user.trip", { tripId: tripId }, { reload: false });
+        $state.go("user.trip", { tripId: tripId }, { reload: true });
     };
 
     $scope.getUserSummary = function () {

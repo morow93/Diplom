@@ -116,6 +116,7 @@
     <Compile Include="Models\InputModels\InputSignUpModel.cs" />
     <Compile Include="Models\InputModels\InputChangeEmailModel.cs" />
     <Compile Include="Models\InputModels\InputChangePasswordModel.cs" />
+    <Compile Include="Models\OutputModels\OutputCommentModel.cs" />
     <Compile Include="Models\OutputModels\OutputMyBidModel.cs" />
     <Compile Include="Models\OutputModels\OutputBidForMyTripModel.cs" />
     <Compile Include="Models\OutputModels\OutputFindTripModel.cs" />

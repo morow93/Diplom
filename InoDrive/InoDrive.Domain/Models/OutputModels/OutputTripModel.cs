@@ -33,5 +33,7 @@ namespace InoDrive.Domain.Models.OutputModels
         public Decimal? Pay { get; set; }
         public Boolean IsBidded { get; set; }
         public Boolean IsEnded { get; set; }
+        public List<OutputCommentModel> Comments { get; set; }
+        public Boolean AllowCommented { get; set; }
     }
 }

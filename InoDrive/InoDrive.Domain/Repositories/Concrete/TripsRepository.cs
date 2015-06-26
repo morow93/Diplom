@@ -114,6 +114,18 @@ namespace InoDrive.Domain.Repositories.Concrete
                     trip.User.Bids.Any(b => b.IsAccepted == true && b.Trip.EndDate < DateTimeOffset.Now))
             });
 
+            result.Comments = trip.Commnents.Select(c => new OutputCommentModel
+            {
+                CommentId = c.CommentId,
+                Initials = c.User.FirstName + " " + c.User.LastName,
+                Title = c.Title,
+                UserId = c.UserId,
+                Vote = c.Vote
+
+            }).OrderByDescending(nc => nc.CommentId).ToList<OutputCommentModel>();
+
+            result.AllowCommented = result.IsBidded && result.IsEnded && trip.Commnents.FirstOrDefault(c => c.TripId == model.TripId && c.UserId == model.UserId) == null;
+
             return result;
        
         }

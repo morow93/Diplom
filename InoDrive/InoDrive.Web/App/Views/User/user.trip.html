@@ -53,7 +53,7 @@
                             </button>
                             <button class="btn btn-primary btn-sm full-width" disabled
                                     ng-if="trip.isEnded">
-                                Поездка завершена
+                                Завершена
                             </button>
 
                         </div>
@@ -151,30 +151,31 @@
                      ng-src="{{noCarImage}}" class="full-width" ng-attr-title="{{trip.car}}" />
             </div>
         </div>
-
-        <div ng-repeat="userIndicator in trip.userIndicators" class="indicators-users">
-            <button class="user-indicator"
-                    ng-show="userIndicator.avatarImage"
-                    data-placement="bottom"
-                    data-title="{{userIndicator.firstName + ' ' + userIndicator.lastName}}"
-                    data-content="{{userIndicator.wasTriped ? 'Уже ездил с InoDrive' : 'Еще не ездил с InoDrive'}}"
-                    data-trigger="hover"
-                    bs-popover>
-                <img class="user-circle"
-                     ng-src="{{fullAvatarsFolder + userIndicator.avatarImage}}" />
-            </button>
-            <button class="user-indicator"
-                    ng-show="!userIndicator.avatarImage"
-                    data-placement="bottom"
-                    data-title="{{userIndicator.firstName + ' ' + userIndicator.lastName}}"
-                    data-content="{{userIndicator.wasTriped ? 'Уже ездил с InoDrive' : 'Еще не ездил с InoDrive'}}"
-                    data-trigger="hover"
-                    bs-popover>
-                <img class="user-circle"
-                     ng-src="{{noAvatarImage}}" />
-            </button>
-        </div>
-        
+        <hr />
+        <div style="min-height:65px;">
+            <div ng-repeat="userIndicator in trip.userIndicators" class="indicators-users">
+                <button class="user-indicator pull-left"
+                        ng-show="userIndicator.avatarImage"
+                        data-placement="bottom"
+                        data-title="{{userIndicator.firstName + ' ' + userIndicator.lastName}}"
+                        data-content="{{userIndicator.wasTriped ? 'Уже ездил с InoDrive' : 'Еще не ездил с InoDrive'}}"
+                        data-trigger="hover"
+                        bs-popover>
+                    <img class="user-circle"
+                         ng-src="{{fullAvatarsFolder + userIndicator.avatarImage}}" />
+                </button>
+                <button class="user-indicator pull-left"
+                        ng-show="!userIndicator.avatarImage"
+                        data-placement="bottom"
+                        data-title="{{userIndicator.firstName + ' ' + userIndicator.lastName}}"
+                        data-content="{{userIndicator.wasTriped ? 'Уже ездил с InoDrive' : 'Еще не ездил с InoDrive'}}"
+                        data-trigger="hover"
+                        bs-popover>
+                    <img class="user-circle"
+                         ng-src="{{noAvatarImage}}" />
+                </button>
+            </div>
+        </div>        
         <div class="form-block">
             <div class="row">
                 <div class="col-xs-8">
@@ -207,7 +208,10 @@
                 <div class="col-xs-4">
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-2">
-                            <button class="btn btn-primary full-width btn-sm" ng-click="addPost()">Написать!</button>
+                            <button class="btn btn-primary full-width btn-sm" ng-click="addComment()"
+                                    ng-if="trip.allowCommented">
+                                Написать!
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -217,7 +221,7 @@
         <div class="row">
             <div class="col-xs-12">
 
-                <form class="form-add-comment" name="formAddComment">
+                <form class="form-add-comment" name="formAddComment" ng-if="trip.allowCommented">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-error pull-left-error fucking-text">
@@ -236,21 +240,22 @@
                     </div>
                 </form>
                 
-                <div class="form-add-comment">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="pull-left another-fucking-text">
-                                <b><a>Имя Фамилия</a></b>
+                <div ng-repeat="comment in trip.comments">
+                    <div class="form-add-comment">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="pull-left another-fucking-text">
+                                    <b><a>{{comment.initials}}</a></b>
+                                </div>
+                                <div data-star-rating ng-model="comment.vote" data-readonly="true" class="pull-rating"></div>
+                                <textarea name="title" disabled
+                                          class="form-control no-border-radius def-cur"
+                                          rows="3"
+                                          ng-model="comment.title"></textarea>
                             </div>
-                            <div data-star-rating data-readonly="true" class="pull-rating"></div>
-                            <textarea name="title" disabled
-                                      class="form-control no-border-radius def-cur"
-                                      rows="3"
-                                      placeholder="Напишите свой отзыв о совместной поездке"
-                                      ng-maxlength="200"></textarea>
                         </div>
-                    </div>
-                </div>             
+                    </div>                    
+                </div>          
          
             </div>
         </div>

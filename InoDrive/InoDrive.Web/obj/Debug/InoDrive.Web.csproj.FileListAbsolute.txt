@@ -3,3 +3,4 @@ E:\Diplom\InoDrive\InoDrive.Web\bin\InoDrive.Web.dll
 E:\Diplom\InoDrive\InoDrive.Web\bin\InoDrive.Web.pdb
 E:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.dll
 E:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.pdb
+E:\Diplom\InoDrive\InoDrive.Web\obj\Debug\InoDrive.Web.csprojResolveAssemblyReference.cache

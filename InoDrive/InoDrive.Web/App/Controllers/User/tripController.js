@@ -33,20 +33,32 @@ angular.module('InoDrive').controller('tripController', function (
         return percentageRating;
     };
 
-    $scope.voteForTrip = function (rating) {
+    $scope.addComment = function () {
 
-        debugger;
-        var params = {
-            vote: rating,
-            userId: $scope.authentication.userId,
-            tripId: $stateParams.tripId
-        };
+        if ($scope.comment.title) {
+            var params = {
+                vote: $scope.comment.vote,
+                title: $scope.comment.title,
+                userId: $scope.authentication.userId,
+                tripId: $stateParams.tripId
+            };
 
-        tripsService.voteForTrip(params).then(function () {
-            //success
-        }).catch(function (err) {
-            throw err.data;
-        });
+            tripsService.addComment(params).then(function () {
+                debugger;
+                $scope.trip.comments.unshift({
+                    initials: $scope.authentication.initials,
+                    vote: $scope.comment.vote,
+                    title: $scope.comment.title
+                });
+                $scope.trip.allowCommented = false;
+
+            }).catch(function (err) {
+                throw err.data;
+            });
+        } else {
+            alert("Оставьте свой отзыв!");
+        }
+
     };
 
     $scope.getTrip = function () {
