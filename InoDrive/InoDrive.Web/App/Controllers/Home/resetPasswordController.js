@@ -30,7 +30,7 @@
                         message: 'Поздравляем! Вы успешно выполнили смену пароля! Теперь можете выполнить вход.',
                         type: 'success',
                     });
-                    $state.go("signin", null, { reload: true });
+                    $state.go("home.signin", null, { reload: true });
 
                 }).catch(function (results) {
 
